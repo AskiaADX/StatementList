@@ -1,0 +1,407 @@
+﻿/* standard.css */
+{%
+Dim responseColourPrimary =CurrentADC.PropValue("responseColourPrimary")
+Dim responseColourSecondary =CurrentADC.PropValue("responseColourSecondary")
+Dim fontColour =CurrentADC.PropValue("fontColour")
+Dim responseShadow =CurrentADC.PropValue("responseShadow")
+Dim responseSelectedColourPrimary =CurrentADC.PropValue("responseSelectedColourPrimary")
+Dim responseSelectedColourSecondary =CurrentADC.PropValue("responseSelectedColourSecondary")
+Dim responseSelectedFontColour =CurrentADC.PropValue("responseSelectedFontColour")
+Dim responseSelectedShadow =CurrentADC.PropValue("responseSelectedShadow")
+
+Dim borderColour =CurrentADC.PropValue("borderColour")
+Dim borderThickness =CurrentADC.PropValue("borderThickness")
+Dim borderStyle =CurrentADC.PropValue("borderStyle")
+Dim responseSelectedBorderColour =CurrentADC.PropValue("responseSelectedBorderColour")
+Dim responseSelectedBorderThickness =CurrentADC.PropValue("responseSelectedBorderThickness")
+Dim responseSelectedBorderStyle =CurrentADC.PropValue("responseSelectedBorderStyle")
+Dim borderRadius =CurrentADC.PropValue("borderRadius")
+
+Dim statementTextAlign =CurrentADC.PropValue("statementTextAlign")
+Dim responseTextAlign =CurrentADC.PropValue("responseTextAlign")
+Dim responseImagePosition =CurrentADC.PropValue("responseImagePosition")
+Dim responseContentPosition =CurrentADC.PropValue("responseContentPosition")
+Dim responseAlign =CurrentADC.PropValue("responseAlign")
+Dim displayResponseText =CurrentADC.PropValue("displayResponseText")
+
+Dim nsResponseColourPrimary =CurrentADC.PropValue("nsResponseColourPrimary")
+Dim nsResponseColourSecondary =CurrentADC.PropValue("nsResponseColourSecondary")
+Dim nsfontColour =CurrentADC.PropValue("nsfontColour")
+Dim nsResponseBorderColour =CurrentADC.PropValue("nsResponseBorderColour")
+Dim nsResponseBorderThickness =CurrentADC.PropValue("nsResponseBorderThickness")
+Dim nsResponseBorderStyle =CurrentADC.PropValue("nsResponseBorderStyle")
+Dim nsResponseShadow =CurrentADC.PropValue("nsResponseShadow")
+Dim nsResponseSelectedColourPrimary =CurrentADC.PropValue("nsResponseSelectedColourPrimary")
+Dim nsResponseSelectedColourSecondary =CurrentADC.PropValue("nsResponseSelectedColourSecondary")
+Dim nsResponseSelectedFontColour =CurrentADC.PropValue("nsResponseSelectedFontColour")
+Dim nsResponseSelectedBorderColour =CurrentADC.PropValue("nsResponseSelectedBorderColour")
+Dim nsResponseSelectedBorderThickness =CurrentADC.PropValue("nsResponseSelectedBorderThickness")
+Dim nsResponseSelectedBorderStyle =CurrentADC.PropValue("nsResponseSelectedBorderStyle")
+Dim nsResponseSelectedShadow =CurrentADC.PropValue("nsResponseSelectedShadow")
+
+Dim statementColourPrimary =CurrentADC.PropValue("statementColourPrimary")
+Dim statementColourSecondary =CurrentADC.PropValue("statementColourSecondary")
+Dim altStatementColourPrimary =CurrentADC.PropValue("altStatementColourPrimary")
+Dim altStatementColourSecondary =CurrentADC.PropValue("altStatementColourSecondary")
+Dim statementFontColour =CurrentADC.PropValue("statementFontColour")
+Dim statementBorderColour =CurrentADC.PropValue("statementBorderColour")
+Dim statementBorderRadius =CurrentADC.PropValue("statementBorderRadius")
+Dim statementBorderThickness =CurrentADC.PropValue("statementBorderThickness")
+Dim statementBorderStyle =CurrentADC.PropValue("statementBorderStyle")
+Dim statementShadow =CurrentADC.PropValue("statementShadow")
+Dim statementFontSize =CurrentADC.PropValue("statementFontSize")
+
+Dim responseHoverColourPrimary =CurrentADC.PropValue("responseHoverColourPrimary")
+Dim responseHoverColourSecondary =CurrentADC.PropValue("responseHoverColourSecondary")
+Dim responseHoverFontColour =CurrentADC.PropValue("responseHoverFontColour")
+Dim responseHoverBorderColour =CurrentADC.PropValue("responseHoverBorderColour")
+Dim responseHoverBorderThickness =CurrentADC.PropValue("responseHoverBorderThickness")
+Dim responseHoverBorderStyle =CurrentADC.PropValue("responseHoverBorderStyle")
+Dim responseHoverShadow =CurrentADC.PropValue("responseHoverShadow")
+
+Dim showResponseHoverColour =CurrentADC.PropValue("showResponseHoverColour")
+Dim showResponseHoverFontColour =CurrentADC.PropValue("showResponseHoverFontColour")
+Dim showResponseHoverBorder =CurrentADC.PropValue("showResponseHoverBorder")
+
+Dim responseTextPadding =CurrentADC.PropValue("responseTextPadding")
+Dim responseTextLineHeight =CurrentADC.PropValue("responseTextLineHeight")
+
+Dim fontSize =CurrentADC.PropValue("fontSize")
+Dim responseHeight =CurrentADC.PropValue("responseHeight")
+
+Dim statementTextPadding =CurrentADC.PropValue("statementTextPadding")
+Dim statementTextLineHeight =CurrentADC.PropValue("statementTextLineHeight")
+Dim statementHeight =CurrentADC.PropValue("statementHeight")
+
+Dim counterBorderColour =CurrentADC.PropValue("counterBorderColour")
+Dim counterBorderRadius =CurrentADC.PropValue("counterBorderRadius")
+Dim counterBorderWidth =CurrentADC.PropValue("counterBorderWidth")
+Dim counterPrimaryColour =CurrentADC.PropValue("counterPrimaryColour")
+Dim counterSecondaryColour =CurrentADC.PropValue("counterSecondaryColour")
+Dim counterFontColour =CurrentADC.PropValue("counterFontColour")
+Dim counterDropShadow =CurrentADC.PropValue("counterDropShadow")
+Dim counterAlign =CurrentADC.PropValue("counterAlign")
+
+Dim buttonBorderColour =CurrentADC.PropValue("buttonBorderColour")
+Dim buttonBorderRadius =CurrentADC.PropValue("buttonBorderRadius")
+Dim buttonBorderWidth =CurrentADC.PropValue("buttonBorderWidth")
+Dim buttonPrimaryColour =CurrentADC.PropValue("buttonPrimaryColour")
+Dim buttonSecondaryColour =CurrentADC.PropValue("buttonSecondaryColour")
+Dim buttonDropShadow =CurrentADC.PropValue("buttonDropShadow")
+Dim buttonArrowColour =CurrentADC.PropValue("buttonArrowColour")
+
+IF responseHeight = "" Then
+	responseHeight = "auto"
+EndIF
+IF statementHeight = "" Then
+	statementHeight = "auto"
+EndIF
+%}
+
+/* General */
+#adc_{%= CurrentADC.InstanceId%} 
+{ 
+	text-align:{%= responseAlign%};
+}
+
+/* Statements */
+#adc_{%= CurrentADC.InstanceId%} .statement 
+{
+	
+	/* Decoration */
+	{% IF CurrentADC.PropValue("statementBorderThickness") = "none" Then %}
+		border: none;
+	{% Else %}
+		border: {%= statementBorderThickness%} {%= statementBorderStyle%} rgb({%= statementBorderColour%});
+	{% EndIF %}	
+	
+	/* Effects */
+	-webkit-border-radius:	{%= statementBorderRadius%}; 
+	-moz-border-radius:		{%= statementBorderRadius%}; 
+	-khtml-border-radius:	{%= statementBorderRadius%}; 
+	border-radius:			{%= statementBorderRadius%};
+	
+	-webkit-box-shadow: {%= statementShadow%};
+	-moz-box-shadow: {%= statementShadow%};
+	box-shadow: {%= statementShadow%};
+	
+	height: {%= statementHeight%};
+	 
+}
+
+#adc_{%= CurrentADC.InstanceId%} .evenStatement 
+{
+	background: rgb({%= statementColourPrimary%}); 
+	background: -moz-linear-gradient(top,  rgb({%= statementColourPrimary%}) 0%, rgb({%= statementColourSecondary%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= statementColourPrimary%})), color-stop(100%,rgb({%= statementColourSecondary%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= statementColourPrimary%}) 0%,rgb({%= statementColourSecondary%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= statementColourPrimary%}) 0%,rgb({%= statementColourSecondary%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= statementColourPrimary%}) 0%,rgb({%= statementColourSecondary%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= statementColourPrimary%}) 0%,rgb({%= statementColourSecondary%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= statementColourPrimary.ToHexa()%}, endColorstr={%= statementColourSecondary.ToHexa()%},GradientType=0 ) !important; /* IE6-8 */
+}
+
+#adc_{%= CurrentADC.InstanceId%} .altStatement 
+{
+
+	background: rgb({%= altStatementColourPrimary%}); 
+	background: -moz-linear-gradient(top,  rgb({%= altStatementColourPrimary%}) 0%, rgb({%= altStatementColourSecondary%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= altStatementColourPrimary%})), color-stop(100%,rgb({%= altStatementColourSecondary%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= altStatementColourPrimary%}) 0%,rgb({%= altStatementColourSecondary%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= altStatementColourPrimary%}) 0%,rgb({%= altStatementColourSecondary%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= altStatementColourPrimary%}) 0%,rgb({%= altStatementColourSecondary%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= altStatementColourPrimary%}) 0%,rgb({%= altStatementColourSecondary%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= altStatementColourPrimary.ToHexa()%}, endColorstr={%= altStatementColourSecondary.ToHexa()%},GradientType=0 ) !important; /* IE6-8 */
+
+}
+
+#adc_{%= CurrentADC.InstanceId%} .statement_text 
+{ 
+	font-size:{%= statementFontSize%};
+	text-align:{%= statementTextAlign%};
+	color:rgb({%= statementFontColour%});
+	padding:{%= statementTextPadding%};
+	line-height:{%= statementTextLineHeight%};
+}
+
+/* Reponses */
+#adc_{%= CurrentADC.InstanceId%} .responseItem 
+{   
+	
+	/* Decoration */
+	{% IF CurrentADC.PropValue("borderThickness") = "none" Then %}
+		border: none;
+	{% Else %}
+		border: {%= borderThickness%} {%= borderStyle%} rgb({%= borderColour%});
+	{% EndIF %}	
+	background: rgb({%= responseColourPrimary%}); 
+	background: -moz-linear-gradient(top,  rgb({%= responseColourPrimary%}) 0%, rgb({%= responseColourSecondary%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= responseColourPrimary%})), color-stop(100%,rgb({%= responseColourSecondary%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= responseColourPrimary%}) 0%,rgb({%= responseColourSecondary%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= responseColourPrimary%}) 0%,rgb({%= responseColourSecondary%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= responseColourPrimary%}) 0%,rgb({%= responseColourSecondary%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= responseColourPrimary%}) 0%,rgb({%= responseColourSecondary%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= responseColourPrimary.ToHexa()%}, endColorstr={%= responseColourSecondary.ToHexa()%},GradientType=0 ); /* IE6-8 */
+	
+	/* Effects */
+	-webkit-border-radius:	{%= borderRadius%}; 
+	-moz-border-radius:		{%= borderRadius%}; 
+	-khtml-border-radius:	{%= borderRadius%}; 
+	border-radius:			{%= borderRadius%};
+	
+	-webkit-box-shadow: {%= responseShadow%};
+	-moz-box-shadow: {%= responseShadow%};
+	box-shadow: {%= responseShadow%};
+	
+	text-align: {%= responseContentPosition%};
+		
+	height: {%= responseHeight%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .responseItem:hover
+{
+	
+	/* Decoration */
+	{% IF showResponseHoverBorder = "1" Then %}
+		border: {%= responseHoverBorderThickness%} {%= responseHoverBorderStyle%} rgb({%= responseHoverBorderColour%});
+	{% EndIF %}
+	{% IF showResponseHoverColour = "1" Then %}
+		background: rgb({%= responseHoverColourPrimary%}) !important;
+		background: -moz-linear-gradient(top,  rgb({%= responseHoverColourPrimary%}) 0%, rgb({%= responseHoverColourSecondary%}) 100%) !important; /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= responseHoverColourPrimary%})), color-stop(100%,rgb({%= responseHoverColourSecondary%}))) !important; /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  rgb({%= responseHoverColourPrimary%}) 0%,rgb({%= responseHoverColourSecondary%}) 100%) !important; /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  rgb({%= responseHoverColourPrimary%}) 0%,rgb({%= responseHoverColourSecondary%}) 100%) !important; /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  rgb({%= responseHoverColourPrimary%}) 0%,rgb({%= responseHoverColourSecondary%}) 100%) !important; /* IE10+ */
+		background: linear-gradient(to bottom,  rgb({%= responseHoverColourPrimary%}) 0%,rgb({%= responseHoverColourSecondary%}) 100%) !important; /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{%= responseHoverColourPrimary.ToHexa()%}', endColorstr='{%= responseHoverColourSecondary.ToHexa()%}',GradientType=0 ) !important; /* IE6-8 */
+	{% EndIF %}
+	-webkit-box-shadow: {%= responseHoverShadow%};
+	-moz-box-shadow: {%= responseHoverShadow%};
+	box-shadow: {%= responseHoverShadow%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .responseItem img
+{  
+	float:{%= responseImagePosition%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .response_text 
+{ 
+	display:{%= displayResponseText%};
+	font-size:{%= fontSize%};
+	text-align:{%= responseTextAlign%};
+	color:rgb({%= fontColour%});
+	
+	padding:{%= responseTextPadding%};
+	line-height:{%= responseTextLineHeight%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text 
+{ 
+	{% IF showResponseHoverFontColour = "1" Then %}
+		color:rgb({%= responseHoverFontColour%}) !important;
+	{% EndIF %}
+}
+
+#adc_{%= CurrentADC.InstanceId%} .responseItem.selected 
+{	
+    /* Decoration */	
+	{% IF CurrentADC.PropValue("responseSelectedBorderThickness") = "none" Then %}
+		border: none !important;
+	{% Else %}
+		border: {%= responseSelectedBorderThickness%} {%= responseSelectedBorderStyle%} rgb({%= responseSelectedBorderColour%}) !important;
+	{% EndIF %}	
+	background: rgb({%= responseSelectedColourPrimary%}) !important;
+	background: -moz-linear-gradient(top,  rgb({%= responseSelectedColourPrimary%}) 0%, rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= responseSelectedColourPrimary%})), color-stop(100%,rgb({%= responseSelectedColourSecondary%}))) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= responseSelectedColourPrimary%}) 0%,rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= responseSelectedColourPrimary%}) 0%,rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= responseSelectedColourPrimary%}) 0%,rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= responseSelectedColourPrimary%}) 0%,rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{%= responseSelectedColourPrimary.ToHexa()%}', endColorstr='{%= responseSelectedColourSecondary.ToHexa()%}',GradientType=0 ) !important; /* IE6-8 */
+	
+	-webkit-box-shadow: {%= responseSelectedShadow%} !important;
+	-moz-box-shadow: {%= responseSelectedShadow%} !important;
+	box-shadow: {%= responseSelectedShadow%} !important;
+	
+	/* Effects */
+	-webkit-border-radius:	{%= borderRadius%} !important; 
+	-moz-border-radius:		{%= borderRadius%} !important; 
+	-khtml-border-radius:	{%= borderRadius%} !important; 
+	border-radius:			{%= borderRadius%} !important;
+}
+
+#adc_{%= CurrentADC.InstanceId%} .responseItem.selected .response_text 
+{
+	font-size:{%= fontSize%} !important;
+    color:rgb({%= responseSelectedFontColour%}) !important;
+}
+
+/* Non Scaled Reponses */
+#adc_{%= CurrentADC.InstanceId%} .ns 
+{   
+
+	/* Decoration */
+	{% IF CurrentADC.PropValue("nsResponseBorderThickness") = "none" Then %}
+		border: none;
+	{% Else %}
+		border: {%= nsResponseBorderThickness%} {%= nsResponseBorderStyle%} rgb({%= nsResponseBorderColour%});
+	{% EndIF %}	
+	background: rgb({%= nsResponseColourPrimary%}); 
+	background: -moz-linear-gradient(top,  rgb({%= nsResponseColourPrimary%}) 0%, rgb({%= nsResponseColourSecondary%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= nsResponseColourPrimary%})), color-stop(100%,rgb({%= nsResponseColourSecondary%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= nsResponseColourPrimary%}) 0%,rgb({%= nsResponseColourSecondary%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= nsResponseColourPrimary%}) 0%,rgb({%= nsResponseColourSecondary%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= nsResponseColourPrimary%}) 0%,rgb({%= nsResponseColourSecondary%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= nsResponseColourPrimary%}) 0%,rgb({%= nsResponseColourSecondary%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= nsResponseColourPrimary.ToHexa()%}, endColorstr={%= nsResponseColourSecondary.ToHexa()%},GradientType=0 ); /* IE6-8 */
+	
+	/* Effects */
+	-webkit-border-radius:	{%= borderRadius%}; 
+	-moz-border-radius:		{%= borderRadius%}; 
+	-khtml-border-radius:	{%= borderRadius%}; 
+	border-radius:			{%= borderRadius%};
+	
+	-webkit-box-shadow: {%= nsResponseShadow%};
+	-moz-box-shadow: {%= nsResponseShadow%};
+	box-shadow: {%= nsResponseShadow%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .ns .response_text 
+{ 
+	display:block;
+	font-size:{%= fontSize%};
+	color:rgb({%= nsfontColour%});
+	
+	padding:{%= responseTextPadding%};
+	line-height:{%= responseTextLineHeight%};
+}
+
+#adc_{%= CurrentADC.InstanceId%} .ns.selected 
+{	
+    /* Decoration */	
+	{% IF CurrentADC.PropValue("nsResponseSelectedBorderThickness") = "none" Then %}
+		border: none !important;
+	{% Else %}
+		border: {%= nsResponseSelectedBorderThickness%} {%= nsResponseSelectedBorderStyle%} rgb({%= nsResponseSelectedBorderColour%}) !important;
+	{% EndIF %}	
+	background: rgb({%= nsResponseSelectedColourPrimary%}) !important;
+	background: -moz-linear-gradient(top,  rgb({%= nsResponseSelectedColourPrimary%}) 0%, rgb({%= nsResponseSelectedColourSecondary%}) 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= nsResponseSelectedColourPrimary%})), color-stop(100%,rgb({%= nsResponseSelectedColourSecondary%}))) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= nsResponseSelectedColourPrimary%}) 0%,rgb({%= nsResponseSelectedColourSecondary%}) 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= nsResponseSelectedColourPrimary%}) 0%,rgb({%= nsResponseSelectedColourSecondary%}) 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= nsResponseSelectedColourPrimary%}) 0%,rgb({%= nsResponseSelectedColourSecondary%}) 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= nsResponseSelectedColourPrimary%}) 0%,rgb({%= nsResponseSelectedColourSecondary%}) 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{%= nsResponseSelectedColourPrimary.ToHexa()%}', endColorstr='{%= nsResponseSelectedColourSecondary.ToHexa()%}',GradientType=0 ) !important; /* IE6-8 */
+	
+	-webkit-box-shadow: {%= nsResponseSelectedShadow%} !important;
+	-moz-box-shadow: {%= nsResponseSelectedShadow%} !important;
+	box-shadow: {%= nsResponseSelectedShadow%} !important;
+}
+
+#adc_{%= CurrentADC.InstanceId%} .ns.selected .response_text 
+{
+    color:rgb({%= nsResponseSelectedFontColour%}) !important;
+}
+
+/* Counter */
+#adc_{%= CurrentADC.InstanceId%} .counterContainer { text-align:{%= counterAlign%}; }
+#adc_{%= CurrentADC.InstanceId%} .counter { 
+	{% IF CurrentADC.PropValue("counterBorderWidth") = "none" Then %}
+		border: none;
+	{% Else %}
+		border: {%= counterBorderWidth%} solid rgb({%= counterBorderColour%});
+	{% EndIF %}	
+	background: rgb({%= counterPrimaryColour%}); 
+	background: -moz-linear-gradient(top,  rgb({%= counterPrimaryColour%}) 0%, rgb({%= counterSecondaryColour%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= counterPrimaryColour%})), color-stop(100%,rgb({%= counterSecondaryColour%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= counterPrimaryColour%}) 0%,rgb({%= counterSecondaryColour%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= counterPrimaryColour%}) 0%,rgb({%= counterSecondaryColour%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= counterPrimaryColour%}) 0%,rgb({%= counterSecondaryColour%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= counterPrimaryColour%}) 0%,rgb({%= counterSecondaryColour%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= counterPrimaryColour.ToHexa()%}, endColorstr={%= counterSecondaryColour.ToHexa()%},GradientType=0 ); /* IE6-8 */
+	
+	display:inline-block; 
+	border-radius:{%= counterBorderRadius%}; 
+	margin:10px 0px; 
+	width:30px; 
+	height:30px;
+	
+	-webkit-box-shadow: {%= counterDropShadow%};
+	-moz-box-shadow: {%= counterDropShadow%};
+	box-shadow: {%= counterDropShadow%};
+}
+#adc_{%= CurrentADC.InstanceId%} .counterNumber { padding:25%; text-align:center; margin:0px auto; color:rgb({%= counterFontColour%}); }
+
+#adc_{%= CurrentADC.InstanceId%} .previousStatement,
+#adc_{%= CurrentADC.InstanceId%} .nextStatement,
+#adc_{%= CurrentADC.InstanceId%} .Btn
+{   
+	/* Decoration */
+	{% IF CurrentADC.PropValue("buttonBorderWidth") = "none" Then %}
+		border: none;
+	{% Else %}
+		border: {%= buttonBorderWidth%} solid rgb({%= buttonBorderColour%});
+	{% EndIF %}	
+	background: rgb({%= buttonPrimaryColour%}); 
+	background: -moz-linear-gradient(top,  rgb({%= buttonPrimaryColour%}) 0%, rgb({%= buttonSecondaryColour%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= buttonPrimaryColour%})), color-stop(100%,rgb({%= buttonSecondaryColour%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= buttonPrimaryColour%}) 0%,rgb({%= buttonSecondaryColour%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= buttonPrimaryColour%}) 0%,rgb({%= buttonSecondaryColour%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= buttonPrimaryColour%}) 0%,rgb({%= buttonSecondaryColour%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= buttonPrimaryColour%}) 0%,rgb({%= buttonSecondaryColour%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= buttonPrimaryColour.ToHexa()%}, endColorstr={%= buttonSecondaryColour.ToHexa()%},GradientType=0 ); /* IE6-8 */
+	
+	/* Effects */
+	-webkit-border-radius:	{%= buttonBorderRadius%}; 
+	-moz-border-radius:		{%= buttonBorderRadius%}; 
+	-khtml-border-radius:	{%= buttonBorderRadius%}; 
+	border-radius:			{%= buttonBorderRadius%}; 
+	
+	-webkit-box-shadow: {%= buttonDropShadow%};
+	-moz-box-shadow: {%= buttonDropShadow%};
+	box-shadow: {%= buttonDropShadow%};
+	
+}
+
+#adc_{%= CurrentADC.InstanceId%} .nextStatement .img, #adc_{%= CurrentADC.InstanceId%} .previousStatement .img { background-position:{%= buttonArrowColour%}; }

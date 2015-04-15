@@ -1,0 +1,34 @@
+{%
+Dim inputName = CurrentQuestion.InputName()
+Dim inputValue
+Dim caption
+Dim inputId
+Dim image
+Dim attrChecked
+
+Dim i
+For i = 1 To CurrentQuestion.AvailableResponses.Count 
+    inputId     = inputName + "_" + i
+    inputValue  = CurrentQuestion.AvailableResponses[i].InputValue()
+    caption     = CurrentQuestion.AvailableResponses[i].Caption
+    image		= CurrentQuestion.AvailableResponses.ResourceURL[i]
+%}
+<div class="responseItem" data-value="{%= inputValue %}" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+	{% IF image <> "" Then %}
+		<img src="{%= image %}" />
+    {% EndIF %}
+	<span class="response_text">{%:= caption %}</span>
+	<div style="clear:both"></div>
+</div>
+{% Next %}
+
+{%
+Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
+Dim j
+For j = 1 To ar.Count 
+    inputName = CurrentQuestion.Iteration(ar[j].Index).InputName()
+    inputId   = inputName
+    inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
+%}
+<input type="hidden" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}"  />
+{% Next %}

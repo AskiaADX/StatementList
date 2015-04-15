@@ -1,0 +1,157 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Statements */
+.adc-statementList .statement, 
+.adc-statementList .previousStatement,
+.adc-statementList .nextStatement
+{   
+    /* Element */
+	display:block;
+	margin:0 0 5px 0;
+    vertical-align:middle;
+	cursor:pointer;
+	
+	/* Decoration */
+	border: 1px solid #000;
+	background: #fff; 
+	background: -webkit-gradient(linear, 0 0, 0 100%, from( #fff ) to( #cecece )); 
+	background: -webkit-linear-gradient( #fff , #cecece ); 
+	background: -moz-linear-gradient( 	 #fff , #cecece ); 
+	background: -ms-linear-gradient( 	 #fff , #cecece ); 
+	background: -o-linear-gradient( 	 #fff , #cecece ); 
+	background: linear-gradient( 		 #fff , #cecece ); 	
+	
+	/* Effects */
+	-webkit-border-radius:	5px 5px 5px 5px; 
+	-moz-border-radius:		5px 5px 5px 5px; 
+	-khtml-border-radius:	5px 5px 5px 5px; 
+	border-radius:			5px 5px 5px 5px; 
+	
+	/* disable highlight text */
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select:none; 
+	user-select:none;
+	
+	position:relative;
+}
+.adc-statementList .previousStatement span,
+.adc-statementList .nextStatement span 
+{
+    text-align:center;
+}
+
+.adc-statementList .previousStatement span,
+.adc-statementList .nextStatement span,
+.adc-statementList .statement_text 
+{ 
+	display:block;
+	padding:10px;
+	font-size:12px;
+	color:#000;
+}
+.adc-statementList .statement { margin-bottom:10px; cursor:default; }
+.adc-statementList .statement img {
+	float:left;
+	display:inline-block; 
+	margin:5px 20px 5px 5px;
+}
+
+/* Reponses */
+.adc-statementList .responseItem 
+{   
+    /* Element */
+	display:block;
+	margin:0 0 5px 0;
+    vertical-align:middle;
+	cursor:pointer;
+	clear:both;
+	
+	/* Decoration */
+	border: 1px solid #000;
+	background: #fff; 
+	background: -webkit-gradient(linear, 0 0, 0 100%, from( #fff ) to( #cecece )); 
+	background: -webkit-linear-gradient( #fff , #cecece ); 
+	background: -moz-linear-gradient( 	 #fff , #cecece ); 
+	background: -ms-linear-gradient( 	 #fff , #cecece ); 
+	background: -o-linear-gradient( 	 #fff , #cecece ); 
+	background: linear-gradient( 		 #fff , #cecece ); 	
+	
+	/* Effects */
+	-webkit-border-radius:	5px 5px 5px 5px; 
+	-moz-border-radius:		5px 5px 5px 5px; 
+	-khtml-border-radius:	5px 5px 5px 5px; 
+	border-radius:			5px 5px 5px 5px; 
+	
+	/* disable highlight text */
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select:none; 
+	user-select:none;
+	
+	position:relative;
+}
+
+.adc-statementList .response_text 
+{ 
+	display:block;
+	padding:10px;
+	font-size:12px;
+	color:#000;
+}
+.adc-statementList .responseItem img {
+	display:inline-block; 
+	margin:5px;
+}
+.adc-statementList .responseItem.selected 
+{	
+    /* Decoration */	
+	background: #ff0000;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from( #ff0000 ) to( #990000 ));
+	background: -webkit-linear-gradient( #ff0000 , #990000 );
+	background: -moz-linear-gradient( 	 #ff0000 , #990000 );
+	background: -ms-linear-gradient( 	 #ff0000 , #990000 );
+	background: -o-linear-gradient( 	 #ff0000 , #990000 );
+	background: linear-gradient( 		 #ff0000 , #990000 );
+}
+.adc-statementList .responseItem.selected .response_text 
+{
+    color:#fff; 
+}
+
+.adc-statementList .Btn { 
+    /* Element */
+	display:block;
+	width:35px;
+	margin:0 0 5px 0;
+    vertical-align:middle;
+	cursor:pointer;
+	
+	/* Decoration */
+	border: 1px solid #000;
+	background: #fff; 
+	background: -webkit-gradient(linear, 0 0, 0 100%, from( #fff ) to( #cecece )); 
+	background: -webkit-linear-gradient( #fff , #cecece ); 
+	background: -moz-linear-gradient( 	 #fff , #cecece ); 
+	background: -ms-linear-gradient( 	 #fff , #cecece ); 
+	background: -o-linear-gradient( 	 #fff , #cecece ); 
+	background: linear-gradient( 		 #fff , #cecece ); 	
+	
+	/* Effects */
+	-webkit-border-radius:	5px 5px 5px 5px; 
+	-moz-border-radius:		5px 5px 5px 5px; 
+	-khtml-border-radius:	5px 5px 5px 5px; 
+	border-radius:			5px 5px 5px 5px; 
+	
+	/* disable highlight text */
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select:none; 
+	user-select:none;
+	
+	position:relative;
+}
+
+.adc-statementList .nextStatement .img { display:block; height:100%; width:100%; background:url(next.png) center left no-repeat; }
+.adc-statementList .previousStatement .img { display:block; height:100%; width:100%; background:url(prev.png) center left no-repeat; }

@@ -191,9 +191,10 @@
 			$target.addClass('selected');
 			$input.val(value);
 			
-			//if ( $('#' + iterations[currentIteration].id).val() != '' ) $container.find('.nextStatement').show();
+			if ( !autoForward ) $container.find('.nextStatement').show();
 			//if ( $container.find('.nextStatement').size() === 0 || ( $container.find('.nextStatement').size() > 0 && autoForward) ) nextIteration(); //14/05/14
-			if ( ($container.find('.nextStatement').css('display') === 'none' || $container.find('.nextStatement').size() === 0) || ( ($container.find('.nextStatement').css('display') != 'none' || $container.find('.nextStatement').size() > 0) && autoForward) ) nextIteration();
+			if ( ( ($container.find('.nextStatement').css('display') != 'none' || $container.find('.nextStatement').size() > 0) && autoForward) ) nextIteration();
+			
 		}
 
 		// Select a statement for multiple
@@ -297,7 +298,7 @@
 			}
 			if (currentIteration < (iterations.length - 1)) {
 				//if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show(options.animationSpeed);
-				if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show().css('visibility','hidden');
+				if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show().css('visibility','visible');
 			} else {
 				$container.find('.nextStatement').css('display','none');
 			}
@@ -336,7 +337,7 @@
 					left: '-=' + width,
 					width: width
 				};
-			if (currentIteration >= (iterations.length - 1)) {
+			if (currentIteration > (iterations.length - 1)) {
 				if ( options.autoForward === true ) {
 					$container.find('.statement').animate(css, options.animationSpeed);
 					$(':input[name=Next]:last').click();

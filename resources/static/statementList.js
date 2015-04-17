@@ -249,7 +249,7 @@
 			// Update the value
 			$input.val(currentValue);
 			if ( currentValue != '' ) {
-				$container.find('.nextStatement').show();
+				$container.find('.nextStatement').css('visibility','visible').show();
 				var width = initialWidth;
 				if ( $container.find('.previousStatement.top').css('display') == "block" ) {
 					width -= $container.find('.previousStatement.top').outerWidth(true);
@@ -336,7 +336,7 @@
 					left: '-=' + width,
 					width: width
 				};
-			if (currentIteration > (iterations.length - 1)) {
+			if (currentIteration >= (iterations.length - 1)) {
 				if ( options.autoForward === true ) {
 					$container.find('.statement').animate(css, options.animationSpeed);
 					$(':input[name=Next]:last').click();

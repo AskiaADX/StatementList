@@ -513,10 +513,6 @@
 					size.width  *= ratio,
 					size.height *= ratio;
 				}
-
-
-
-
 				
 			} 
 			$(this).css(size);
@@ -602,6 +598,12 @@
 			else if ( isMultiple ) {
 				if ( iterations[currentIteration].items[0].element.val() == '' ) $container.find('.nextStatement').hide();
 			}
+		}
+		
+		if ( isMultiple ) {
+			$container.find('.responseItem').each(function (index) {
+				if ( !$(this).hasClass('exclusive') ) $(this).addClass('cb');
+			});
 		}
 		
 		for ( var i=0; i<iterations.length; i++ ) {

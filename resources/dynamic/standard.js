@@ -1,4 +1,4 @@
-﻿/* standard.js */
+/* standard.js */
 $(window).load(function() {
 	$('#adc_{%= CurrentADC.InstanceId %}').adcStatementList({
 		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',
@@ -25,6 +25,7 @@ $(window).load(function() {
 		useHLayout: {%= (CurrentADC.PropValue("useHLayout") = "1") %},
 		responseWidth: '{%= CurrentADC.PropValue("responseWidth") %}',
 		responseMargin: '{%= CurrentADC.PropValue("responseMargin") %}',
+        hideNextBtn: '{%= CurrentADC.PropValue("hideNextBtn") %}',
 		{% IF CurrentADC.PropValue("useRange") = "1" Then %}
 			range: '{%= CurrentADC.PropValue("responseColourPrimary") %};{%= CurrentADC.PropValue("responseColourSecondary") %};{%= CurrentADC.PropValue("responseColourRangePrimary") %};{%= CurrentADC.PropValue("responseColourRangeSecondary") %}',
 		{% EndIF %}

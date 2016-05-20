@@ -1,4 +1,4 @@
-﻿/* standard_multiple.js */
+/* standard_multiple.js */
 
 {% 
 Dim isExclusive

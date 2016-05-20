@@ -91,6 +91,7 @@
 			showCounter = options.showCounter,
             initialWidth = $container.find('.statement').width(),
 			total_images = $container.find("img").length,
+            hideNextBtn = options.hideNextBtn,
 			images_loaded = 0;
 		
 		// Hide or show next buttons
@@ -101,7 +102,9 @@
 		if ( options.bottomButtons === 'hide both' )	  $container.find('.nextStatement:last, .previousStatement:last').remove();
 		else if ( options.bottomButtons === 'show next' ) $container.find('.previousStatement:last').remove();
 		else if ( options.bottomButtons === 'show back' ) $container.find('.nextStatement:last').remove();
-				
+		
+        if ( hideNextBtn === 'Until All items displayed' || hideNextBtn === 'Until All items answered' ) $('input[name="Next"]').hide();
+        
 		// Convert RGB to hex
 		function trim(arg) {
 			return arg.replace(/^\s+|\s+$/g, "");
@@ -190,7 +193,10 @@
 			$container.find('.selected').removeClass('selected');
 			$target.addClass('selected');
 			$input.val(value);
-			
+            
+            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').show();
+            else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').hide();
+            
 			if ( !autoForward ) $container.find('.nextStatement').show();
 			//if ( $container.find('.nextStatement').size() === 0 || ( $container.find('.nextStatement').size() > 0 && autoForward) ) nextIteration(); //14/05/14
 			if ( ( ($container.find('.nextStatement').css('display') != 'none' || $container.find('.nextStatement').size() > 0) && autoForward) ) nextIteration();
@@ -271,6 +277,9 @@
 				}
 				$container.find('.statement').css('width',width);
 			}
+
+            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').show();
+            else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').hide();
 		}
 
 		// Returns the width of the statement
@@ -324,6 +333,21 @@
 			$container.find('.statement').css('width',width).animate(css, options.animationSpeed, onAnimationComplete);
 			
 		}
+        
+        // Check all answers
+        function checkAllAnswered() {
+            var answered = 0;
+            if ( !isMultiple ) {
+                for ( i=0; i<iterations.length; i++ ) {
+                    if ( $('#' + iterations[i].id).val() !== '' ) answered++;
+                }
+            } else {
+                for ( i=0; i<iterations.length; i++ ) {
+                    if ( iterations[i].items[0].element.val() !== '' ) answered++;
+                }
+            }
+            return answered;
+        }
 
 		// Go to the next loop iteration
 		function nextIteration() {
@@ -353,6 +377,7 @@
 				}
 				return;
 			} else {
+                if ( currentIteration === (iterations.length - 1) && hideNextBtn === 'Until All items displayed' ) $('input[name=Next]').show();
 				if ( scrollToTop ) {
 					$("html, body").animate({ scrollTop: 0 }, "fast");
 				}

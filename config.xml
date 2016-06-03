@@ -7,7 +7,7 @@
   <info>
     <name>adc2-statementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -19,7 +19,9 @@
 		v1.0.10 - added horizontal layout options
 		v1.0.11 - fixed image loading glitch
 			    - updated jquery to v1.11.1
-		v1.0.12 - add option to hide next button]]></description>
+		v1.0.12 - add option to hide next button
+		v1.0.13 - disabled pressing enter when buttons are hidden
+    ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

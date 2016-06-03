@@ -103,7 +103,90 @@
 		else if ( options.bottomButtons === 'show next' ) $container.find('.previousStatement:last').remove();
 		else if ( options.bottomButtons === 'show back' ) $container.find('.nextStatement:last').remove();
 		
-        if ( hideNextBtn === 'Until All items displayed' || hideNextBtn === 'Until All items answered' ) $('input[name="Next"]').hide();
+		var m_IsPageUnLocked=false;
+		
+        function disableNext() {
+            
+            function addEvent(elem, event, fn) {
+	
+                if (typeof elem === "string") {
+                    elem = document.getElementById(elem);
+                }
+
+                function listenHandler(e) {
+                    var ret = fn.apply(this, arguments);
+                    if (ret === false) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    return(ret);
+                }
+
+                function attachHandler() {
+                    window.event.target = window.event.srcElement;
+
+                    var ret = fn.call(elem, window.event);
+
+                    if (ret === false) {
+                        window.event.returnValue = false;
+                        window.event.cancelBubble = true;
+                    }
+                    return(ret);
+                }
+
+                if (elem.addEventListener) {
+                    elem.addEventListener(event, listenHandler, false);
+                } else {
+                    elem.attachEvent("on" + event, attachHandler);
+                }
+            }
+
+            function enterKey(e) {
+                if (!e) {
+                    e = window.event;  // Get event details for IE
+                    e.which = e.keyCode; // assign which property (so rest of the code works using e.which)
+                }
+                var elt = (e.target) ? e.target : e.srcElement;
+                var key = e.which || e.keyCode;
+                if (key == 13 && elt.tagName !== "TEXTAREA" && elt.type !== "submit") {
+                    return false;
+                }
+            }
+            NavigatorHandler.keydown = function(e){
+                var event = e;
+                enterKey(event);
+                return true;
+            }
+            var elem = document.documentElement || document.body;
+            addEvent(elem,"keydown",enterKey);
+
+            m_IsPageUnLocked=false;
+
+            function verifySubmit(e){
+                if (!e)e=window.event;
+                e.returnValue=m_IsPageUnLocked;
+                return m_IsPageUnLocked;
+            }
+
+            document.documentElement.onSubmit = verifySubmit;
+            $('input[name=Next]').hide();
+            
+        }
+		
+		///Display the navigation buttons
+		function enableNext(){
+            alert("unlocked");
+			//Unlock the page
+			m_IsPageUnLocked=true;
+			//Display the button next
+			$('input[name=Next]').show();
+			document.documentElement.onSubmit="";
+		}
+        
+        if ( hideNextBtn === 'Until All items displayed' || hideNextBtn === 'Until All items answered' ) {
+            // hide next and disable pressing enter to submit form.
+            disableNext();
+        }
         
 		// Convert RGB to hex
 		function trim(arg) {
@@ -194,8 +277,11 @@
 			$target.addClass('selected');
 			$input.val(value);
             
-            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').show();
-            else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').hide();
+            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) {
+                enableNext();
+            } else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) {
+                disableNext();
+            }
             
 			if ( !autoForward ) $container.find('.nextStatement').show();
 			//if ( $container.find('.nextStatement').size() === 0 || ( $container.find('.nextStatement').size() > 0 && autoForward) ) nextIteration(); //14/05/14
@@ -278,8 +364,11 @@
 				$container.find('.statement').css('width',width);
 			}
 
-            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').show();
-            else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) $('input[name=Next]').hide();
+            if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) {
+                enableNext();
+            } else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) {
+                disableNext();
+            }
 		}
 
 		// Returns the width of the statement
@@ -377,7 +466,7 @@
 				}
 				return;
 			} else {
-                if ( currentIteration === (iterations.length - 1) && hideNextBtn === 'Until All items displayed' ) $('input[name=Next]').show();
+                if ( currentIteration === (iterations.length - 1) && hideNextBtn === 'Until All items displayed' ) enableNext();
 				if ( scrollToTop ) {
 					$("html, body").animate({ scrollTop: 0 }, "fast");
 				}

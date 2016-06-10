@@ -26,6 +26,7 @@ $(window).load(function() {
 		responseWidth: '{%= CurrentADC.PropValue("responseWidth") %}',
 		responseMargin: '{%= CurrentADC.PropValue("responseMargin") %}',
         hideNextBtn: '{%= CurrentADC.PropValue("hideNextBtn") %}',
+		disableReturn: {%= (CurrentADC.PropValue("disableReturn") = "1") %},
 		{% IF CurrentADC.PropValue("useRange") = "1" Then %}
 			range: '{%= CurrentADC.PropValue("responseColourPrimary") %};{%= CurrentADC.PropValue("responseColourSecondary") %};{%= CurrentADC.PropValue("responseColourRangePrimary") %};{%= CurrentADC.PropValue("responseColourRangeSecondary") %}',
 		{% EndIF %}

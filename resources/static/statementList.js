@@ -92,6 +92,7 @@
             initialWidth = $container.find('.statement').width(),
 			total_images = $container.find("img").length,
             hideNextBtn = options.hideNextBtn,
+			disableReturn = Boolean(options.disableReturn),
 			images_loaded = 0;
 		
 		// Hide or show next buttons
@@ -106,76 +107,78 @@
 		var m_IsPageUnLocked=false;
 		
         function disableNext() {
+			
+			if ( disableReturn ) {
             
-            function addEvent(elem, event, fn) {
+				function addEvent(elem, event, fn) {
+		
+					if (typeof elem === "string") {
+						elem = document.getElementById(elem);
+					}
 	
-                if (typeof elem === "string") {
-                    elem = document.getElementById(elem);
-                }
-
-                function listenHandler(e) {
-                    var ret = fn.apply(this, arguments);
-                    if (ret === false) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                    }
-                    return(ret);
-                }
-
-                function attachHandler() {
-                    window.event.target = window.event.srcElement;
-
-                    var ret = fn.call(elem, window.event);
-
-                    if (ret === false) {
-                        window.event.returnValue = false;
-                        window.event.cancelBubble = true;
-                    }
-                    return(ret);
-                }
-
-                if (elem.addEventListener) {
-                    elem.addEventListener(event, listenHandler, false);
-                } else {
-                    elem.attachEvent("on" + event, attachHandler);
-                }
-            }
-
-            function enterKey(e) {
-                if (!e) {
-                    e = window.event;  // Get event details for IE
-                    e.which = e.keyCode; // assign which property (so rest of the code works using e.which)
-                }
-                var elt = (e.target) ? e.target : e.srcElement;
-                var key = e.which || e.keyCode;
-                if (key == 13 && elt.tagName !== "TEXTAREA" && elt.type !== "submit") {
-                    return false;
-                }
-            }
-            NavigatorHandler.keydown = function(e){
-                var event = e;
-                enterKey(event);
-                return true;
-            }
-            var elem = document.documentElement || document.body;
-            addEvent(elem,"keydown",enterKey);
-
-            m_IsPageUnLocked=false;
-
-            function verifySubmit(e){
-                if (!e)e=window.event;
-                e.returnValue=m_IsPageUnLocked;
-                return m_IsPageUnLocked;
-            }
-
-            document.documentElement.onSubmit = verifySubmit;
+					function listenHandler(e) {
+						var ret = fn.apply(this, arguments);
+						if (ret === false) {
+							e.stopPropagation();
+							e.preventDefault();
+						}
+						return(ret);
+					}
+	
+					function attachHandler() {
+						window.event.target = window.event.srcElement;
+	
+						var ret = fn.call(elem, window.event);
+	
+						if (ret === false) {
+							window.event.returnValue = false;
+							window.event.cancelBubble = true;
+						}
+						return(ret);
+					}
+	
+					if (elem.addEventListener) {
+						elem.addEventListener(event, listenHandler, false);
+					} else {
+						elem.attachEvent("on" + event, attachHandler);
+					}
+				}
+	
+				function enterKey(e) {
+					if (!e) {
+						e = window.event;  // Get event details for IE
+						e.which = e.keyCode; // assign which property (so rest of the code works using e.which)
+					}
+					var elt = (e.target) ? e.target : e.srcElement;
+					var key = e.which || e.keyCode;
+					if (key == 13 && elt.tagName !== "TEXTAREA" && elt.type !== "submit") {
+						return false;
+					}
+				}
+				NavigatorHandler.keydown = function(e){
+					var event = e;
+					enterKey(event);
+					return true;
+				}
+				var elem = document.documentElement || document.body;
+				addEvent(elem,"keydown",enterKey);
+	
+				m_IsPageUnLocked=false;
+	
+				function verifySubmit(e){
+					if (!e)e=window.event;
+					e.returnValue=m_IsPageUnLocked;
+					return m_IsPageUnLocked;
+				}
+	
+				document.documentElement.onSubmit = verifySubmit;
+			}
             $('input[name=Next]').hide();
             
         }
 		
 		///Display the navigation buttons
 		function enableNext(){
-            alert("unlocked");
 			//Unlock the page
 			m_IsPageUnLocked=true;
 			//Display the button next
@@ -183,7 +186,7 @@
 			document.documentElement.onSubmit="";
 		}
         
-        if ( hideNextBtn === 'Until All items displayed' || hideNextBtn === 'Until All items answered' ) {
+        if ( hideNextBtn === 'Until All items displayed' || hideNextBtn === 'Until All items answered' || hideNextBtn === 'Always' ) {
             // hide next and disable pressing enter to submit form.
             disableNext();
         }

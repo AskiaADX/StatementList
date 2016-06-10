@@ -20,7 +20,7 @@
 		v1.0.11 - fixed image loading glitch
 			    - updated jquery to v1.11.1
 		v1.0.12 - add option to hide next button
-		v1.0.13 - disabled pressing enter when buttons are hidden
+		v1.0.13 - add option to disable pressing enter when buttons are hidden
     ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
@@ -142,9 +142,18 @@
         <value><![CDATA[No]]></value>
         <options>
           <option value="No" text="No" />
+		  <option value="Always" text="Always" />
           <option value="Until All items displayed" text="Until All items displayed" />
           <option value="Until All items answered" text="Until All items answered" />
         </options>
+      </property>
+	  <property xsi:type="standardProperty" id="disableReturn" name="Disable Return to Submit" type="boolean" mode="static">
+        <description><![CDATA[
+          
+	          When turned on this will disable the submission of the page when pressing return.
+			
+        ]]></description>
+        <value><![CDATA[false]]></value>
       </property>
     </category>
     <category id="buttons" name="Buttons">

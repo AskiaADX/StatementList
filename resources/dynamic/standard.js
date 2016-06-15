@@ -1,4 +1,4 @@
-/* standard.js */
+﻿/* standard.js */
 $(window).load(function() {
 	$('#adc_{%= CurrentADC.InstanceId %}').adcStatementList({
 		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',

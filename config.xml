@@ -7,7 +7,7 @@
   <info>
     <name>adc2-statementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>1.0.14</version>
+    <version>1.0.15</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -22,6 +22,7 @@
 		v1.0.12 - add option to hide next button
 		v1.0.13 - add option to disable pressing enter when buttons are hidden
 		v1.0.14 - fixed encoding of the adc file
+		v1.0.15 - fixed safari and firefox strict mode
     ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>

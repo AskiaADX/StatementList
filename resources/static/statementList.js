@@ -1,5 +1,5 @@
 (function ($) {
-	"use strict";
+	/*"use strict";*/
 
 	/**
 	* Extend the jQuery with the method adcStatementList

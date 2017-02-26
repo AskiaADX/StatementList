@@ -279,6 +279,9 @@
 			$container.find('.selected').removeClass('selected');
 			$target.addClass('selected');
 			$input.val(value);
+            if (window.askia) {
+                askia.triggerAnswer();
+            }
             
             if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) {
                 enableNext();
@@ -344,6 +347,9 @@
 
 			// Update the value
 			$input.val(currentValue);
+            if (window.askia) {
+                askia.triggerAnswer();
+            }
 			if ( currentValue != '' ) {
 				$container.find('.nextStatement').css('visibility','visible').show();
 				var width = initialWidth;

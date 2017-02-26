@@ -1,4 +1,4 @@
-﻿/* standard.js */
+/* standard.js */
 $(window).load(function() {
 	$('#adc_{%= CurrentADC.InstanceId %}').adcStatementList({
 		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',
@@ -28,7 +28,7 @@ $(window).load(function() {
         hideNextBtn: '{%= CurrentADC.PropValue("hideNextBtn") %}',
 		disableReturn: {%= (CurrentADC.PropValue("disableReturn") = "1") %},
 		{% IF CurrentADC.PropValue("useRange") = "1" Then %}
-			range: '{%= CurrentADC.PropValue("responseColourPrimary") %};{%= CurrentADC.PropValue("responseColourSecondary") %};{%= CurrentADC.PropValue("responseColourRangePrimary") %};{%= CurrentADC.PropValue("responseColourRangeSecondary") %}',
+			range: '{%= CurrentADC.PropValue("responseColourPrimary") %};{%= CurrentADC.PropValue("responseColourPrimary") %};{%= CurrentADC.PropValue("responseColourRangePrimary") %};{%= CurrentADC.PropValue("responseColourRangePrimary") %}',
 		{% EndIF %}
 		{% IF CurrentQuestion.Type = "multiple" Then %}
 			isMultiple : true,

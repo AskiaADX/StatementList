@@ -166,6 +166,7 @@ EndIF
 	text-align: {%= responseContentPosition%};
 		
 	height: {%= responseHeight%};
+    transition: background-color ease-in-out .3s, color ease-in-out .3s;
 }
 
 #adc_{%= CurrentADC.InstanceId%} .responseItem:hover
@@ -176,7 +177,7 @@ EndIF
 		border: {%= responseHoverBorderThickness%} {%= responseHoverBorderStyle%} rgb({%= responseHoverBorderColour%});
 	{% EndIF %}
 	{% IF showResponseHoverColour = "1" Then %}
-		background-color: rgb({%= responseHoverColourPrimary%});
+		background-color: rgb({%= responseHoverColourPrimary%}) !important;
 	{% EndIF %}
 	-webkit-box-shadow: {%= responseHoverShadow%};
 	-moz-box-shadow: {%= responseHoverShadow%};
@@ -214,7 +215,7 @@ EndIF
 	{% Else %}
 		border: {%= responseSelectedBorderThickness%} {%= responseSelectedBorderStyle%} rgb({%= responseSelectedBorderColour%});
 	{% EndIF %}	
-	background-color: rgb({%= responseSelectedColourPrimary%});
+	background-color: rgb({%= responseSelectedColourPrimary%}) !important;
 	
 	-webkit-box-shadow: {%= responseSelectedShadow%};
 	-moz-box-shadow: {%= responseSelectedShadow%};

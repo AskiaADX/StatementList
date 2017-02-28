@@ -430,7 +430,7 @@
       </property>
       <property xsi:type="standardProperty" id="useRange" name="Use a colour range" type="boolean" mode="static" require="false" visible="false">
         <description><![CDATA[This will create a colour range between the primary and the range primary colours]]></description>
-        <value><![CDATA[0]]></value>
+        <value><![CDATA[1]]></value>
       </property>
       <property xsi:type="standardProperty" id="responseColourRangePrimary" name="Response Background Colour Range" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Background colour of the item]]></description>

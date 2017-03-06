@@ -341,7 +341,7 @@
     <category id="statement" name="Statement">
       <property xsi:type="standardProperty" id="statementTextPadding" name="Statement Text Padding" type="string" mode="static" require="false" visible="false">
         <description><![CDATA[When set this will force the height of the statment]]></description>
-        <value><![CDATA[0.5em]]></value>
+        <value><![CDATA[0.6em]]></value>
       </property>
       <property xsi:type="standardProperty" id="statementTextLineHeight" name="Statement Text Line Height" type="string" mode="dynamic" require="false" visible="false">
         <description><![CDATA[When set this will force the height of the statment]]></description>
@@ -406,7 +406,7 @@
     <category id="responses" name="Responses">
       <property xsi:type="standardProperty" id="responseTextPadding" name="Response Text Padding" type="string" mode="static" require="false" visible="false">
         <description><![CDATA[When set this will force the height of the reponses]]></description>
-        <value><![CDATA[0.5em]]></value>
+        <value><![CDATA[0.6em]]></value>
       </property>
       <property xsi:type="standardProperty" id="responseTextLineHeight" name="Response Text Line Height" type="string" mode="static" require="false" visible="false">
         <description><![CDATA[When set this will force the height of the reponses]]></description>

@@ -1,0 +1,521 @@
+<table class="askiaadctable">
+<tbody>
+<tr>
+<td class="askiaadctdheader">Parameters</td>
+<td class="askiaadctdheader">Type</td>
+<td class="askiaadctdheader">Comments and/or possible value</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>General</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Font Size</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">14px or 1.3em etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Control Width</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">100% or 600px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Max Width</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">100% or 600px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Control Alignment</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left, Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Auto Forward</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Animate Responses</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Animation Speed</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Very Fast, Fast, Medium or Slow</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Buttons</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Top Buttons</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Hide both or Show Next or Show Back or Show Both</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Bottom Buttons</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Hide both or Show Next or Show Back or Show Both</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Border Radius</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Primary Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Secondary Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Button Array Colour</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">White or Grey or Black</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Alignment</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Text Alignment</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left or Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Text Alignment</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left or Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Alignment</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left or Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Content Position</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left or Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Image Position</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Default or Left or Right</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Counter</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Show Counter</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Count Direction</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Count Down or Count Up</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Border Radius</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Primary Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Secondary Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Padding</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">10% or 10px or 10px 0px 10px 0px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Counter Align</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Left or Center or Right</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Statement</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Text Padding</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">10px or 10px 10px or 10px 0px 10px 0px etc...</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Text Line Height</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">100% or 200px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Height</td>
+<td class="askiaadctd">Number</td>
+<td class="askiaadctd">120 or let it blank</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Font Size</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">18px or 1.3em etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Border Radius</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Statement Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Responses</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Text Padding</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">10px or 10px 10px or 10px 0px 10px 0px etc...</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Text Line Height</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">100% or 200px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Height</td>
+<td class="askiaadctd">Number</td>
+<td class="askiaadctd">120 or let it blank</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Display Response Text</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Ye sor No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Use a Colour Range</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Colour Range Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Colour Range Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Border Radius</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Show Response Hover Colour</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Show Response Hover Font Colour</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Show Response Hover Border</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Show Response Hover Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Yes or No</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Hover Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Response Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Response Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Response Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Response Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Response Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Non-Scaled Responses</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Number of Non-Scaled Responses</td>
+<td class="askiaadctd">Number</td>
+<td class="askiaadctd">0 or 1 or 2 etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Non-Scaled Response Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Colour Primary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Colour Secondary</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Font Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Border Colour</td>
+<td class="askiaadctd">Colour</td>
+<td class="askiaadctd">&nbsp;</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Border Thickness</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or 1px or 2px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Border Style</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">None or Solid or Dashed or Dotted or Double</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Selected Non-Scaled Response Drop Shadow</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">On or Off</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Images</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Max Image Width</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">blank or 100px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Max Image Height</td>
+<td class="askiaadctd">String</td>
+<td class="askiaadctd">blank or 100px etc.</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Force image size</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">No or Force width or Force height or Force both</td>
+</tr>
+<tr>
+<td class="askiaadccategory" colspan="3"><strong>Fallback</strong></td>
+</tr>
+<tr>
+<td class="askiaadctdname">Orientation</td>
+<td class="askiaadctd">Combo box</td>
+<td class="askiaadctd">Horizontal or Vertical</td>
+</tr>
+<tr>
+<td class="askiaadctdname">Image Width</td>
+<td class="askiaadctd">Number</td>
+<td class="askiaadctd">blank or 100 etc.</td>
+</tr>
+</tbody>
+</table>

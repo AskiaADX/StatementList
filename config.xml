@@ -166,7 +166,7 @@
       </property>
       <property xsi:type="standardProperty" id="buttonBorderColour" name="Button Border Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Border colour of buttons]]></description>
-        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+        <value><![CDATA[{%= Theme.PrimaryDarkColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="buttonBorderRadius" name="Button Border Radius" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The amount of curve on the buttons]]></description>
@@ -528,7 +528,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseSelectedColourPrimary" name="Selected Response Colour Primary" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Primary colour of the selected item]]></description>
-        <value><![CDATA[{%= Theme.PrimaryColor %}]]></value>
+        <value><![CDATA[{%= Theme.SecondaryColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="responseSelectedFontColour" name="Selected Response Font Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Font colour for selected responses]]></description>
@@ -536,7 +536,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseSelectedBorderColour" name="Response Border Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Border colour for selected responses]]></description>
-        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+        <value><![CDATA[{%= Theme.SecondaryDarkColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="responseSelectedBorderThickness" name="Response Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the selected responses]]></description>
@@ -614,7 +614,7 @@
       </property>
       <property xsi:type="standardProperty" id="nsResponseSelectedBorderColour" name="Selected Non-Scaled Response Border Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Border colour for selected non-scaled responses]]></description>
-        <value><![CDATA[{%= Theme.NeutralDarkColor %}]]></value>
+        <value><![CDATA[{%= Theme.PrimaryDarkColor %}]]></value>
       </property>
       <property xsi:type="standardProperty" id="nsResponseSelectedBorderThickness" name="Selected Non-Scaled Response Border Thickness" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[The thickness of the border around the selected non-scaled responses]]></description>

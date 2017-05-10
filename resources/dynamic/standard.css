@@ -206,7 +206,7 @@ EndIF
 	{% EndIF %}
 }
 
-#adc_{%= CurrentADC.InstanceId%} .responseItem.selected 
+#adc_{%= CurrentADC.InstanceId%} .responseItem.selected, #adc_{%= CurrentADC.InstanceId%} .responseItem.selected:hover 
 {	
     /* Decoration */	
 	{% IF CurrentADC.PropValue("responseSelectedBorderThickness") = "none" Then %}
@@ -266,7 +266,7 @@ EndIF
 	line-height:{%= responseTextLineHeight%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .ns.selected 
+#adc_{%= CurrentADC.InstanceId%} .ns.selected, #adc_{%= CurrentADC.InstanceId%} .ns.selected:hover 
 {	
     /* Decoration */	
 	{% IF CurrentADC.PropValue("nsResponseSelectedBorderThickness") = "none" Then %}
@@ -274,7 +274,7 @@ EndIF
 	{% Else %}
 		border: {%= nsResponseSelectedBorderThickness%} {%= nsResponseSelectedBorderStyle%} rgb({%= nsResponseSelectedBorderColour%});
 	{% EndIF %}	
-	background-color: rgb({%= nsResponseSelectedColourPrimary%});
+	background-color: rgb({%= nsResponseSelectedColourPrimary%}) !important;
 	
 	-webkit-box-shadow: {%= nsResponseSelectedShadow%};
 	-moz-box-shadow: {%= nsResponseSelectedShadow%};

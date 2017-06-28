@@ -7,8 +7,8 @@
         <div class="statement" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
         {%  Dim j
         	Dim caption
-            For j = 1 To CurrentQuestion.ParentLoop.AvailableResponses.Count
-                caption = CurrentQuestion.ParentLoop.AvailableResponses[j].Caption
+For j = 1 To CurrentQuestion.ParentLoop.Answers.Count
+                caption = CurrentQuestion.ParentLoop.Answers[j].Caption
         %}
             <span class="statement_text" data-id="{%= j %}" style="display:none;">{%:= caption %}</span>
         {% Next %}

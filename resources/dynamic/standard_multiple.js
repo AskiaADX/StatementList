@@ -1,4 +1,4 @@
-﻿/* standard_multiple.js */
+/* standard_multiple.js */
 
 {% 
 Dim isExclusive
@@ -6,7 +6,7 @@ Dim isExclusive
 Dim i 
 Dim j
 
-Dim par = CurrentQuestion.ParentLoop.AvailableResponses
+Dim par = CurrentQuestion.ParentLoop.Answers
 
 For i = 1 To par.Count 
   Dim ar  = CurrentQuestion.Iteration(par[i].Index).AvailableResponses

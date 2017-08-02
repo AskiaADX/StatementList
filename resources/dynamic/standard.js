@@ -1,6 +1,8 @@
-/* standard.js */
-$(window).load(function() {
-	$('#adc_{%= CurrentADC.InstanceId %}').adcStatementList({
+DomReady.ready(function() {
+     
+    var statementList = new StatementList({
+        instanceId : '{%= CurrentADC.InstanceId%}',
+        currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
 		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',
 		controlWidth : '{%= CurrentADC.PropValue("controlWidth") %}',
 		maxImageWidth : '{%= CurrentADC.PropValue("maxImageWidth") %}',
@@ -8,8 +10,6 @@ $(window).load(function() {
 		forceImageSize : '{%= CurrentADC.PropValue("forceImageSize") %}',
 		autoForward : {%= (CurrentADC.PropValue("autoForward") = "1") %},
 		scrollToTop : {%= (CurrentADC.PropValue("scrollToTop") = "1") %},
-		animate : {%= (CurrentADC.PropValue("animateResponses") = "1") %},
-		animationSpeed : '{%= CurrentADC.PropValue("animationSpeed") %}',
 		topButtons : '{%= CurrentADC.PropValue("topButtons") %}',
 		bottomButtons : '{%= CurrentADC.PropValue("bottomButtons") %}',
 		showCounter : {%= (CurrentADC.PropValue("showCounter") = "1") %},

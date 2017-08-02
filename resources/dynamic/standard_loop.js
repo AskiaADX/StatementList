@@ -13,5 +13,5 @@ For i = 1 To ar.Count
 	caption   = ar[i].Caption
 	resource  = ar.ResourceURL[i]
 %}
-	{caption : '{%= caption %}', element : $('#{%= inputId%}'), resource: '{%= resource %}'}{%= On(i < ar.Count, ",", "") %}
+	{caption : '{%= caption %}', element : document.getElementById('{%= inputName%}'), resource: '{%= resource %}'}{%= On(i < ar.Count, ",", "") %}
 {% Next %}

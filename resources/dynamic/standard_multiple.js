@@ -16,7 +16,7 @@ For i = 1 To par.Count
 	For j = 1 To ar.Count
 		isExclusive = ar[j].IsExclusive
 %}
-{element : $("input[name='{%= CurrentQuestion.Iteration(par[i].Index).InputName("List")%}']"), isExclusive : {%= isExclusive%}}{%= On(j < ar.Count, ",", "") %}
+{element : document.querySelector("input[name='{%= CurrentQuestion.Iteration(par[i].Index).InputName("List")%}']"), isExclusive : {%= isExclusive%}}{%= On(j < ar.Count, ",", "") %}
 {% Next %}
 	]}{%= On(i < par.Count, ",", "") %}
 {% Next %}

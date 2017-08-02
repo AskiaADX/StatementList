@@ -1,13 +1,13 @@
-<div class="controlContainer" style="visibility: hidden;">
+<div class="controlContainer">
     <div id="adc_{%= CurrentADC.InstanceId %}" class="adc-statementList">
         {% IF CurrentADC.PropValue("showCounter") = "1" Then %}
             <div class="counterContainer" unselectable='on' onselectstart='return false;' onmousedown='return false;'><div class="counter"><div class="counterNumber"></div></div></div>
         {% EndIF %}
         <div class="previousStatement Btn top" style="display:none;" unselectable='on' onselectstart='return false;' onmousedown='return false;'><div class="img"></div></div>
-        <div class="statement" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+        <div class="statement animate" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
         {%  Dim j
         	Dim caption
-For j = 1 To CurrentQuestion.ParentLoop.Answers.Count
+            For j = 1 To CurrentQuestion.ParentLoop.Answers.Count
                 caption = CurrentQuestion.ParentLoop.Answers[j].Caption
         %}
             <span class="statement_text" data-id="{%= j %}" style="display:none;">{%:= caption %}</span>

@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -23,7 +23,8 @@
 		v1.0.13 - add option to disable pressing enter when buttons are hidden
 		v1.0.14 - fixed encoding of the adc file
 		v1.0.15 - fixed safari and firefox strict mode
-		v2.0.0 - Theme implementation]]></description>
+		v2.0.0 - Theme implementation
+		v2.0.1 - PureJS version]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -48,17 +49,12 @@
       <content fileName="standard_multiple.html" type="html" mode="dynamic" position="none" />
       <content fileName="es5-shim.min.js" type="javascript" mode="share" position="head">
         <yield><![CDATA[
-          
           <!--[if lt IE 10]>
             <script type="text/javascript" src="{%= CurrentADC.URLTo("share/es5-shim.min.js") %}"></script>
           <![endif]-->
-          
         ]]></yield>
       </content>
-      <content fileName="jquery-1.11.1.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery-ui-1.10.4.custom.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery.ui.touch-punch.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery.transit.min.js" type="javascript" mode="share" position="head" />
+      <content fileName="domready.js" type="javascript" mode="share" position="head" />
       <content fileName="rainbowvis.js" type="javascript" mode="share" position="head" />
       <content fileName="statementList.js" type="javascript" mode="static" position="head" />
       <content fileName="standard.js" type="javascript" mode="dynamic" position="foot" />
@@ -113,20 +109,6 @@
       <property xsi:type="standardProperty" id="scrollToTop" name="Scroll To Top" type="boolean" mode="static" require="false" visible="true">
         <description><![CDATA[When true will scroll the screen to the top once a response is selected]]></description>
         <value><![CDATA[0]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="animateResponses" name="Animate Responses" type="boolean" mode="static" require="false" visible="true">
-        <description><![CDATA[Whether the resonses fly into the screen]]></description>
-        <value><![CDATA[0]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="animationSpeed" name="Animation Speed" type="string" mode="static" require="false" visible="true">
-        <description><![CDATA[Speed of the animation]]></description>
-        <value><![CDATA[fast]]></value>
-        <options>
-          <option value="very fast" text="Very Fast" />
-          <option value="fast" text="Fast" />
-          <option value="medium" text="Medium" />
-          <option value="slow" text="Slow" />
-        </options>
       </property>
       <property xsi:type="standardProperty" id="hideNextBtn" name="Hide Next Button" type="string" mode="static" require="false" visible="true">
         <description><![CDATA[Hide the next button]]></description>
@@ -201,9 +183,7 @@
     <category id="alignment" name="Alignment">
       <property xsi:type="standardProperty" id="statementTextAlign" name="Statement Text Alignment" type="string" mode="static">
         <description><![CDATA[
-          
 	          Set alignment for text in the statement
-	        
         ]]></description>
         <value><![CDATA[left]]></value>
         <options>
@@ -214,9 +194,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseTextAlign" name="Response Text Alignment" type="string" mode="static">
         <description><![CDATA[
-          
 	          The alignment of the text in the responses
-	        
         ]]></description>
         <value><![CDATA[left]]></value>
         <options>
@@ -227,9 +205,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseAlign" name="Response Alignment" type="string" mode="static">
         <description><![CDATA[
-          
 	          Set alignment of responses
-	        
         ]]></description>
         <value><![CDATA[left]]></value>
         <options>
@@ -240,9 +216,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseContentPosition" name="Response Content Position" type="string" mode="static">
         <description><![CDATA[
-          
 	          Set position for response content
-	        
         ]]></description>
         <value><![CDATA[left]]></value>
         <options>
@@ -253,9 +227,7 @@
       </property>
       <property xsi:type="standardProperty" id="responseImagePosition" name="Response Image Position" type="string" mode="static">
         <description><![CDATA[
-          
 	          Set position for images in responses in relation to text
-	        
         ]]></description>
         <value><![CDATA[right]]></value>
         <options>
@@ -643,25 +615,19 @@
     <category id="images" name="Images">
       <property xsi:type="standardProperty" id="maxImageWidth" name="Max Image Width" type="number" mode="static">
         <description><![CDATA[
-          
 	          Set max image width
-			
         ]]></description>
         <value><![CDATA[100px]]></value>
       </property>
       <property xsi:type="standardProperty" id="maxImageHeight" name="Max Image Height" type="number" mode="static">
         <description><![CDATA[
-          
 	          Set max image height
-			
         ]]></description>
         <value><![CDATA[100px]]></value>
       </property>
       <property xsi:type="standardProperty" id="forceImageSize" name="Force image size" type="string" mode="static">
         <description><![CDATA[
-          
 	          Force height or width for all images
-	        
         ]]></description>
         <value><![CDATA[width]]></value>
         <options>
@@ -675,9 +641,7 @@
     <category id="fallback" name="Fallback">
       <property xsi:type="standardProperty" id="orientation" name="Orientation" type="string" mode="static">
         <description><![CDATA[
-          
 	          Response block orientation
-	        
         ]]></description>
         <value><![CDATA[horizontal]]></value>
         <options>
@@ -687,9 +651,7 @@
       </property>
       <property xsi:type="standardProperty" id="fbImageWidth" name="Image Width" type="number" mode="static">
         <description><![CDATA[
-          
 	          Set image width for fallback
-			
         ]]></description>
         <value><![CDATA[100]]></value>
       </property>

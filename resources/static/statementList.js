@@ -1,110 +1,269 @@
-(function ($) {
-	/*"use strict";*/
+(function () {
+	
+    // Polyfill: Add a getElementsByClassName function IE < 9
+    function polyfillGetElementsByClassName() {
+        if (!document.getElementsByClassName) {
+            document.getElementsByClassName = function(search) {
+                var d = document, elements, pattern, i, results = [];
+                if (d.querySelectorAll) { // IE8
+                    return d.querySelectorAll("." + search);
+                }
+                if (d.evaluate) { // IE6, IE7
+                    pattern = ".//*[contains(concat(' ', @class, ' '), ' " + search + " ')]";
+                    elements = d.evaluate(pattern, d, null, 0, null);
+                    while ((i = elements.iterateNext())) {
+                        results.push(i);
+                    }
+                } else {
+                    elements = d.getElementsByTagName("*");
+                    pattern = new RegExp("(^|\\s)" + search + "(\\s|$)");
+                    for (var j = 0, l = elements.length; j < l; j++) {
+                        if ( pattern.test(elements[j].className) ) {
+                            results.push(elements[j]);
+                        }
+                    }
+                }
+                return results;
+            };
+        }
+	}
+    
+    function hasClass(el, className) {
+        return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+	}
 
-	/**
-	* Extend the jQuery with the method adcStatementList
-	* Should be call on the container of the statement list
-	* 
-	*     // Single closed question
-	*     $('#adc_1').adcStatementList({
-	*         iterations : [
-	*           { id : 'U1', caption : "Iteration 1" },
-	*           { id : 'U3', caption : "Iteration 2" },
-	*           { id : 'U5', caption : "Iteration 3" }
-	*         ]
-	*     });
-	*
-	*     // Multi-coded question
-	*     $('#adc_1').adcStatementList({
-	*         isMultiple : true,
-	*         iterations : [
-	*           { id : 'L1', caption : "Iteration 1" },
-	*           { id : 'L3', caption : "Iteration 2" },
-	*           { id : 'L5', caption : "Iteration 3" }
-	*         ]
-	*     });
-	*
-	* @param {Object} options Statements list parameters
-	* @param {Array}  options.iterations Array which contains the definition of iterations
-	* @param {String} options.iterations[].id Id or name of the input which contains the value of the current iteration
-	* @param {String} options.iterations[].caption Caption of the current iteration
-	* @param {Boolean} [options.isMultiple] Indicates if the question is multiple
-	* @return {jQuery} Returns the current instance of the root container for the call chains
-	*/
-	$.fn.adcStatementList = function adcStatementList(options) {
-		// Verify if the options are correct
-		// Require key:iterations (array)
-		if (!options || !options.iterations || !options.iterations.length) {
-			throw new Error('adcStatementList expect an option argument with an array of iterations');
-		}
-		
+	function addClass(el, className) {
+        if (el.classList) el.classList.add(className);
+        else if (!hasClass(el, className)) el.className += ' ' + className;
+	}
+
+	function removeClass(el, className) {
+        if (el.classList) el.classList.remove(className);
+        else el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
+	}
+    
+    function StatementsList(options) {
+        this.instanceId = options.instanceId || 1;
+        var container = document.getElementById("adc_" + this.instanceId),
+            images = [].slice.call(container.getElementsByTagName("img")),
+        	total_images = container.getElementsByTagName("img").length;
+        
+        function loadImages( images, callback ) {
+            var count = 0;
+
+            function check( n ) {
+                if( n == total_images ) {
+                    callback();
+                }
+            }
+
+            for( i = 0; i < total_images; ++i ) {
+                var src = images[i].src;
+                var img = document.createElement( "img" );
+                img.src = src;
+
+                img.addEventListener( "load", function() {
+                    if( this.complete ) {
+                        count++;
+                        check( count );
+                    }
+                });
+            }
+        }
+        
+        window.addEventListener( "load", function() {
+            if ( total_images > 0 ) {
+                loadImages( images, function() {
+                    init(options);
+                });
+            } else {
+                init(options);
+            }
+        });
+        
+    }
+   
+    function init(options) {
+
+        this.options = options;
+        this.instanceId = options.instanceId || 1;
 		(options.autoForward = Boolean(options.autoForward) || false);
 		(options.scrollToTop = Boolean(options.scrollToTop) || false);
 		(options.useRange = Boolean(options.useRange));
 		(options.showCounter = Boolean(options.showCounter) || false);
         (options.currentQuestion = options.currentQuestion || '');
-				
-		// Delegate .transition() calls to .animate() if the browser can't do CSS transitions.
-		if (!$.support.transition) $.fn.transition = $.fn.animate;
-				
-		$(this).css({'max-width':options.maxWidth,'width':options.controlWidth});
-		$(this).parents('.controlContainer').css({'width':'100%','overflow':'hidden'});
-		
-		if ( options.controlAlign === "center" ) {
-			$(this).parents('.controlContainer').css({'text-align':'center'});
-			$(this).css({'margin':'0px auto'});
-		} else if ( options.controlAlign === "right" ) {
-			$(this).css({'margin':'0 0 0 auto'});
-		}
-		
-		// IE8 and below fix
-		if (!Array.prototype.indexOf) {
-			
-		  Array.prototype.indexOf = function(elt /*, from*/) {
-			var len = this.length >>> 0;
-		
-			var from = Number(arguments[1]) || 0;
-			from = (from < 0)
-				 ? Math.ceil(from)
-				 : Math.floor(from);
-			if (from < 0)
-			  from += len;
-		
-			for (; from < len; from++) {
-			  if (from in this && this[from] === elt)
-				return from;
-			}
-			return -1;
-		  };
-		}
-		
-		// Global variables
-		var $container = $(this),
+        
+        polyfillGetElementsByClassName();
+        
+        var container = document.getElementById("adc_" + this.instanceId),
+            responseItems =  [].slice.call(container.getElementsByClassName('responseItem')),
+            images = [].slice.call(container.getElementsByTagName("img")),
+			inputs = [].slice.call(document.getElementsByTagName("input")),
+            submitBtns = [],
+            nextBtn,
+        	isMultiple = Boolean(options.isMultiple),
 			currentIteration = 0,
             iterations = options.iterations,
-            isMultiple = Boolean(options.isMultiple),
-			useAltColour = Boolean(options.useAltColour),
+            useAltColour = Boolean(options.useAltColour),
 			useHLayout = Boolean(options.useHLayout),
 			responseWidth = options.responseWidth,
 			responseMargin = options.responseMargin,
 			autoForward = options.autoForward,
 			scrollToTop = options.scrollToTop,
 			showCounter = options.showCounter,
-            initialWidth = $container.find('.statement').width(),
-			total_images = $container.find("img").length,
+            initialWidth = container.clientWidth,
             hideNextBtn = options.hideNextBtn,
-			disableReturn = Boolean(options.disableReturn),
-			images_loaded = 0;
+			disableReturn = Boolean(options.disableReturn);
+        
+        if (!options || !options.iterations || !options.iterations.length) {
+			throw new Error('adcStatementList expect an option argument with an array of iterations');
+		}
+        
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type.toLowerCase() === 'submit') {
+               submitBtns.push(inputs[i]);
+            }
+        }
+        nextBtn = submitBtns[submitBtns.length-2];
+        
+        container.style.maxWidth = options.maxWidth;
+        container.style.width = options.controlWidth;
+        container.parentNode.style.width = '100%';
+        container.parentNode.style.overflow = 'hidden';
 		
-		// Hide or show next buttons
-		if ( options.topButtons === 'hide both' && !(isMultiple && options.bottomButtons === 'hide both') ) $container.find('.nextStatement:first, .previousStatement:first').remove();
-		else if ( options.topButtons === 'show next' && !(isMultiple && options.bottomButtons === 'hide both') )  $container.find('.previousStatement:first').remove();
-		else if ( options.topButtons === 'show back' )  $container.find('.nextStatement:first').remove();
+		if ( options.controlAlign === "center" ) {
+            container.parentNode.style.textAlign = 'center';
+            container.style.margin = '0px auto';
+		} else if ( options.controlAlign === "right" ) {
+            container.style.margin = '0 0 0 auto';
+		}
 		
-		if ( options.bottomButtons === 'hide both' )	  $container.find('.nextStatement:last, .previousStatement:last').remove();
-		else if ( options.bottomButtons === 'show next' ) $container.find('.previousStatement:last').remove();
-		else if ( options.bottomButtons === 'show back' ) $container.find('.nextStatement:last').remove();
-		
+        // Check for missing images and resize
+        for ( i=0; i<images.length; i++) {
+            var size = {
+                width: images[i].width,
+                height: images[i].height
+            };
+			var ratio;
+
+            if (options.forceImageSize === "height" ) {
+                if ( size.height > parseInt(options.maxImageHeight,10) ) {
+                    ratio = ( parseInt(options.maxImageHeight,10) / size.height);
+                    size.height *= ratio;
+                    size.width  *= ratio;
+                }
+            } else if (options.forceImageSize === "width" ) {
+                if ( size.width > parseInt(options.maxImageWidth,10) ) {
+                    ratio = ( parseInt(options.maxImageWidth,10) / size.width);
+                    size.width  *= ratio;
+                    size.height *= ratio;
+                }
+            } else if (options.forceImageSize === "both" ) {
+                if ( parseInt(options.maxImageHeight,10) > 0 && size.height > parseInt(options.maxImageHeight,10) ) {
+                    ratio = ( parseInt(options.maxImageHeight,10) / size.height);
+                    size.height *= ratio;
+                    size.width  *= ratio;
+                }
+
+                if ( parseInt(options.maxImageWidth,10) > 0 && size.width > parseInt(options.maxImageWidth,10) ) {
+                    ratio = ( parseInt(options.maxImageWidth,10) / size.width);
+                    size.width  *= ratio;
+                    size.height *= ratio;
+                }
+
+            } 
+            images[i].width = size.width;
+            images[i].height = size.height;
+        }
+
+        // If image align is center
+        if (options.imageAlign === "center") {
+            for ( i=0; i<images.length; i++) {
+                images[i].style.marginLeft = 'auto';
+                images[i].style.marginRight = 'auto';
+            }
+            for ( i=0; i<responseItems.length; i++) {
+                responseItems[i].style.textAlign = 'center';
+            }
+        }
+
+        // add ns to last x items
+		var nsItems;
+        if ( options.numberNS > 0 ) {
+            nsItems = responseItems.slice(-options.numberNS);
+            for ( i=0; i<nsItems.length; i++) {
+                addClass(nsItems[i], 'ns');
+                nsItems[i].style.filter = '';
+            }
+        }
+
+        // Use range if on
+        if ( options.useRange ) {
+            var maxNumber = responseItems.length - options.numberNS,
+                rangeArray = options.range.split(';');
+            var rainbow1 = new Rainbow();
+                rainbow1.setSpectrum(processRgb(rangeArray[0]), processRgb(rangeArray[2]));
+                rainbow1.setNumberRange(0, maxNumber);
+            var rainbow2 = new Rainbow();
+                rainbow2.setSpectrum(processRgb(rangeArray[1]), processRgb(rangeArray[3]));
+                rainbow2.setNumberRange(0, maxNumber);
+            
+            nsItems = responseItems.slice(0, (options.numberNS > 0) ? 0-options.numberNS : responseItems.length);
+            for ( i=0; i<nsItems.length; i++) {
+                if ( options.rangeGradientDirection === 'ltr' ) { 
+                    nsItems[i].style.backgroundColor = '#'+rainbow1.colourAt(i);
+                    addClass( nsItems[i], 'active' );
+                    removeClass( nsItems[i], 'active' );
+                } else {
+                    nsItems[i].style.backgroundColor = '#'+rainbow2.colourAt(i);
+                    addClass( nsItems[i], 'active' );
+                    removeClass( nsItems[i], 'active' );
+                }
+            }
+        }
+        
+        // Hide or show next buttons
+        var el,
+            nextStatements = [].slice.call(container.getElementsByClassName( 'nextStatement' )),
+            prevStatements = [].slice.call(container.getElementsByClassName( 'previousStatement' )),
+            statementTexts = [].slice.call(container.getElementsByClassName( 'statement_text' ));
+        
+		if ( options.topButtons === 'hide both' && !(isMultiple && options.bottomButtons === 'hide both') ) {
+            el = nextStatements[0];
+			el.parentNode.removeChild( el );
+            el = prevStatements[0];
+			el.parentNode.removeChild( el );
+        }
+        else if ( options.topButtons === 'show next' && !(isMultiple && options.bottomButtons === 'hide both') ) 
+        {
+            el = prevStatements[0];
+			el.parentNode.removeChild( el );
+        }
+        else if ( options.topButtons === 'show back' )
+        {
+            el = nextStatements[0];
+			el.parentNode.removeChild( el );
+        }
+        nextStatements = [].slice.call(container.getElementsByClassName( 'nextStatement' ));
+        prevStatements = [].slice.call(container.getElementsByClassName( 'previousStatement' ));
+        
+        if ( options.bottomButtons === 'hide both' ) {
+            el = nextStatements[nextStatements.length - 1];
+			el.parentNode.removeChild( el );
+            el = prevStatements[prevStatements.length - 1];
+			el.parentNode.removeChild( el );
+        }
+		else if ( options.bottomButtons === 'show next' ) {
+            el = prevStatements[prevStatements.length - 1];
+			el.parentNode.removeChild( el );
+        }
+		else if ( options.bottomButtons === 'show back' ) {
+            el = nextStatements[nextStatements.length - 1];
+			el.parentNode.removeChild( el );
+        }
+        nextStatements = [].slice.call(container.getElementsByClassName( 'nextStatement' ));
+        prevStatements = [].slice.call(container.getElementsByClassName( 'previousStatement' ));
+
 		var m_IsPageUnLocked=false;
 		
         function disableNext() {
@@ -160,7 +319,7 @@
 					var event = e;
 					enterKey(event);
 					return true;
-				}
+				};
 				var elem = document.documentElement || document.body;
 				addEvent(elem,"keydown",enterKey);
 	
@@ -174,7 +333,7 @@
 	
 				document.documentElement.onSubmit = verifySubmit;
 			}
-            $('input[name=Next]').hide();
+            container.querySelector('input[name=Next]').style.display = "none";
             
         }
 		
@@ -183,7 +342,7 @@
 			//Unlock the page
 			m_IsPageUnLocked=true;
 			//Display the button next
-			$('input[name=Next]').show();
+            container.querySelector('input[name=Next]').style.display = "";
 			document.documentElement.onSubmit="";
 		}
         
@@ -220,67 +379,79 @@
 		}
 		
 		// For multi-coded question
-		// Add the @valueToAdd in @currentValue (without duplicate)
-		// and return the new value
-		function addValue(currentValue, valueToAdd) {
-			if (currentValue == '') {
-				return valueToAdd;
-			}
+        // Add the @valueToAdd in @currentValue (without duplicate)
+        // and return the new value
+        function addValue(currentValue, valueToAdd) {
+            
+            if (currentValue === '' || currentValue === null) {
+                return valueToAdd;
+            }
+            var arr = String(currentValue).split(','), i, l, wasFound = false;
+                for (i = 0, l = arr.length; i < l; i += 1) {
+                if (arr[i] === valueToAdd) {
+                    wasFound = true;
+                    break;
+                }
+            }
+            if (!wasFound) {
+                currentValue += ',' + valueToAdd;
+            }
+            return currentValue;
+        }
 
-			var arr = String(currentValue).split(','), i, l, wasFound = false;
-
-			for (i = 0, l = arr.length; i < l; i += 1) {
-				if (arr[i] == valueToAdd) {
-					wasFound = true;
-					break;
-				}
-			}
-
-			if (!wasFound) {
-				currentValue += ',' + valueToAdd;
-			}
-			return currentValue;
-		}
-
-		// For multi-coded question
-		// Remove the @valueToRemove from the @currentValue
-		// and return the new value
-		function removeValue(currentValue, valueToRemove) {
-			if (currentValue === '') {
-				return currentValue;
-			}
-			var arr = String(currentValue).split(','),
-                        i, l,
-                        newArray = [];
-			for (i = 0, l = arr.length; i < l; i += 1) {
-				if (arr[i] != valueToRemove) {
-					newArray.push(arr[i]);
-				}
-			}
-			currentValue = newArray.join(',');
-			return currentValue;
-		}
+        // For multi-coded question
+        // Remove the @valueToRemove from the @currentValue
+        // and return the new value
+        function removeValue(currentValue, valueToRemove) {
+            if (currentValue === '' || currentValue === null) {
+                return currentValue;
+            }
+            var arr = String(currentValue).split(','), i, l, newArray = [];
+            for (i = 0, l = arr.length; i < l; i += 1) {
+                if (arr[i] !== valueToRemove) {
+                    newArray.push(arr[i]);
+                }
+            }
+            currentValue = newArray.join(',');
+            return currentValue;
+        }
+        
+        function addEvent(el, type, handler) {
+            if (el.attachEvent) el.attachEvent('on'+type, handler); else el.addEventListener(type, handler);
+        }
+        function removeEvent(el, type, handler) {
+            if (el.detachEvent) el.detachEvent('on'+type, handler); else el.removeEventListener(type, handler);
+        }
 						
 		// Select a statement for single
 		// @this = target node
-		function selectStatementSingle() {
+		function selectStatementSingle(target) {
 					
 			// hide error
-			$('.error, #error-summary').hide();
+            if ( container.querySelector('.error') ){
+                container.querySelector('.error').style.display = "none";
+            	container.querySelector('#error-summary').style.display = "none";
+            }
 			
 			// disable clicking during animation
-			if ( autoForward ) $container.off('click', '.responseItem');
-			//$container.off('click', '.previousStatement');
-			//$container.off('click', '.nextStatement');
-	
-			var $input = $('#' + iterations[currentIteration].id),
-				$target = $(this),
-				value = $target.data('value');
+			if ( autoForward ) {
+                for ( i=0; i<responseItems.length; i++ ) {
+                    removeEvent(responseItems[i], 'click');
+                }
+            }
 
-			$container.find('.selected').removeClass('selected');
-			$target.addClass('selected');
-			$input.val(value);
-            if (window.askia 
+            var input = iterations[currentIteration].id,
+                value = target.getAttribute('data-value'),
+                selectedElements = [].slice.call(container.getElementsByClassName('selected'));
+            
+            for ( i=0; i<selectedElements.length; i++) {
+                removeClass(selectedElements[i], 'selected');
+            }
+            
+            addClass(target, 'selected');
+            input.value = value;
+            
+             if (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0
                 && window.arrLiveRoutingShortcut.indexOf(options.currentQuestion) >= 0) {
@@ -293,137 +464,160 @@
                 disableNext();
             }
             
-			if ( !autoForward ) $container.find('.nextStatement').show();
-			//if ( $container.find('.nextStatement').size() === 0 || ( $container.find('.nextStatement').size() > 0 && autoForward) ) nextIteration(); //14/05/14
-			if ( ( ($container.find('.nextStatement').css('display') != 'none' || $container.find('.nextStatement').size() > 0) && autoForward) ) nextIteration();
-			
+            if ( !autoForward ) {
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "";
+                }
+            }
+            
+            if ( (nextStatements[0].style.display != "none" || nextStatements.length > 0) && autoForward ) {
+            	nextIteration();
+            }
+            
 		}
-
+                                
 		// Select a statement for multiple
 		// @this = target node
-		function selectStatementMulitple() {
-						
-			// hide error
-			$('.error, #error-summary').hide();
-			
-			// disable clicking during animation
-			var $target = $(this),
-				value = $target.data('value'),
-				$input = iterations[currentIteration].items[$target.data('id')].element,
-				isExclusive = Boolean(iterations[currentIteration].items[$target.data('id')].isExclusive),
-				currentValue = $input.val();
+		function selectStatementMulitple(target) {
 
-			if ($target.hasClass('selected')) {
-				// Un-select
+            // hide error
+            if ( container.querySelector('.error') ){
+                container.querySelector('.error').style.display = "none";
+            	container.querySelector('#error-summary').style.display = "none";
+            }
+                                
+            var value = target.getAttribute('data-value'),
+                 input = iterations[currentIteration].items[target.getAttribute('data-id')].element,
+                 isExclusive = Boolean(iterations[currentIteration].items[target.getAttribute('data-id')].isExclusive),
+                 currentValue = input.value;
+                           
+            if (hasClass(target, 'selected')) {
+                // Un-select
+                removeClass(target, 'selected');
+                currentValue = removeValue(currentValue, value);               
+                                
+           } else {
 
-				$target.removeClass('selected');
-				//$input.prop('checked', false);
-				currentValue = removeValue(currentValue, value);
-				
-			} else {
-
-				// Select
-
+				// Select       
 				if (!isExclusive) {
-					
-					// Check if any exclusive
-					
+
+                    // Check if any exclusive
 					currentValue = addValue(currentValue, value);
-					//$input.prop('checked', true);
-
-					// Un-select all exclusives
-					$container.find('.exclusive').each(function forEachExclusives() {
-						$(this).removeClass('selected');
-						//$input.prop('checked', false);
-						currentValue = removeValue(currentValue, $(this).attr('data-value'));
-					});
-					//$('input[name^="' + iterations[currentIteration].id + ' "].exclusive').prop('checked', false);
-
+                    
+                    // Un-select all exclusives
+                    var exclusiveElements = [].slice.call(container.getElementsByClassName('exclusive'));
+                    
+                    for ( i=0; i<exclusiveElements.length; i++) {
+                        removeClass(exclusiveElements[i], 'selected');
+                        currentValue = removeValue(currentValue, exclusiveElements[i].getAttribute('data-value'));
+                    }
+               
 				} else {
 
 					// When exclusive un-select all others
-					//$('input[name^="' + iterations[currentIteration].id + ' "]').prop('checked', false);
-					$container.find('.selected').removeClass('selected');
+                    var selectedElements = [].slice.call(container.getElementsByClassName('selected'));
+                    for ( i=0; i<selectedElements.length; i++) {
+                        removeClass(selectedElements[i], 'selected');
+                    }
 					currentValue = value;
 				}
-				$target.addClass('selected');
+				addClass(target, 'selected');
 			}
-
-			// Update the value
-			$input.val(currentValue);
+            
+            // Update the value
+			input.value = currentValue;
+            
             if (window.askia 
                 && window.arrLiveRoutingShortcut 
                 && window.arrLiveRoutingShortcut.length > 0
                 && window.arrLiveRoutingShortcut.indexOf(options.currentQuestion) >= 0) {
                 askia.triggerAnswer();
             }
-			if ( currentValue != '' ) {
-				$container.find('.nextStatement').css('visibility','visible').show();
-				var width = initialWidth;
-				if ( $container.find('.previousStatement.top').css('display') == "block" ) {
-					width -= $container.find('.previousStatement.top').outerWidth(true);
-				}
-				if ( $container.find('.nextStatement.top').css('display') == "block" ) {
-					width -= $container.find('.nextStatement.top').outerWidth(true);
-				}
-				$container.find('.statement').css('width',width);
-			}
-			else {
-				$container.find('.nextStatement').hide();
-				var width = initialWidth;
-				if ( $container.find('.previousStatement.top').css('display') == "block" ) {
-					width -= $container.find('.previousStatement.top').outerWidth(true);
-				}
-				if ( $container.find('.nextStatement.top').css('display') == "block" ) {
-					width -= $container.find('.nextStatement.top').outerWidth(true);
-				}
-				$container.find('.statement').css('width',width);
-			}
-
+            
+            if ( currentValue != '' ) {
+                
+                for ( i=0; i<nextStatements.length; i++ ) {
+                	nextStatements[i].style.visibility = "visible";
+                    nextStatements[i].style.display = "";
+                }
+                
+			} else {
+                
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "none";
+                }
+                
+            }
+            var width = initialWidth;
+            if ( container.querySelector('.previousStatement.top').style.display == "" ) {
+            	width -= outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'));
+            }
+            if ( container.querySelector('.nextStatement.top').style.display == "" ) {
+            	width -= outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'));
+            }
+            container.querySelector('.statement').style.width =  width + "px";
+                
             if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) {
                 enableNext();
             } else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) {
                 disableNext();
             }
 		}
-
-		// Returns the width of the statement
+        
+        // Returns the width of the statement
 		// according if the iteration is the first or the last
 		function getStatementWidth() {
-			var width = initialWidth;
-			if (currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both') {
-				width -= $container.find('.previousStatement.top').outerWidth(true);
-			}
-			if (currentIteration < (iterations.length - 1) || options.topButtons != 'hide both') {
-				width -= $container.find('.nextStatement.top').outerWidth(true);
-			}
-			return width;
-		}
 
-		// Update the navigation
+            var width = container.clientWidth,
+                btnWidth = outerWidth(container.querySelector('.previousStatement.top')) > outerWidth(container.querySelector('.nextStatement.top')) ?
+                	( outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top')) ) :
+            		( outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top')) );
+            if ( currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both' ) {
+            	width -= btnWidth;
+            }
+			if (currentIteration < (iterations.length - 1) || options.topButtons != 'hide both') {
+				width -= btnWidth;
+			}
+            return width;
+		}
+        
+        // Update the navigation
 		// Hide or display the button 
 		// if the iteration is the first or last
 		function updateNavigation() {
 			if (currentIteration > 0 && iterations.length > 0) {
-				if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.previousStatement').show(options.animationSpeed);
+				if (options.topButtons !== 'hide both' || options.bottomButtons !== 'hide both') {
+                    for ( i=0; i<prevStatements.length; i++ ) {
+                        prevStatements[i].style.display = "";
+                    }
+                }
 			} else {
-				//$container.find('.previousStatement').hide(0);
-				$container.find('.previousStatement').css('display','none');
+				for ( i=0; i<prevStatements.length; i++ ) {
+                    prevStatements[i].style.display = "none";
+                }
 			}
 			if (currentIteration < (iterations.length - 1)) {
-				//if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show(options.animationSpeed);
-				if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show().css('visibility','visible');
+				if (options.topButtons !== 'hide both' || options.bottomButtons !== 'hide both') {
+                    for ( i=0; i<nextStatements.length; i++ ) {
+                        nextStatements[i].style.visibility = "visible";
+                        nextStatements[i].style.display = "";
+                    }
+                }
 			} else {
-				$container.find('.nextStatement').css('display','none');
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "none";
+                }
 			}
 		}
-
-		// Go to the previous loop iteration
+        
+        // Go to the previous loop iteration
 		function previousIteration() {
-			
-			$container.off('click', '.responseItem');
-			
-			if (currentIteration <= 0) {
+            
+            for ( i=0; i<responseItems.length; i++ ) {
+                removeEvent(responseItems[i], 'click');
+            }
+            
+            if (currentIteration <= 0) {
 				return;
 			}
 			currentIteration--;
@@ -435,8 +629,57 @@
 					width: width
 				};
 			updateNavigation();
-			$container.find('.statement').css('width',width).animate(css, options.animationSpeed, onAnimationComplete);
-			
+            container.querySelector('.statement').style.width =  width + "px";
+            //$container.find('.statement').css('width',width).animate(css, options.animationSpeed, onAnimationComplete);
+                        var leftPos = container.querySelector('.statement').style.left;
+                    container.querySelector('.statement').style.left = -outerWidth(container) + "px";
+                    
+                    setTimeout( function() {
+                        container.querySelector('.statement').style.left = leftPos + "px";
+                        container.querySelector('.statement').style.width = css.width + "px";
+            container.querySelector('.statement').style.opacity = 0;
+            container.querySelector('.statement').style.width = css.width + "px";
+            onAnimationComplete();
+                    }, 500);
+            
+		} 
+        
+        function scrollTo(element, to, duration) {
+            if (duration <= 0) return;
+            var difference = to - element.scrollTop;
+            var perTick = difference / duration * 10;
+
+            setTimeout(function() {
+                element.scrollTop = element.scrollTop + perTick;
+                if (element.scrollTop === to) return;
+                scrollTo(element, to, duration - 10);
+            }, 10);
+        }
+		
+		function tbBorder(el) {
+			var margin = el.offsetHeight - el.clientHeight;
+			return margin;
+		}
+		
+		function lrBorder(el) {
+			var margin = el.offsetWidth - el.clientWidth;
+			return margin;
+		}
+		
+		function outerHeight(el) {
+		  var height = el.offsetHeight;
+		  var style = el.currentStyle || getComputedStyle(el);
+
+		  height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+		  return height;
+		}
+		
+		function outerWidth(el) {
+		  var width = el.offsetWidth;
+		  var style = el.currentStyle || getComputedStyle(el);
+
+		  width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+		  return width;
 		}
         
         // Check all answers
@@ -444,20 +687,22 @@
             var answered = 0;
             if ( !isMultiple ) {
                 for ( i=0; i<iterations.length; i++ ) {
-                    if ( $('#' + iterations[i].id).val() !== '' ) answered++;
+                    if ( iterations[i].id.value !== '' ) answered++;
                 }
             } else {
                 for ( i=0; i<iterations.length; i++ ) {
-                    if ( iterations[i].items[0].element.val() !== '' ) answered++;
+                    if ( iterations[i].items[0].element.value !== '' ) answered++;
                 }
             }
             return answered;
         }
-
-		// Go to the next loop iteration
+        
+        // Go to the next loop iteration
 		function nextIteration() {
 			
-			$container.off('click', '.responseItem');
+			for ( i=0; i<responseItems.length; i++ ) {
+                removeEvent(responseItems[i], 'click');
+            }
 			
 			currentIteration++;
 			var width = getStatementWidth(),
@@ -468,28 +713,52 @@
 				};
 			if (currentIteration > (iterations.length - 1)) {
 				if ( options.autoForward === true ) {
-					$container.find('.statement').animate(css, options.animationSpeed);
-					$(':input[name=Next]:last').click();
-					//hideResponses();
+					//$container.find('.statement').animate(css, options.animationSpeed);
+                    container.querySelector('.statement').style.opacity = css.opacity;
+                    
+                    var leftPos = container.querySelector('.statement').style.left;
+                    container.querySelector('.statement').style.left = -outerWidth(container) + "px";
+                     container.querySelector('.statement').style.width = css.width + "px";
+                    setTimeout (function() {
+                        container.querySelector('.statement').style.left = 0 + "px";
+                       
+                        nextBtn.click();
+                    }, 500);
+                    
 				} else {
 					currentIteration--;	
-					if ( $container.find('.nextStatement').css('display') != 'none' ) $container.find('.nextStatement').css('display','none');
-					$(':input[name=Next]:last').click();
-					//hideResponses();
-					/*$("html").animate({ scrollTop: $('html').height() }, 'fast', function() {
-						$(':input[name=Next]:last').click();
-					});*/
+                    for ( i=0; i<nextStatements.length; i++ ) {
+                        if ( nextStatements[i].style.display !== "none" ) {
+                        	nextStatements[i].style.display = "none";
+                        }
+                    }
+					nextBtn.click();
 				}
 				return;
 			} else {
                 if ( currentIteration === (iterations.length - 1) && hideNextBtn === 'Until All items displayed' ) enableNext();
 				if ( scrollToTop ) {
-					$("html, body").animate({ scrollTop: 0 }, "fast");
+					scrollTo(document.body, 0, 600);
 				}
 			}
+            removeClass(container.querySelector('.statement'), 'animate');
 			updateNavigation();
-			$container.find('.statement').css('width',width).animate(css, options.animationSpeed, onAnimationComplete);
-			
+            
+            container.querySelector('.statement').style.width =  width + "px";
+
+            //$container.find('.statement').css('width',width).animate(css, options.animationSpeed, onAnimationComplete);
+            container.querySelector('.statement').style.opacity = css.opacity;
+            container.querySelector('.statement').style.width = css.width + "px";
+            onAnimationComplete();
+            addClass(container.querySelector('.statement'), 'animate');
+            var leftPos = container.querySelector('.statement').style.left;
+                    container.querySelector('.statement').style.left = -outerWidth(container) + "px";
+                    
+                    setTimeout ( function() {
+                        container.querySelector('.statement').style.left = 0 + "px";
+                        //onAnimationComplete();
+                    }, 500);
+            
 		}
 
 		// After the previous/next animation
@@ -498,232 +767,256 @@
 			else 			  displayIterationSingle();
 			
 			var width = getStatementWidth(),
-					css = {
-						opacity: 1,
-						left: '+=' + width,
-						width: width
-					};
+				css = {
+					opacity: 1,
+					left: '+=' + width,
+					width: width
+				};
 
-			$container.find('.statement').animate(css, options.animationSpeed);
+			//$container.find('.statement').animate(css, options.animationSpeed);
+            container.querySelector('.statement').style.opacity = css.opacity;
+            container.querySelector('.statement').style.width = css.width + "px";
+            var leftPos = container.querySelector('.statement').style.left;
+                    container.querySelector('.statement').style.left = 0 + "px";
 		}
-		
-		// Display the right loop caption and the right responses
+        
+        // Display the right loop caption and the right responses
 		function displayIterationSingle() {
-			
-			$container
-			.on('click', '.responseItem', (!isMultiple) ? selectStatementSingle : selectStatementMulitple);
+
+            for ( i=0; i<responseItems.length; i++ ) {
+                responseItems[i].onclick = function(e){
+                    (!isMultiple) ? selectStatementSingle(this) : selectStatementMulitple(this);
+                };
+            }
 			
 			if ( showCounter ) {
-				if ( options.countDirection === 'count down' ) $container.find('.counterNumber').html(iterations.length - currentIteration - 1);
-				else $container.find('.counterNumber').html(currentIteration + 1);	
+				if ( options.countDirection === 'count down' ) container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);
+				else container.querySelector('.counterNumber').textContent = (currentIteration + 1);	
 			}
 			
 			// Display the info of the current loop iteration
-			//$container.find('.statement_text').html(iterations[currentIteration].caption);
-			$container.find('.statement_text').hide();
-			$container.find('.statement_text[data-id="' + (currentIteration + 1) + '"]').show();
-			
-			$container.find('.statement').css('filter','');
+            for ( i=0; i<statementTexts.length; i++ ) {
+                statementTexts[i].style.display = "none";
+                statementTexts[i].style.filter = "";
+            }
+			container.querySelector('.statement_text[data-id="' + (currentIteration + 1) + '"]').style.display = "";
+            
 			// add alt here
 			if ( useAltColour ) {
-				if ( (currentIteration % 2) == 0 ) $container.find('.statement').removeClass('altStatement').addClass('evenStatement');
-				else $container.find('.statement').removeClass('evenStatement').addClass('altStatement');
+				if ( (currentIteration % 2) === 0 )
+                {
+                    removeClass(container.querySelector('.statement'), 'altStatement');
+                    addClass(container.querySelector('.statement'), 'evenStatement');
+                }
+				else
+                {
+                    removeClass(container.querySelector('.statement'), 'evenStatement');
+                    addClass(container.querySelector('.statement'), 'altStatement');
+                }
 			} else {
-				$container.find('.statement').addClass('evenStatement');
+				addClass(container.querySelector('.statement'), 'evenStatement');
 			}
 
-			var currentValues = $('#' + iterations[currentIteration].id).val();
-			$container.find('.responseItem').each(function () {
-				var value = $(this).data('value'),
-					isSelected = (currentValues.indexOf(value) != -1);
-				if (isSelected) {
-					$(this).addClass('selected');
+			var currentValues = iterations[currentIteration].id.value;
+            
+            for ( i=0; i<responseItems.length; i++ ) {
+                var value = responseItems[i].getAttribute('data-value'),
+                    isSelected = (currentValues.indexOf(value) != -1);
+                
+                if (isSelected) {
+                    addClass(responseItems[i], 'selected');
 				} else {
-					$(this).removeClass('selected');
+                    removeClass(responseItems[i], 'selected');
 				}
-			});
-			if ( $('#' + iterations[currentIteration].id).val() == '' ) $container.find('.nextStatement').hide();
-			else if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') $container.find('.nextStatement').show().css('visibility','visible');
+            }
+
+			if ( iterations[currentIteration].id.value == '' ) 
+            {
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "none";
+                }
+            }
+			else if (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') {
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "";
+                    nextStatements[i].style.visibility = "visible";
+                }
+            }
 		}
-		
-		// Display the right loop caption and the right responses
+        
+        // Display the right loop caption and the right responses
 		function displayIterationMultiple() {
 			
-			$container.on('click', '.responseItem', (!isMultiple) ? selectStatementSingle : selectStatementMulitple);
+            for ( i=0; i<responseItems.length; i++ ) {
+                responseItems[i].onclick = function(e){
+                    (!isMultiple) ? selectStatementSingle(this) : selectStatementMulitple(this);
+                };
+            }
 			
-			if ( showCounter ) {
-				if ( options.countDirection === 'count down' ) $container.find('.counterNumber').html(iterations.length - currentIteration - 1);
-				else $('.counterNumber').html(currentIteration + 1);	
+            if ( showCounter ) {
+				if ( options.countDirection === 'count down' ) container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);
+				else container.querySelector('.counterNumber').textContent = (currentIteration + 1);	
 			}
-			
-			// Display the info of the current loop iteration
-			//$container.find('.statement_text').html(iterations[currentIteration].items[0].caption);
-			$container.find('.statement_text').hide();
-			$container.find('.statement_text[data-id="' + (currentIteration + 1) + '"]').show();
-			
-			$container.find('.statement').css('filter','');
-			// add alt here
+            
+            // Display the info of the current loop iteration
+            // Display the info of the current loop iteration
+            for ( i=0; i<statementTexts.length; i++ ) {
+                statementTexts[i].style.display = "none";
+                statementTexts[i].style.filter = "";
+            }
+			container.querySelector('.statement_text[data-id="' + (currentIteration + 1) + '"]').style.display = "";
+            
+            // add alt here
 			if ( useAltColour ) {
-				if ( (currentIteration % 2) == 0 ) $container.find('.statement').removeClass('altStatement').addClass('evenStatement');
-				else $container.find('.statement').removeClass('evenStatement').addClass('altStatement');
+				if ( (currentIteration % 2) == 0 )
+                {
+                    removeClass(container.querySelector('.statement'), 'altStatement');
+                    addClass(container.querySelector('.statement'), 'evenStatement');
+                }
+				else
+                {
+                    removeClass(container.querySelector('.statement'), 'evenStatement');
+                    addClass(container.querySelector('.statement'), 'altStatement');
+                }
 			} else {
-				$container.find('.statement').addClass('evenStatement');
+				addClass(container.querySelector('.statement'), 'evenStatement');
 			}
-			
-			$container.find('.selected').removeClass('selected');
-			
-			var currentValues = iterations[currentIteration].items[0].element.val().split(","),
-				currentValue;
-			
-			for ( var i=0; i<currentValues.length; i++ ) {
-				//currentValue = items[i].element.val();
-				currentValue = currentValues[i];
-				$container.find('.responseItem').each(function () {
-					var value = $(this).data('value'),
-						isSelected = $(this).data('value') == currentValue ? true : false;
-					if (isSelected) {
-						$(this).addClass('selected');
-					}
-				});
+            
+            for ( i=0; i<responseItems.length; i++ ) {
+                removeClass(responseItems[i], 'selected');
+            }
+
+			var currentValues = iterations[currentIteration].items[0].element.value.split(","),
+                currentValue;
+            
+			for ( var j=0; j<currentValues.length; j++ ) {
+                
+				currentValue = currentValues[j];
+                
+                for ( i=0; i<responseItems.length; i++ ) {
+                    
+                    var value = responseItems[i].getAttribute('data-value'),
+                        isSelected = responseItems[i].getAttribute('data-value') == currentValue ? true : false;
+
+                    if (isSelected) addClass(responseItems[i], 'selected');
+                }
 				
 			}
 			
-			if ( currentValue == '' ) $('.nextStatement').hide();
+			if ( currentValue == '' ) {
+                for ( i=0; i<nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "none";
+                }
+            }
 		}
-		
-		function hideResponses() {
+        
+        function hideResponses() {
 			
-			$container.find('.responseItem').each(function (index) {
-				$container.removeClass('selected').off('click').animate({
+            for ( i=0; i<responseItems.length; i++ ) {
+                removeEvent(responseItems[i], 'click');
+                removeClass(responseItems[i], 'selected');
+                /*$container.removeClass('selected').off('click').animate({
 					opacity: 0,
 					left: '-=' + $container.outerWidth()
-				}, options.animationSpeed );
-			});
+				}, options.animationSpeed );*/
+                    var leftPos = container.querySelector('.statement').style.left;
+                    container.querySelector('.statement').style.left = -outerWidth(container) + "px";
+
+            }
 			
-			if ( scrollToTop ) {
-				$("html").animate({ scrollTop: $('html').height() }, 'fast', function() {
-					$(':input[name=Next]:last').click();
-				});
-			} else {
-				$(':input[name=Next]:last').click();
-			}
+			if ( scrollToTop ) scrollTo(document.body, 0, 600);
+			nextBtn.click();
 				
 		}
-
-		// Check for missing images and resize
-		$container.find('.responseItem img').each(function forEachImage() {
-			//if ( $container.attr('src') == '' ) /*$container.remove();*/alert("foo");
-			var size = {
-				width: $(this).width(),
-				height: $(this).height()
-			};
-			
-			if (options.forceImageSize === "height" ) {
-				if ( size.height > parseInt(options.maxImageHeight,10) ) {
-					var ratio = ( parseInt(options.maxImageHeight,10) / size.height);
-					size.height *= ratio,
-					size.width  *= ratio;
-				}
-			} else if (options.forceImageSize === "width" ) {
-				if ( size.width > parseInt(options.maxImageWidth,10) ) {
-					var ratio = ( parseInt(options.maxImageWidth,10) / size.width);
-					size.width  *= ratio,
-					size.height *= ratio;
-				}
-				
-			} else if (options.forceImageSize === "both" ) {
-				if ( parseInt(options.maxImageHeight,10) > 0 && size.height > parseInt(options.maxImageHeight,10) ) {
-					var ratio = ( parseInt(options.maxImageHeight,10) / size.height);
-					size.height *= ratio,
-					size.width  *= ratio;
-				}
-	
-				if ( parseInt(options.maxImageWidth,10) > 0 && size.width > parseInt(options.maxImageWidth,10) ) {
-					var ratio = ( parseInt(options.maxImageWidth,10) / size.width);
-					size.width  *= ratio,
-					size.height *= ratio;
-				}
-				
-			} 
-			$(this).css(size);
-		});
-		
-		// add ns to last x items
-		if ( options.numberNS > 0 ) $container.find('.responseItem').slice(-options.numberNS).addClass('ns');
-		
-		// Use range if on
-		if ( options.useRange ) {
-			var maxNumber = $container.find('.responseItem').size() - options.numberNS;
-			var rangeArray = options.range.split(';');
-			
-			var rainbow1 = new Rainbow();
-				rainbow1.setSpectrum(processRgb(rangeArray[0]), processRgb(rangeArray[2]));
-				rainbow1.setNumberRange(0, maxNumber);
-			var rainbow2 = new Rainbow();
-				rainbow2.setSpectrum(processRgb(rangeArray[1]), processRgb(rangeArray[3]));
-				rainbow2.setNumberRange(0, maxNumber);
-			$container.find('.responseItem').slice(0,(options.numberNS > 0)?0-options.numberNS:$container.find('.responseItem').size()).each(function( index ) {
-
-				if ( options.rangeGradientDirection == 'ltr' ) { 
-					$(this).css({ 'background-color': '#'+rainbow1.colourAt(index) });
-				} else {
-					$(this).css({ 'background-color': '#'+rainbow1.colourAt(index) });
-				}
-				
-			});
-		}
-		
-		// Horizontal layout
+        
+        // Horizontal layout
 		if ( useHLayout ) {
-			$container.find('.responseItem').width(options.responseWidth).css({'float':'left','clear':'none','margin':responseMargin});
-			var maxResponseHeight = Math.max.apply( null, $container.find('.responseItem').map( function () {
-				return $( this ).outerHeight();
-			}).get() );
-			$container.find('.responseItem').height(maxResponseHeight);
+            for ( i=0; i<responseItems.length; i++ ) {
+                responseItems[i].style.width = options.responseWidth;
+                responseItems[i].style.float = "left";
+                responseItems[i].style.clear = "none";
+                responseItems[i].style.margin = responseMargin;
+            }
+            var height = responseItems[0].offsetHeight;
+            var maxResponseHeight = responseItems[0].offsetHeight;
+            for ( i = 0; i < responseItems; i++) {
+                maxResponseHeight = Math.max(height, responseItems[i].offsetHeight);
+            }
+            for ( i = 0; i < responseItems.length; i++ ) {
+                responseItems[i].style.height = maxResponseHeight+'px';
+            }
 		}
-		
-		// Attach all events
-		/*$container
-			.delegate('.responseItem', 'click', (!isMultiple) ? selectStatementSingle : selectStatementMulitple)
-			.delegate('.previousStatement', 'click', previousIteration)
-			.delegate('.nextStatement', 'click', nextIteration);*/
-			
-		$container
-			.on('click', '.previousStatement', previousIteration)
-			.on('click', '.nextStatement', nextIteration);
-			/*.on('click', '.responseItem', (!isMultiple) ? selectStatementSingle : selectStatementMulitple)*/
-		
+        
+        // Attach all events
+        for ( i = 0; i < prevStatements.length; i++ ) {
+        	addEvent(prevStatements[i], 'click', previousIteration);
+        }
+        
+        for ( i = 0; i < nextStatements.length; i++ ) {
+        	addEvent(nextStatements[i], 'click', nextIteration);
+        }
+        
+        // Refresh the current status on load 
+		if ( isMultiple ) 
+            displayIterationMultiple();
+		else
+            displayIterationSingle();
+        	
+		if ( isMultiple || ( !isMultiple && (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') ) ) {
 
-		// Refresh the current status on load 
-		// (iteration = 0)
-		//$container.find('.previousStatement').hide();
-		//$container.find('.statement').width(getStatementWidth());
-		
-		if ( isMultiple ) displayIterationMultiple();
-		else 			  displayIterationSingle();
-		
-		if ( isMultiple || ( !isMultiple && (options.topButtons != 'hide both' || options.bottomButtons != 'hide both') ) ) {	
-			if ( currentIteration === 0 ) $container.find('.previousStatement').css('display','none');
-			$container.find('.nextStatement').css({'display':'block','margin-left':'10px','float':'right'});
-			$container.find('.statement').width($container.find('.statement').width() - $container.find('.nextStatement.top').outerWidth(true)).css('float','left');
-			$container.find('.nextStatement').height($container.find('.statement').height());
+            if ( currentIteration === 0 ) {
+                for ( i = 0; i < prevStatements.length; i++ ) {
+                    prevStatements[i].style.display = "none";
+                }
+            }
+            for ( i = 0; i < nextStatements.length; i++ ) {
+				nextStatements[i].style.display = "block";
+                nextStatements[i].style.marginLeft = "10px";
+                nextStatements[i].style.float = "right";
+			}
+            
+            container.querySelector('.statement').style.width = 
+				container.clientWidth - ( outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(document.querySelector('.statement'))) + "px";
+			container.querySelector('.statement').style.float = "left";
 			
-			$container.find('.previousStatement').css({'display':'block','margin-right':'10px','float':'left'});
-			$container.find('.previousStatement').height($container.find('.statement').height()).hide();
-			if ( $('#' + iterations[currentIteration].id).val() == '' && !isMultiple) $container.find('.nextStatement').hide();
-			else if ( isMultiple ) {
-				if ( iterations[currentIteration].items[0].element.val() == '' ) $container.find('.nextStatement').hide();
+            for ( i = 0; i < nextStatements.length; i++ ) {
+				nextStatements[i].style.height = container.querySelector('.statement').clientHeight + "px";
+			}
+			for ( i = 0; i < prevStatements.length; i++ ) {
+                
+				prevStatements[i].style.display = "block";
+                prevStatements[i].style.marginRight = "10px";
+                prevStatements[i].style.float = "left";
+                prevStatements[i].style.height = container.querySelector('.statement').clientHeight + "px";
+                prevStatements[i].style.display = "none";
+			}
+
+            if ( iterations[currentIteration].value == '' && !isMultiple) 
+            {
+                for ( i = 0; i < nextStatements.length; i++ ) {
+                    nextStatements[i].style.display = "none";
+                }
+            }
+			else if ( isMultiple ) 
+            {
+				if ( iterations[currentIteration].items[0].element.value == '' ) 
+                {
+                    for ( i = 0; i < nextStatements.length; i++ ) {
+                        nextStatements[i].style.display = "none";
+                    }
+                }
 			}
 		}
 		
 		if ( isMultiple ) {
-			$container.find('.responseItem').each(function (index) {
-				if ( !$(this).hasClass('exclusive') ) $(this).addClass('cb');
-			});
+            for ( i = 0; i < responseItems.length; i++ ) {
+                if ( hasClass( responseItems[i], 'exclusive' ) ) addClass( responseItems[i], 'cb' )
+                responseItems[i].style.height = maxResponseHeight+'px';
+            }
 		}
 		
 		for ( var i=0; i<iterations.length; i++ ) {
-			if ( (!isMultiple && $('#' + iterations[i].id).val() == '') || (isMultiple && iterations[currentIteration].items[0].element.val() == '')) {
+			if ( (!isMultiple && iterations[i].id.value == '') || (isMultiple && iterations[currentIteration].items[0].element.value == '')) {
 				if ( i!=0 ) {
 					currentIteration--;
 					nextIteration();
@@ -738,46 +1031,7 @@
 				}
 			}
 		}
-		
-		if ( total_images > 0 ) {
-			$container.find('img').each(function() {
-				var fakeSrc = $(this).attr('src');
-				$("<img/>").css('display', 'none').load(function() {
-					images_loaded++;
-					if (images_loaded >= total_images) {
-						
-						// now all images are loaded.
-						$container.css('visibility','visible');
-						
-						if ( options.animate ) {
-							var delay = 0,
-								easing = (!$.support.transition)?'swing':'snap';
-							
-							$container.find('.responseItem').each(function forEachItem() {
-								$container.css({ y: 200, opacity: 0 }).transition({ y: 0, opacity: 1, delay: delay }, options.animationSpeed, easing);
-								delay += 30;
-							});
-						}
-	
-					}
-				}).attr("src", fakeSrc);
-			});
-		} else {
-			$container.css('visibility','visible');
-						
-			if ( options.animate ) {
-				var delay = 0,
-					easing = (!$.support.transition)?'swing':'snap';
-				
-				$container.find('.responseItem').each(function forEachItem() {
-					$container.css({ y: 200, opacity: 0 }).transition({ y: 0, opacity: 1, delay: delay }, options.animationSpeed, easing);
-					delay += 30;
-				});
-			}
-		}
-
-		// Returns the container
-		return this;
-	};
-
-} (jQuery));
+	}
+    	
+	window.StatementList = StatementsList;
+}());

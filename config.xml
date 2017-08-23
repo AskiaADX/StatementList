@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -24,7 +24,8 @@
 		v1.0.14 - fixed encoding of the adc file
 		v1.0.15 - fixed safari and firefox strict mode
 		v2.0.0 - Theme implementation
-		v2.0.1 - PureJS version]]></description>
+		v2.0.1 - PureJS version
+		v2.0.2 - Fixed bug for Single with AutoForward on and buttons hidden ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

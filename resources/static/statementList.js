@@ -42,6 +42,27 @@
         else el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
 	}
     
+    // IE8 and below fix
+    if (!Array.prototype.indexOf) {
+			
+    	Array.prototype.indexOf = function(elt /*, from*/) {
+    		var len = this.length >>> 0;
+		
+			var from = Number(arguments[1]) || 0;
+			from = (from < 0)
+				 ? Math.ceil(from)
+				 : Math.floor(from);
+			if (from < 0)
+			  from += len;
+		
+			for (; from < len; from++) {
+			  if (from in this && this[from] === elt)
+				return from;
+			}
+			return -1;
+    	};
+    }
+    
     function StatementsList(options) {
         this.instanceId = options.instanceId || 1;
         var container = document.getElementById("adc_" + this.instanceId),
@@ -99,13 +120,12 @@
             responseItems =  [].slice.call(container.getElementsByClassName('responseItem')),
             images = [].slice.call(container.getElementsByTagName("img")),
 			inputs = [].slice.call(document.getElementsByTagName("input")),
-            submitBtns = [],
             nextBtn,
         	isMultiple = Boolean(options.isMultiple),
 			currentIteration = 0,
             iterations = options.iterations,
             useAltColour = Boolean(options.useAltColour),
-			useHLayout = Boolean(options.useHLayout),
+			useHLayout = Boolean(options.useHLayout),																																																																																					
 			responseWidth = options.responseWidth,
 			responseMargin = options.responseMargin,
 			autoForward = options.autoForward,
@@ -115,16 +135,12 @@
             hideNextBtn = options.hideNextBtn,
 			disableReturn = Boolean(options.disableReturn);
         
+        
         if (!options || !options.iterations || !options.iterations.length) {
 			throw new Error('adcStatementList expect an option argument with an array of iterations');
 		}
         
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].type.toLowerCase() === 'submit') {
-               submitBtns.push(inputs[i]);
-            }
-        }
-        nextBtn = submitBtns[submitBtns.length-2];
+        nextBtn = document.querySelector('input[value="Next"]');
         
         container.style.maxWidth = options.maxWidth;
         container.style.width = options.controlWidth;
@@ -333,7 +349,7 @@
 	
 				document.documentElement.onSubmit = verifySubmit;
 			}
-            container.querySelector('input[name=Next]').style.display = "none";
+            document.querySelector('input[value="Next"]').style.display = "none";
             
         }
 		
@@ -342,7 +358,7 @@
 			//Unlock the page
 			m_IsPageUnLocked=true;
 			//Display the button next
-            container.querySelector('input[name=Next]').style.display = "";
+            document.querySelector('input[value="Next"]').style.display = "";
 			document.documentElement.onSubmit="";
 		}
         
@@ -426,7 +442,7 @@
 		// Select a statement for single
 		// @this = target node
 		function selectStatementSingle(target) {
-					
+            
 			// hide error
             if ( container.querySelector('.error') ){
                 container.querySelector('.error').style.display = "none";
@@ -443,7 +459,7 @@
             var input = iterations[currentIteration].id,
                 value = target.getAttribute('data-value'),
                 selectedElements = [].slice.call(container.getElementsByClassName('selected'));
-            
+
             for ( i=0; i<selectedElements.length; i++) {
                 removeClass(selectedElements[i], 'selected');
             }
@@ -470,8 +486,12 @@
                 }
             }
             
-            if ( (nextStatements[0].style.display != "none" || nextStatements.length > 0) && autoForward ) {
-            	nextIteration();
+            if ( nextStatements.length > 0 ) {
+                if ( nextStatements[0].style.display != "none" && autoForward ) {
+                    nextIteration();
+                }
+            } else {
+                nextIteration();
             }
             
 		}
@@ -548,7 +568,8 @@
                 }
                 
             }
-            var width = initialWidth;
+            
+            var width = container.offsetWidth;
             if ( container.querySelector('.previousStatement.top').style.display == "" ) {
             	width -= outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'));
             }
@@ -556,7 +577,6 @@
             	width -= outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'));
             }
             container.querySelector('.statement').style.width =  width + "px";
-                
             if ( checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered' ) {
                 enableNext();
             } else if ( checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered' ) {
@@ -569,9 +589,13 @@
 		function getStatementWidth() {
 
             var width = container.clientWidth,
-                btnWidth = outerWidth(container.querySelector('.previousStatement.top')) > outerWidth(container.querySelector('.nextStatement.top')) ?
-                	( outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top')) ) :
-            		( outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top')) );
+                previousStatementTopOWidth = container.querySelector('.previousStatement.top') ? outerWidth(container.querySelector('.previousStatement.top')) : 0,
+                previousStatementTopLRBorder = container.querySelector('.previousStatement.top') ? lrBorder(container.querySelector('.previousStatement.top')) : 0,
+                nextStatementTopOWidth = container.querySelector('.nextStatement.top') ? outerWidth(container.querySelector('.nextStatement.top')) : 0,
+                nextStatementTopLRBorder = container.querySelector('.nextStatement.top') ? lrBorder(container.querySelector('.nextStatement.top')) : 0,
+                btnWidth = previousStatementTopOWidth >nextStatementTopOWidth ?
+                	( previousStatementTopOWidth + previousStatementTopLRBorder ) :
+            		( nextStatementTopOWidth + nextStatementTopLRBorder );
             if ( currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both' ) {
             	width -= btnWidth;
             }
@@ -712,7 +736,9 @@
 					width: width
 				};
 			if (currentIteration > (iterations.length - 1)) {
-				if ( options.autoForward === true ) {
+                
+				if ( autoForward ) {
+                    
 					//$container.find('.statement').animate(css, options.animationSpeed);
                     container.querySelector('.statement').style.opacity = css.opacity;
                     
@@ -721,7 +747,6 @@
                      container.querySelector('.statement').style.width = css.width + "px";
                     setTimeout (function() {
                         container.querySelector('.statement').style.left = 0 + "px";
-                       
                         nextBtn.click();
                     }, 500);
                     
@@ -752,12 +777,12 @@
             onAnimationComplete();
             addClass(container.querySelector('.statement'), 'animate');
             var leftPos = container.querySelector('.statement').style.left;
-                    container.querySelector('.statement').style.left = -outerWidth(container) + "px";
+            container.querySelector('.statement').style.left = -outerWidth(container) + "px";
                     
-                    setTimeout ( function() {
-                        container.querySelector('.statement').style.left = 0 + "px";
-                        //onAnimationComplete();
-                    }, 500);
+            setTimeout ( function() {
+            	container.querySelector('.statement').style.left = 0 + "px";
+            	//onAnimationComplete();
+            }, 500);
             
 		}
 
@@ -975,8 +1000,9 @@
                 nextStatements[i].style.float = "right";
 			}
             
+            var nextStatementWidth = ( container.querySelector('.nextStatement.top') ? outerWidth(container.querySelector('.nextStatement.top')) : 0);
             container.querySelector('.statement').style.width = 
-				container.clientWidth - ( outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(document.querySelector('.statement'))) + "px";
+				container.clientWidth - ( nextStatementWidth + lrBorder(document.querySelector('.statement'))) + "px";
 			container.querySelector('.statement').style.float = "left";
 			
             for ( i = 0; i < nextStatements.length; i++ ) {

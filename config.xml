@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.2</version>
+    <version>2.0.3</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -25,7 +25,7 @@
 		v1.0.15 - fixed safari and firefox strict mode
 		v2.0.0 - Theme implementation
 		v2.0.1 - PureJS version
-		v2.0.2 - Fixed bug for Single with AutoForward on and buttons hidden ]]></description>
+		v2.0.2 - Fixed bug for Single with AutoForward on and buttons hidden]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -96,20 +96,28 @@
       </property>
       <property xsi:type="standardProperty" id="controlAlign" name="Control Alignment" type="string" mode="static" require="false" visible="true">
         <description><![CDATA[The alignment of the control]]></description>
-        <value><![CDATA[left]]></value>
+        <value><![CDATA[center]]></value>
         <options>
           <option value="left" text="Left" />
           <option value="center" text="Center" />
           <option value="right" text="Right" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="autoForward" name="Auto Forward" type="boolean" mode="static" require="false" visible="true">
+      <property xsi:type="standardProperty" id="autoForward" name="Auto Forward" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[When true will automatically click the next button at the end of the question.]]></description>
         <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
-      <property xsi:type="standardProperty" id="scrollToTop" name="Scroll To Top" type="boolean" mode="static" require="false" visible="true">
+      <property xsi:type="standardProperty" id="scrollToTop" name="Scroll To Top" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[When true will scroll the screen to the top once a response is selected]]></description>
         <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="hideNextBtn" name="Hide Next Button" type="string" mode="static" require="false" visible="true">
         <description><![CDATA[Hide the next button]]></description>
@@ -121,9 +129,13 @@
           <option value="Until All items answered" text="Until All items answered" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="disableReturn" name="Disable Return to Submit" type="boolean" mode="static" require="false" visible="true">
+      <property xsi:type="standardProperty" id="disableReturn" name="Disable Return to Submit" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[When turned on this will disable the submission of the page when pressing return.]]></description>
         <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
     </category>
     <category id="buttons" name="Buttons">
@@ -239,9 +251,13 @@
       </property>
     </category>
     <category id="horizontalLayout" name="Horizontal Layout">
-      <property xsi:type="standardProperty" id="useHLayout" name="Use Horizontal Layout" type="boolean" mode="static" require="false" visible="true">
+      <property xsi:type="standardProperty" id="useHLayout" name="Use Horizontal Layout" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Use horizontal layout]]></description>
         <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="responseWidth" name="Response Width" type="string" mode="static">
         <description><![CDATA[
@@ -257,9 +273,13 @@
       </property>
     </category>
     <category id="counter" name="Counter">
-      <property xsi:type="standardProperty" id="showCounter" name="Show Counter" type="boolean" mode="static" require="false" visible="true">
+      <property xsi:type="standardProperty" id="showCounter" name="Show Counter" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Show counter at the top of the control]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="countDirection" name="Count Direction" type="string" mode="static" require="false" visible="true">
         <description><![CDATA[Set count direction for counter]]></description>
@@ -332,9 +352,13 @@
         <description><![CDATA[Background colour of the statement]]></description>
         <value><![CDATA[{%= Theme.PrimaryLightColor %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="useAltColour" name="Use a alternative statement colour" type="boolean" mode="static" require="false" visible="false">
+      <property xsi:type="standardProperty" id="useAltColour" name="Use a alternative statement colour" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[This will use a alternative colour for each odd numbered statement]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="altStatementColourPrimary" name="Alt Statement Background Colour" type="color" mode="dynamic" require="false" visible="false">
         <description><![CDATA[Alternative background colour of the statement]]></description>
@@ -401,9 +425,13 @@
         <description><![CDATA[Background colour of the item]]></description>
         <value><![CDATA[{%= Theme.NeutralLightColor %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="useRange" name="Use a colour range" type="boolean" mode="static" require="false" visible="false">
+      <property xsi:type="standardProperty" id="useRange" name="Use a colour range" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[This will create a colour range between the primary and the range primary colours]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="responseColourRangePrimary" name="Response Background Colour Range" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Background colour of the item]]></description>
@@ -452,25 +480,37 @@
           <option value="none" text="Off" />
         </options>
       </property>
-      <property xsi:type="standardProperty" id="showResponseHoverColour" name="Show Response Hover Colour" type="boolean" mode="static" require="false" visible="false">
+      <property xsi:type="standardProperty" id="showResponseHoverColour" name="Show Response Hover Colour" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[This will change the colour of responses when hovered over]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="responseHoverColourPrimary" name="Response Hover Background Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Background colour of the response when hovering]]></description>
         <value><![CDATA[{%= Theme.WhiteColor %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="showResponseHoverFontColour" name="Show Response Hover Font Colour" type="boolean" mode="static" require="false" visible="false">
+      <property xsi:type="standardProperty" id="showResponseHoverFontColour" name="Show Response Hover Font Colour" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[This will change the colour of the text of responses when hovered over]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="responseHoverFontColour" name="Response Hover Font Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Font colour for responses when hovering]]></description>
         <value><![CDATA[{%= Theme.BlackColor %}]]></value>
       </property>
-      <property xsi:type="standardProperty" id="showResponseHoverBorder" name="Show Response Hover Border" type="boolean" mode="static" require="true" visible="false">
+      <property xsi:type="standardProperty" id="showResponseHoverBorder" name="Show Response Hover Border" type="string" mode="dynamic" require="true" visible="false">
         <description><![CDATA[This will change the colour of the border of responses when hovered over]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
       <property xsi:type="standardProperty" id="responseHoverBorderColour" name="Response Hover Border Colour" type="color" mode="dynamic" require="true" visible="false">
         <description><![CDATA[Border colour for responses when hovering]]></description>

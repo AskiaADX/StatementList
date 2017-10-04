@@ -140,7 +140,7 @@
 			throw new Error('adcStatementList expect an option argument with an array of iterations');
 		}
         
-        nextBtn = document.querySelector('input[value="Next"]');
+        nextBtn = document.querySelector('input[name="Next"]');
         
         container.style.maxWidth = options.maxWidth;
         container.style.width = options.controlWidth;
@@ -349,7 +349,7 @@
 	
 				document.documentElement.onSubmit = verifySubmit;
 			}
-            document.querySelector('input[value="Next"]').style.display = "none";
+            document.querySelector('input[name="Next"]').style.display = "none";
             
         }
 		
@@ -358,7 +358,7 @@
 			//Unlock the page
 			m_IsPageUnLocked=true;
 			//Display the button next
-            document.querySelector('input[value="Next"]').style.display = "";
+            document.querySelector('input[name="Next"]').style.display = "";
 			document.documentElement.onSubmit="";
 		}
         

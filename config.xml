@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -26,7 +26,8 @@
 		v2.0.0 - Theme implementation
 		v2.0.1 - PureJS version
 		v2.0.2 - Fixed bug for Single with AutoForward on and buttons hidden
-		v2.0.5 - Fixed Navigator error when disable return to submit in ADXStudio and Design 6]]></description>
+		v2.0.5 - Fixed Navigator error when disable return to submit in ADXStudio and Design 6
+		v2.0.6 - Fixed the selected response styling when autoforward is yes]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

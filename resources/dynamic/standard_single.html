@@ -13,7 +13,7 @@ For i = 1 To CurrentQuestion.AvailableResponses.Count
     caption     = CurrentQuestion.AvailableResponses[i].Caption
     image		= CurrentQuestion.AvailableResponses.ResourceURL[i]
 %}
-<div class="responseItem" data-value="{%= inputValue %}" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+<div class="responseItem" data-value="{%= inputValue %}">
 	{% IF image <> "" Then %}
 		<img src="{%= image %}" />
     {% EndIF %}

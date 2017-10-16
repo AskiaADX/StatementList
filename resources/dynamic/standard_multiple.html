@@ -23,7 +23,7 @@ For i = 1 To CurrentQuestion.AvailableResponses.Count
     image		= CurrentQuestion.AvailableResponses.ResourceURL[i]
     isExclusive = On(CurrentQuestion.AvailableResponses[i].IsExclusive, " exclusive", "")
 %}
-<div class="responseItem{%:= isExclusive %}" data-value="{%= inputValue %}" data-id="{%= i-1 %}" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+<div class="responseItem{%:= isExclusive %}" data-value="{%= inputValue %}" data-id="{%= i-1 %}">
 	{% IF image <> "" Then %}
 		<img src="{%= image %}" />
     {% EndIF %}

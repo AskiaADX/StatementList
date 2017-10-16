@@ -497,11 +497,11 @@
       }
 
       if (nextStatements.length > 0) {
-        if (nextStatements[0].style.display != 'none' && autoForward) {
-          nextIteration();
+        if (autoForward) {
+          setTimeout(function() {nextIteration();}, 100);
         }
       } else {
-        nextIteration();
+          setTimeout(function() {nextIteration();}, 100); 
       }
 
     }
@@ -675,7 +675,7 @@
         container.querySelector('.statement').style.opacity = 0;
         container.querySelector('.statement').style.width = css.width + 'px';
         onAnimationComplete();
-      }, 500);
+      }, 200);
 
     }
 
@@ -759,7 +759,7 @@
           setTimeout(function () {
             container.querySelector('.statement').style.left = 0 + 'px';
             nextBtn.click();
-          }, 500);
+          }, 200);
 
         } else {
           currentIteration--;
@@ -793,7 +793,7 @@
       setTimeout(function () {
         container.querySelector('.statement').style.left = 0 + 'px';
         //onAnimationComplete();
-      }, 500);
+      }, 200);
 
     }
 
@@ -1049,6 +1049,7 @@
         }
         break;
       } else {
+        debugger;
         if (i == iterations.length - 1) {
           currentIteration--;
           nextIteration();

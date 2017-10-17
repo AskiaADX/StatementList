@@ -1049,12 +1049,14 @@
         }
         break;
       } else {
-        debugger;
-        if (i == iterations.length - 1) {
+		if (isMultiple && (i === (iterations.length - 1))) {
           currentIteration--;
           nextIteration();
-        } else {
+        } else if (isMultiple && (i !== (iterations.length - 1))) {
           currentIteration++;
+        } else if (currentIteration < (iterations.length - 1)) {
+          currentIteration++;
+          nextIteration(); 
         }
       }
     }

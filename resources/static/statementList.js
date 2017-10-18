@@ -1070,6 +1070,7 @@
         }
       }
     }
+    setTimeout(function(){ document.querySelector("#adc_" + this.instanceId).style.visibility = 'visible'; }, 300);
   }
 
   window.StatementList = StatementsList;

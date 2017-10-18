@@ -1041,22 +1041,32 @@
       }
     }
 
-    for (var i = 0; i < iterations.length; i++) {
+    for (var i = 0; i < iterations.length; ++i) {
       if ((!isMultiple && iterations[i].id.value == '') || (isMultiple && iterations[currentIteration].items[0].element.value == '')) {
-        if (i != 0) {
-          currentIteration--;
-          nextIteration();
+        if (i === 0) {
+          break;
         }
+        if (currentIteration <= iterations.length) {
+         currentIteration = (i - 1);   
+        } else {
+         currentIteration--;
+        }
+        nextIteration();
         break;
       } else {
 		if (isMultiple && (i === (iterations.length - 1))) {
           currentIteration--;
           nextIteration();
+          break;
         } else if (isMultiple && (i !== (iterations.length - 1))) {
           currentIteration++;
         } else if (currentIteration < (iterations.length - 1)) {
           currentIteration++;
-          nextIteration(); 
+          // nextIteration(); 
+        } else {
+          currentIteration--;
+          nextIteration();
+          break;
         }
       }
     }

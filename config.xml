@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.9</version>
+    <version>2.0.10</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -30,7 +30,8 @@
 		v2.0.6 - Fixed the selected response styling when autoforward is yes
 		v2.0.7 - Fixed autoForward behaviour
 		v2.0.8 - Fixed autoForward behaviour
-		v2.0.9 - Fixed visibility of the control]]></description>
+		v2.0.9 - Fixed visibility of the control
+		v2.0.10 - Add show counter as chinese number]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -281,6 +282,14 @@
       <property xsi:type="standardProperty" id="showCounter" name="Show Counter" type="string" mode="dynamic" require="true" visible="true">
         <description><![CDATA[Show counter at the top of the control]]></description>
         <value><![CDATA[1]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="chineseCounter" name="Show Counter as chinese number" type="string" mode="dynamic" require="true" visible="true">
+        <description><![CDATA[Show counter as chinese number]]></description>
+        <value><![CDATA[0]]></value>
         <options>
           <option value="1" text="Yes" />
           <option value="0" text="No" />

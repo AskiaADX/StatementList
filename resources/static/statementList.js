@@ -115,6 +115,7 @@
     (options.scrollToTop = Boolean(options.scrollToTop) || false);
     (options.useRange = Boolean(options.useRange));
     (options.showCounter = Boolean(options.showCounter) || false);
+    (options.chineseCounter = Boolean(options.chineseCounter) || false);
     (options.currentQuestion = options.currentQuestion || '');
 
     polyfillGetElementsByClassName();
@@ -134,6 +135,7 @@
       autoForward = options.autoForward,
       scrollToTop = options.scrollToTop,
       showCounter = options.showCounter,
+      chineseCounter = options.chineseCounter,
       initialWidth = container.clientWidth,
       hideNextBtn = options.hideNextBtn,
       disableReturn = Boolean(options.disableReturn);
@@ -826,8 +828,19 @@
       }
 
       if (showCounter) {
-        if (options.countDirection === 'count down') container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);
-        else container.querySelector('.counterNumber').textContent = (currentIteration + 1);
+        if (options.countDirection === 'count down') {
+            if (chineseCounter) {
+                container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1).toLocaleString("zh-Hans-CN-u-nu-hanidec");
+            } else {
+            	container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);   
+            }
+        } else {
+            if (chineseCounter) {
+            	container.querySelector('.counterNumber').textContent = (currentIteration + 1).toLocaleString("zh-Hans-CN-u-nu-hanidec");
+            } else {
+            	container.querySelector('.counterNumber').textContent = (currentIteration + 1);   
+            }
+        }
       }
 
       // Display the info of the current loop iteration

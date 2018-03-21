@@ -13,6 +13,7 @@ DomReady.ready(function() {
 		topButtons : '{%= CurrentADC.PropValue("topButtons") %}',
 		bottomButtons : '{%= CurrentADC.PropValue("bottomButtons") %}',
 		showCounter : {%= (CurrentADC.PropValue("showCounter") = "1") %},
+        chineseCounter : {%= (CurrentADC.PropValue("chineseCounter") = "1") %},
 		countDirection : '{%= CurrentADC.PropValue("countDirection") %}',
 		numberNS: {%= CurrentADC.PropValue("numberNS") %},
 		useRange: {%= (CurrentADC.PropValue("useRange") = "1") %},

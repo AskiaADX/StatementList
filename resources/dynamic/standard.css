@@ -187,7 +187,19 @@ EndIF
 	-moz-box-shadow: {%= responseHoverShadow%};
 	box-shadow: {%= responseHoverShadow%};
 }
+@media screen and (max-width: 800px) {
+    #adc_{%= CurrentADC.InstanceId%} .responseItem:hover {
 
+        /* Decoration */
+        border: {%= borderThickness%} {%= borderStyle%} rgb({%= borderColour%});
+        {% IF showResponseHoverColour = "1" Then %}
+        background-color: rgb({%= responseColourPrimary%}) !important;
+        {% EndIF %}
+        -webkit-box-shadow: {%= responseShadow%};
+        -moz-box-shadow: {%= responseShadow%};
+        box-shadow: {%= responseShadow%};
+    }
+}
 #adc_{%= CurrentADC.InstanceId%} .responseItem img
 {  
 	float:{%= responseImagePosition%};
@@ -209,6 +221,13 @@ EndIF
 	{% IF showResponseHoverFontColour = "1" Then %}
 		color:rgb({%= responseHoverFontColour%});
 	{% EndIF %}
+}
+@media screen and (max-width: 800px) {
+    #adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text { 
+        {% IF showResponseHoverFontColour = "1" Then %}
+        color:rgb({%= fontColour %});
+        {% EndIF %}
+    }
 }
 
 #adc_{%= CurrentADC.InstanceId%} .responseItem.selected, #adc_{%= CurrentADC.InstanceId%} .responseItem.selected:hover 

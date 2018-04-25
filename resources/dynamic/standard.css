@@ -187,7 +187,7 @@ EndIF
 	-moz-box-shadow: {%= responseHoverShadow%};
 	box-shadow: {%= responseHoverShadow%};
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     #adc_{%= CurrentADC.InstanceId%} .responseItem:hover {
 
         /* Decoration */
@@ -222,7 +222,7 @@ EndIF
 		color:rgb({%= responseHoverFontColour%});
 	{% EndIF %}
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     #adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text { 
         {% IF showResponseHoverFontColour = "1" Then %}
         color:rgb({%= fontColour %});

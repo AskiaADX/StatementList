@@ -680,18 +680,104 @@
       }, 200);
 
     }
+      
+      // Helper function to get an element's exact position
+      function getPosition(el) {
+          var xPos = 0;
+          var yPos = 0;
 
-    function scrollTo (element, to, duration) {
-      if (duration <= 0) return;
-      var difference = to - element.scrollTop;
-      var perTick = difference / duration * 10;
+          while (el) {
+              // for all other non-BODY elements
+              // xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+              // yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+              xPos += (el.offsetLeft + el.clientLeft);
+              yPos += (el.offsetTop + el.clientTop);
+              el = el.offsetParent;
+          }
+          return {
+              x: xPos,
+              y: yPos
+          };
+      }
 
-      setTimeout(function () {
-        element.scrollTop = element.scrollTop + perTick;
-        if (element.scrollTop === to) return;
-        scrollTo(element, to, duration - 10);
-      }, 10);
-    }
+      function scrollIt(destination, duration, easing, callback) {
+
+          var easings = {
+              linear: function linear(t)  {
+                  return t;
+              },
+              easeInQuad: function easeInQuad(t) {
+                  return t * t;
+              },
+              easeOutQuad: function easeOutQuad(t) {
+                  return t * (2 - t);
+              },
+              easeInOutQuad: function easeInOutQuad(t) {
+                  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+              },
+              easeInCubic: function easeInCubic(t) {
+                  return t * t * t;
+              },
+              easeOutCubic: function easeOutCubic(t) {
+                  return (--t) * t * t + 1;
+              },
+              easeInOutCubic: function easeInOutCubic(t) {
+                  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+              },
+              easeInQuart: function easeInQuart(t) {
+                  return t * t * t * t;
+              },
+              easeOutQuart: function easeOutQuart(t) {
+                  return 1 - (--t) * t * t * t;
+              },
+              easeInOutQuart: function easeInOutQuart(t) {
+                  return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+              },
+              easeInQuint: function easeInQuint(t) {
+                  return t * t * t * t * t;
+              },
+              easeOutQuint: function easeOutQuint(t) {
+                  return 1 + (--t) * t * t * t * t;
+              },
+              easeInOutQuint: function easeInOutQuint(t) {
+                  return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t;
+              }
+          };
+
+          var start = window.pageYOffset;
+          var startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+
+          var documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+          var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+          var destinationOffset = typeof destination === 'number' ? destination : getPosition(destination).y - 20;
+          var destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+
+          if ('requestAnimationFrame' in window === false) {
+              window.scroll(0, destinationOffsetToScroll);
+              if (callback) {
+                  callback();
+              }
+              return;
+          }
+
+          function scroll() {
+              var now = 'now' in window.performance ? performance.now() : new Date().getTime();
+              var time = Math.min(1, ((now - startTime) / duration));
+              var timeFunction = easings[easing](time);
+              window.scroll(0, Math.ceil((timeFunction * (destinationOffsetToScroll - start)) + start));
+
+              if (window.pageYOffset === destinationOffsetToScroll) {
+                  if (callback) {
+                      callback();
+                  }
+                  return;
+              }
+
+              requestAnimationFrame(scroll);
+          }
+
+          scroll();
+      }
 
     function tbBorder (el) {
       var margin = el.offsetHeight - el.clientHeight;
@@ -776,7 +862,8 @@
       } else {
         if (currentIteration === (iterations.length - 1) && hideNextBtn === 'Until All items displayed') enableNext();
         if (scrollToTop) {
-          scrollTo(document.body, 0, 600);
+          var elem = document.documentElement || document.body;
+          scrollIt(0, 600, 'easeOutQuad');
         }
       }
       removeClass(container.querySelector('.statement'), 'animate');
@@ -964,8 +1051,8 @@
         container.querySelector('.statement').style.left = -outerWidth(container) + 'px';
 
       }
-
-      if (scrollToTop) scrollTo(document.body, 0, 600);
+	  var elem = document.documentElement || document.body;
+      if (scrollToTop) scrollIt(0, 600, 'easeOutQuad');
       nextBtn.click();
 
     }

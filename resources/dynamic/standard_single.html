@@ -15,7 +15,7 @@ For i = 1 To CurrentQuestion.AvailableResponses.Count
 %}
 <div class="responseItem" data-value="{%= inputValue %}">
 	{% IF image <> "" Then %}
-		<img src="{%= image %}" />
+    <img src="{%= image %}" alt="{%:= caption %}" />
     {% EndIF %}
 	<span class="response_text">{%:= caption %}</span>
 	<div style="clear:both"></div>

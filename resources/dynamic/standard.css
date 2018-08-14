@@ -357,3 +357,21 @@ EndIF
 }
 
 #adc_{%= CurrentADC.InstanceId%} .nextStatement .img, #adc_{%= CurrentADC.InstanceId%} .previousStatement .img { background-position:{%= buttonArrowColour%}; }
+
+
+/* Instead of attribute unselectable and onselectstart not allowed for div in HTML5 */
+#adc_{%= CurrentADC.InstanceId%} .counterContainer, 
+#adc_{%= CurrentADC.InstanceId%} .previousStatement,
+#adc_{%= CurrentADC.InstanceId%} .nextStatement,
+#adc_{%= CurrentADC.InstanceId%} .statement{
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+} 
+
+
+
+
+

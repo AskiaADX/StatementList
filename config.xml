@@ -34,7 +34,8 @@
 		v2.0.10 - Add show counter as chinese number
 		v2.0.11 - Fixed hover styling for small screen
 		v2.0.12 - Fixed scroll to on android device
-		v2.0.13 - Added alt attribute to img]]></description>
+		v2.0.13 - Added alt attribute to img
+				- Modifiacations for HTML5 compatibility]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

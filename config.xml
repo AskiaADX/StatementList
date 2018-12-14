@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.12</version>
+    <version>3.0.0</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -35,7 +35,8 @@
 		v2.0.11 - Fixed hover styling for small screen
 		v2.0.12 - Fixed scroll to on android device
 		v2.0.13 - Added alt attribute to img
-				- Modifiacations for HTML5 compatibility]]></description>
+				- Modifiacations for HTML5 compatibility
+		v3.0.0 - AvailableAnswers]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -44,7 +45,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" />
+      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" RequireLoopDepth="true" />
       <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" checkbox="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>

@@ -1,7 +1,7 @@
 /* standard_single.js */
 {% 
 Dim i 
-Dim ar = CurrentQuestion.ParentLoop.Answers
+Dim ar = CurrentQuestion.ParentLoop.AvailableAnswers
 Dim inputName
 Dim inputId
 Dim caption

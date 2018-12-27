@@ -35,7 +35,7 @@
 		v2.0.11 - Fixed hover styling for small screen
 		v2.0.12 - Fixed scroll to on android device
 		v2.0.13 - Added alt attribute to img
-				- Modifiacations for HTML5 compatibility
+				- Modifications for HTML5 compatibility
 		v3.0.0 - AvailableAnswers]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
@@ -45,13 +45,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" RequireLoopDepth="true" />
+      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" RequireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" checkbox="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="fallback">
-    <output id="standard">
+    <output id="standard" ManageLoopDepth="1">
       <description><![CDATA[Output when the browser support Javascript]]></description>
       <condition><![CDATA[Browser.Support("javascript")]]></condition>
       <content fileName="statementList.css" type="css" mode="static" position="head" />
@@ -76,7 +76,7 @@
       <content fileName="next.png" type="image" mode="static" position="none" />
       <content fileName="prev.png" type="image" mode="static" position="none" />
     </output>
-    <output id="fallback">
+    <output id="fallback" ManageLoopDepth="1">
       <description><![CDATA[Fallback when the browser doesn&acute;t support Javascript]]></description>
       <condition><![CDATA[Not(Browser.Support("javascript"))]]></condition>
       <content fileName="default.css" type="css" mode="static" position="head" />

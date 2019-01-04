@@ -16,6 +16,7 @@ Dim responseSelectedBorderStyle =CurrentADC.PropValue("responseSelectedBorderSty
 Dim borderRadius =CurrentADC.PropValue("borderRadius")
 
 Dim statementTextAlign =CurrentADC.PropValue("statementTextAlign")
+Dim statementImagePosition =CurrentADC.PropValue("statementImagePosition")
 Dim responseTextAlign =CurrentADC.PropValue("responseTextAlign")
 Dim responseImagePosition =CurrentADC.PropValue("responseImagePosition")
 Dim responseContentPosition =CurrentADC.PropValue("responseContentPosition")
@@ -90,34 +91,34 @@ EndIF
 %}
 
 /* General */
-#adc_{%= CurrentADC.InstanceId%} 
-{ 
+#adc_{%= CurrentADC.InstanceId%}
+{
 	text-align:{%= responseAlign%};
 }
 
 /* Statements */
-#adc_{%= CurrentADC.InstanceId%} .statement 
+#adc_{%= CurrentADC.InstanceId%} .statement
 {
-	
+
 	/* Decoration */
 	{% IF CurrentADC.PropValue("statementBorderThickness") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= statementBorderThickness%} {%= statementBorderStyle%} rgb({%= statementBorderColour%});
-	{% EndIF %}	
-	
+	{% EndIF %}
+
 	/* Effects */
-	-webkit-border-radius:	{%= statementBorderRadius%}; 
-	-moz-border-radius:		{%= statementBorderRadius%}; 
-	-khtml-border-radius:	{%= statementBorderRadius%}; 
+	-webkit-border-radius:	{%= statementBorderRadius%};
+	-moz-border-radius:		{%= statementBorderRadius%};
+	-khtml-border-radius:	{%= statementBorderRadius%};
 	border-radius:			{%= statementBorderRadius%};
-	
+
 	-webkit-box-shadow: {%= statementShadow%};
 	-moz-box-shadow: {%= statementShadow%};
 	box-shadow: {%= statementShadow%};
-	
+
 	height: {%= statementHeight%};
-	 
+
 }
 .animate {
     -webkit-transition: all .2s ease-in-out;
@@ -125,20 +126,20 @@ EndIF
      -o-transition: all .2s ease-in-out;
      transition: all .2s ease-in-out;
 }
-#adc_{%= CurrentADC.InstanceId%} .evenStatement 
+#adc_{%= CurrentADC.InstanceId%} .evenStatement
 {
 	background-color: rgb({%= statementColourPrimary%});
 }
 
-#adc_{%= CurrentADC.InstanceId%} .altStatement 
+#adc_{%= CurrentADC.InstanceId%} .altStatement
 {
 
 	background-color: rgb({%= altStatementColourPrimary%});
 
 }
 
-#adc_{%= CurrentADC.InstanceId%} .statement_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .statement_text
+{
 	font-size:{%= statementFontSize%};
 	text-align:{%= statementTextAlign%};
 	color:rgb({%= statementFontColour%});
@@ -146,36 +147,47 @@ EndIF
 	line-height:{%= statementTextLineHeight%};
 }
 
+#adc_{%= CurrentADC.InstanceId%} .statement_image
+{
+	float:{%= statementImagePosition%};
+	margin: 5px;
+	{% IF statementImagePosition = "none" Then %}
+		margin:auto;
+		margin-top: 10px;
+		display:flex;
+	{% EndIF %}
+}
+
 /* Reponses */
-#adc_{%= CurrentADC.InstanceId%} .responseItem 
-{   
-	
+#adc_{%= CurrentADC.InstanceId%} .responseItem
+{
+
 	/* Decoration */
 	{% IF CurrentADC.PropValue("borderThickness") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= borderThickness%} {%= borderStyle%} rgb({%= borderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= responseColourPrimary%});
-	
+
 	/* Effects */
-	-webkit-border-radius:	{%= borderRadius%}; 
-	-moz-border-radius:		{%= borderRadius%}; 
-	-khtml-border-radius:	{%= borderRadius%}; 
+	-webkit-border-radius:	{%= borderRadius%};
+	-moz-border-radius:		{%= borderRadius%};
+	-khtml-border-radius:	{%= borderRadius%};
 	border-radius:			{%= borderRadius%};
-	
+
 	-webkit-box-shadow: {%= responseShadow%};
 	-moz-box-shadow: {%= responseShadow%};
 	box-shadow: {%= responseShadow%};
-	
+
 	text-align: {%= responseContentPosition%};
-		
+
 	height: {%= responseHeight%};
 }
 
 #adc_{%= CurrentADC.InstanceId%} .responseItem:hover
 {
-	
+
 	/* Decoration */
 	{% IF showResponseHoverBorder = "1" Then %}
 		border: {%= responseHoverBorderThickness%} {%= responseHoverBorderStyle%} rgb({%= responseHoverBorderColour%});
@@ -201,131 +213,131 @@ EndIF
     }
 }
 #adc_{%= CurrentADC.InstanceId%} .responseItem img
-{  
+{
 	float:{%= responseImagePosition%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .response_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .response_text
+{
 	display:{%= displayResponseText%};
 	font-size:{%= fontSize%};
 	text-align:{%= responseTextAlign%};
 	color:rgb({%= fontColour%});
-	
+
 	padding:{%= responseTextPadding%};
 	line-height:{%= responseTextLineHeight%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text
+{
 	{% IF showResponseHoverFontColour = "1" Then %}
 		color:rgb({%= responseHoverFontColour%});
 	{% EndIF %}
 }
 @media screen and (max-width: 1000px) {
-    #adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text { 
+    #adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text {
         {% IF showResponseHoverFontColour = "1" Then %}
         color:rgb({%= fontColour %});
         {% EndIF %}
     }
 }
 
-#adc_{%= CurrentADC.InstanceId%} .responseItem.selected, #adc_{%= CurrentADC.InstanceId%} .responseItem.selected:hover 
-{	
-    /* Decoration */	
+#adc_{%= CurrentADC.InstanceId%} .responseItem.selected, #adc_{%= CurrentADC.InstanceId%} .responseItem.selected:hover
+{
+    /* Decoration */
 	{% IF CurrentADC.PropValue("responseSelectedBorderThickness") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= responseSelectedBorderThickness%} {%= responseSelectedBorderStyle%} rgb({%= responseSelectedBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= responseSelectedColourPrimary%}) !important;
-	
+
 	-webkit-box-shadow: {%= responseSelectedShadow%};
 	-moz-box-shadow: {%= responseSelectedShadow%};
 	box-shadow: {%= responseSelectedShadow%};
-	
+
 	/* Effects */
-	-webkit-border-radius:	{%= borderRadius%}; 
-	-moz-border-radius:		{%= borderRadius%}; 
-	-khtml-border-radius:	{%= borderRadius%}; 
+	-webkit-border-radius:	{%= borderRadius%};
+	-moz-border-radius:		{%= borderRadius%};
+	-khtml-border-radius:	{%= borderRadius%};
 	border-radius:			{%= borderRadius%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .responseItem.selected .response_text 
+#adc_{%= CurrentADC.InstanceId%} .responseItem.selected .response_text
 {
 	font-size:{%= fontSize%};
     color:rgb({%= responseSelectedFontColour%});
 }
 
 /* Non Scaled Reponses */
-#adc_{%= CurrentADC.InstanceId%} .ns 
-{   
+#adc_{%= CurrentADC.InstanceId%} .ns
+{
 
 	/* Decoration */
 	{% IF CurrentADC.PropValue("nsResponseBorderThickness") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= nsResponseBorderThickness%} {%= nsResponseBorderStyle%} rgb({%= nsResponseBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= nsResponseColourPrimary%});
-	
+
 	/* Effects */
-	-webkit-border-radius:	{%= borderRadius%}; 
-	-moz-border-radius:		{%= borderRadius%}; 
-	-khtml-border-radius:	{%= borderRadius%}; 
+	-webkit-border-radius:	{%= borderRadius%};
+	-moz-border-radius:		{%= borderRadius%};
+	-khtml-border-radius:	{%= borderRadius%};
 	border-radius:			{%= borderRadius%};
-	
+
 	-webkit-box-shadow: {%= nsResponseShadow%};
 	-moz-box-shadow: {%= nsResponseShadow%};
 	box-shadow: {%= nsResponseShadow%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .ns .response_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .ns .response_text
+{
 	display:block;
 	font-size:{%= fontSize%};
 	color:rgb({%= nsfontColour%});
-	
+
 	padding:{%= responseTextPadding%};
 	line-height:{%= responseTextLineHeight%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .ns.selected, #adc_{%= CurrentADC.InstanceId%} .ns.selected:hover 
-{	
-    /* Decoration */	
+#adc_{%= CurrentADC.InstanceId%} .ns.selected, #adc_{%= CurrentADC.InstanceId%} .ns.selected:hover
+{
+    /* Decoration */
 	{% IF CurrentADC.PropValue("nsResponseSelectedBorderThickness") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= nsResponseSelectedBorderThickness%} {%= nsResponseSelectedBorderStyle%} rgb({%= nsResponseSelectedBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= nsResponseSelectedColourPrimary%}) !important;
-	
+
 	-webkit-box-shadow: {%= nsResponseSelectedShadow%};
 	-moz-box-shadow: {%= nsResponseSelectedShadow%};
 	box-shadow: {%= nsResponseSelectedShadow%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .ns.selected .response_text 
+#adc_{%= CurrentADC.InstanceId%} .ns.selected .response_text
 {
     color:rgb({%= nsResponseSelectedFontColour%});
 }
 
 /* Counter */
 #adc_{%= CurrentADC.InstanceId%} .counterContainer { text-align:{%= counterAlign%}; }
-#adc_{%= CurrentADC.InstanceId%} .counter { 
+#adc_{%= CurrentADC.InstanceId%} .counter {
 	{% IF CurrentADC.PropValue("counterBorderWidth") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= counterBorderWidth%} solid rgb({%= counterBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= counterPrimaryColour%});
-	
-	display:inline-block; 
-	border-radius:{%= counterBorderRadius%}; 
-	margin:10px 0px; 
-	width:30px; 
+
+	display:inline-block;
+	border-radius:{%= counterBorderRadius%};
+	margin:10px 0px;
+	width:30px;
 	height:30px;
-	
+
 	-webkit-box-shadow: {%= counterDropShadow%};
 	-moz-box-shadow: {%= counterDropShadow%};
 	box-shadow: {%= counterDropShadow%};
@@ -335,32 +347,32 @@ EndIF
 #adc_{%= CurrentADC.InstanceId%} .previousStatement,
 #adc_{%= CurrentADC.InstanceId%} .nextStatement,
 #adc_{%= CurrentADC.InstanceId%} .Btn
-{   
+{
 	/* Decoration */
 	{% IF CurrentADC.PropValue("buttonBorderWidth") = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= buttonBorderWidth%} solid rgb({%= buttonBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= buttonPrimaryColour%});
-	
+
 	/* Effects */
-	-webkit-border-radius:	{%= buttonBorderRadius%}; 
-	-moz-border-radius:		{%= buttonBorderRadius%}; 
-	-khtml-border-radius:	{%= buttonBorderRadius%}; 
-	border-radius:			{%= buttonBorderRadius%}; 
-	
+	-webkit-border-radius:	{%= buttonBorderRadius%};
+	-moz-border-radius:		{%= buttonBorderRadius%};
+	-khtml-border-radius:	{%= buttonBorderRadius%};
+	border-radius:			{%= buttonBorderRadius%};
+
 	-webkit-box-shadow: {%= buttonDropShadow%};
 	-moz-box-shadow: {%= buttonDropShadow%};
 	box-shadow: {%= buttonDropShadow%};
-	
+
 }
 
 #adc_{%= CurrentADC.InstanceId%} .nextStatement .img, #adc_{%= CurrentADC.InstanceId%} .previousStatement .img { background-position:{%= buttonArrowColour%}; }
 
 
 /* Instead of attribute unselectable and onselectstart not allowed for div in HTML5 */
-#adc_{%= CurrentADC.InstanceId%} .counterContainer, 
+#adc_{%= CurrentADC.InstanceId%} .counterContainer,
 #adc_{%= CurrentADC.InstanceId%} .previousStatement,
 #adc_{%= CurrentADC.InstanceId%} .nextStatement,
 #adc_{%= CurrentADC.InstanceId%} .statement{
@@ -369,9 +381,4 @@ EndIF
         -khtml-user-select: none;
         -webkit-user-select: none;
         -o-user-select: none;
-} 
-
-
-
-
-
+}

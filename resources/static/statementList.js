@@ -54,7 +54,7 @@
         ? Math.ceil(from)
         : Math.floor(from);
       if (from < 0)        {
-        from += len; 
+        from += len;
       }
 
       for (; from < len; from++) {
@@ -248,6 +248,7 @@
       nextStatements = [].slice.call(container.getElementsByClassName('nextStatement')),
       prevStatements = [].slice.call(container.getElementsByClassName('previousStatement')),
       statementTexts = [].slice.call(container.getElementsByClassName('statement_text'));
+      statementImages = [].slice.call(container.getElementsByClassName('statement_image'));
 
     if (options.topButtons === 'hide both' && !(isMultiple && options.bottomButtons === 'hide both')) {
       el = nextStatements[0];
@@ -335,9 +336,9 @@
               var event = e;
               enterKey(event);
               return true;
-            };    
+            };
         }
-        
+
         var elem = document.documentElement || document.body;
         addEvent(elem, 'keydown', enterKey);
 
@@ -503,7 +504,7 @@
           setTimeout(function() {nextIteration();}, 100);
         }
       } else {
-          setTimeout(function() {nextIteration();}, 100); 
+          setTimeout(function() {nextIteration();}, 100);
       }
 
     }
@@ -530,7 +531,7 @@
 
       } else {
 
-        // Select       
+        // Select
         if (!isExclusive) {
 
           // Check if any exclusive
@@ -619,7 +620,7 @@
     }
 
     // Update the navigation
-    // Hide or display the button 
+    // Hide or display the button
     // if the iteration is the first or last
     function updateNavigation () {
       if (currentIteration > 0 && iterations.length > 0) {
@@ -680,7 +681,7 @@
       }, 200);
 
     }
-      
+
       // Helper function to get an element's exact position
       function getPosition(el) {
           var xPos = 0;
@@ -919,13 +920,13 @@
             if (chineseCounter) {
                 container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1).toLocaleString("zh-Hans-CN-u-nu-hanidec");
             } else {
-            	container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);   
+            	container.querySelector('.counterNumber').textContent = (iterations.length - currentIteration - 1);
             }
         } else {
             if (chineseCounter) {
             	container.querySelector('.counterNumber').textContent = (currentIteration + 1).toLocaleString("zh-Hans-CN-u-nu-hanidec");
             } else {
-            	container.querySelector('.counterNumber').textContent = (currentIteration + 1);   
+            	container.querySelector('.counterNumber').textContent = (currentIteration + 1);
             }
         }
       }
@@ -936,6 +937,17 @@
         statementTexts[i].style.filter = '';
       }
       container.querySelector('.statement_text[data-id="' + (currentIteration + 1) + '"]').style.display = '';
+
+      if(statementImages.length != 0){
+        for (i = 0; i < statementImages.length; i++) {
+          statementImages[i].style.display = 'none';
+          statementImages[i].style.filter = '';
+        }
+
+        try {
+          container.querySelector('.statement_image[data-id="' + (currentIteration + 1) + '"]').style.display = '';
+        } catch (e) {}
+      }
 
       // add alt here
       if (useAltColour) {
@@ -990,12 +1002,22 @@
       }
 
       // Display the info of the current loop iteration
-      // Display the info of the current loop iteration
       for (i = 0; i < statementTexts.length; i++) {
         statementTexts[i].style.display = 'none';
         statementTexts[i].style.filter = '';
       }
       container.querySelector('.statement_text[data-id="' + (currentIteration + 1) + '"]').style.display = '';
+
+      if(statementImages.length != 0){
+        for (i = 0; i < statementImages.length; i++) {
+          statementImages[i].style.display = 'none';
+          statementImages[i].style.filter = '';
+        }
+
+        try {
+          container.querySelector('.statement_image[data-id="' + (currentIteration + 1) + '"]').style.display = '';
+        } catch (e) {}
+      }
 
       // add alt here
       if (useAltColour) {
@@ -1084,9 +1106,9 @@
       addEvent(nextStatements[i], 'click', nextIteration);
     }
 
-    // Refresh the current status on load 
+    // Refresh the current status on load
     if (isMultiple)      {
-      displayIterationMultiple(); 
+      displayIterationMultiple();
     }    else      {
       displayIterationSingle();
     }
@@ -1147,7 +1169,7 @@
           break;
         }
         if (currentIteration <= iterations.length) {
-         currentIteration = (i - 1);   
+         currentIteration = (i - 1);
         } else {
          currentIteration--;
         }
@@ -1162,7 +1184,7 @@
           currentIteration++;
         } else if (currentIteration < (iterations.length - 1)) {
           currentIteration++;
-          // nextIteration(); 
+          // nextIteration();
         } else {
           currentIteration--;
           nextIteration();

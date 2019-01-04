@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>2.0.13</version>
+    <version>2.0.14</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -35,7 +35,9 @@
 		v2.0.11 - Fixed hover styling for small screen
 		v2.0.12 - Fixed scroll to on android device
 		v2.0.13 - Added alt attribute to img
-		     		- Modifiacations for HTML5 compatibility]]></description>
+		     		- Modifiacations for HTML5 compatibility
+    v2.0.14 - Added the statement image for single/multi coded questions
+            - alongs with a new adc property]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -215,6 +217,17 @@
           <option value="right" text="Right" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="statementImagePosition" name="Statement Image Position" type="string" mode="static">
+        <description><![CDATA[
+	          Set position for images in statement in relation to text
+        ]]></description>
+        <value><![CDATA[right]]></value>
+        <options>
+          <option value="none" text="Center" />
+          <option value="left" text="Left" />
+          <option value="right" text="Right" />
+        </options>
+      </property>      
       <property xsi:type="standardProperty" id="responseTextAlign" name="Response Text Alignment" type="string" mode="static">
         <description><![CDATA[
 	          The alignment of the text in the responses

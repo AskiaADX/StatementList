@@ -36,7 +36,9 @@
 		v2.0.12 - Fixed scroll to on android device
 		v2.0.13 - Added alt attribute to img
 				- Modifications for HTML5 compatibility
-		v3.0.0 - AvailableAnswers]]></description>
+		v3.0.0 - AvailableAnswers
+		v3.0.1 - include changes from v2.0.14
+]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -216,6 +218,17 @@
           <option value="right" text="Right" />
         </options>
       </property>
+      <property xsi:type="standardProperty" id="statementImagePosition" name="Statement Image Position" type="string" mode="static">
+        <description><![CDATA[
+	          Set position for images in statement in relation to text
+        ]]></description>
+        <value><![CDATA[right]]></value>
+        <options>
+          <option value="none" text="Center" />
+          <option value="left" text="Left" />
+          <option value="right" text="Right" />
+        </options>
+      </property> 
       <property xsi:type="standardProperty" id="responseTextAlign" name="Response Text Alignment" type="string" mode="static">
         <description><![CDATA[
 	          The alignment of the text in the responses

@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -35,10 +35,12 @@
 		v2.0.11 - Fixed hover styling for small screen
 		v2.0.12 - Fixed scroll to on android device
 		v2.0.13 - Added alt attribute to img
-				- Modifications for HTML5 compatibility
-		v3.0.0 - AvailableAnswers
+		     		- Modifiacations for HTML5 compatibility
+    v2.0.14 - Added the statement image for single/multi coded questions
+            - alongs with a new adc property
+    v3.0.0 - AvailableAnswers
 		v3.0.1 - include changes from v2.0.14
-]]></description>
+            ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -47,13 +49,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" requireLoopDepth="1" />
+      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" RequireLoopDepth="1"/>
       <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" checkbox="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="fallback">
-    <output id="standard" manageLoopDepth="1">
+    <output id="standard" ManageLoopDepth="1">
       <description><![CDATA[Output when the browser support Javascript]]></description>
       <condition><![CDATA[Browser.Support("javascript")]]></condition>
       <content fileName="statementList.css" type="css" mode="static" position="head" />
@@ -78,7 +80,7 @@
       <content fileName="next.png" type="image" mode="static" position="none" />
       <content fileName="prev.png" type="image" mode="static" position="none" />
     </output>
-    <output id="fallback" manageLoopDepth="1">
+    <output id="fallback" ManageLoopDepth="1">
       <description><![CDATA[Fallback when the browser doesn&acute;t support Javascript]]></description>
       <condition><![CDATA[Not(Browser.Support("javascript"))]]></condition>
       <content fileName="default.css" type="css" mode="static" position="head" />
@@ -228,7 +230,7 @@
           <option value="left" text="Left" />
           <option value="right" text="Right" />
         </options>
-      </property> 
+      </property>
       <property xsi:type="standardProperty" id="responseTextAlign" name="Response Text Alignment" type="string" mode="static">
         <description><![CDATA[
 	          The alignment of the text in the responses

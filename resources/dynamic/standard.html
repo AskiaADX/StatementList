@@ -7,9 +7,16 @@
         <div class="statement animate" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
         {%  Dim j
         	Dim caption
-			For j = 1 To CurrentQuestion.ParentLoop.AvailableAnswers.Count
-    			caption = CurrentQuestion.ParentLoop.AvailableAnswers[j].Caption
+          Dim resource
+            For j = 1 To CurrentQuestion.ParentLoop.AvailableAnswers.Count
+                caption = CurrentQuestion.ParentLoop.AvailableAnswers[j].Caption
+                resource = CurrentQuestion.ParentLoop.AvailableAnswers[j].ResourceURL
         %}
+
+        {% IF resource <> "" Then %}
+        <img class="statement_image" data-id="{%= j %}" src="{%= resource %}" alt="{%= caption %}" style="display:none;"/>
+        {% EndIF %}
+
             <span class="statement_text" data-id="{%= j %}" style="display:none;">{%:= caption %}</span>
         {% Next %}
         </div>

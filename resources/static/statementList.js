@@ -251,6 +251,9 @@
       statementImages = [].slice.call(container.getElementsByClassName('statement_image'));
 
     if (options.topButtons === 'hide both' && !(isMultiple && options.bottomButtons === 'hide both')) {
+      container.querySelector('.statement').style.width = getStatementWidth();
+      container.querySelector('.statement').style.float = 'left';
+
       el = nextStatements[0];
       el.parentNode.removeChild(el);
       el = prevStatements[0];
@@ -610,9 +613,22 @@
         ? (previousStatementTopOWidth + previousStatementTopLRBorder)
         : (nextStatementTopOWidth + nextStatementTopLRBorder);
 
+
       if (currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both') {
-        width -= btnWidth;
+        if (options.topButtons == 'show next') {
+          width -= 39;
+        } else if (options.topButtons == 'show back') {
+          width = width;
+        } else {
+          width -= btnWidth - 1;
+        }
       }
+
+      if (options.topButtons == 'hide both'){
+        container.querySelector('.statement').style.width = width + 'px';
+        container.querySelector('.statement').style.float = 'left';
+      }
+
       if (currentIteration < (iterations.length - 1) || options.topButtons != 'hide both') {
         width -= btnWidth;
       }

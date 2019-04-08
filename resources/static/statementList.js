@@ -265,6 +265,7 @@
       el = nextStatements[0];
       el.parentNode.removeChild(el);
     }
+
     nextStatements = [].slice.call(container.getElementsByClassName('nextStatement'));
     prevStatements = [].slice.call(container.getElementsByClassName('previousStatement'));
 
@@ -615,12 +616,16 @@
 
 
       if (currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both') {
-        if (options.topButtons == 'show next') {
-          width -= 39;
-        } else if (options.topButtons == 'show back') {
-          width = width;
+        if (!isMultiple) {
+          if (options.topButtons == 'show next') {
+            width -= 39;
+          } else if (options.topButtons == 'show back') {
+            width = width;
+          } else {
+            width -= btnWidth - 1;
+          }
         } else {
-          width -= btnWidth - 1;
+          width -= btnWidth;
         }
       }
 

@@ -7,7 +7,7 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <date>2013-09-06</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
@@ -49,13 +49,13 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" requireLoopDepth="1"/>
-      <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" checkbox="false" />
+      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" requireLoopDepth="true" />
+      <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="true" textbox="false" checkbox="true" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
   <outputs defaultOutput="fallback">
-    <output id="standard" manageLoopDepth="1">
+    <output id="standard">
       <description><![CDATA[Output when the browser support Javascript]]></description>
       <condition><![CDATA[Browser.Support("javascript")]]></condition>
       <content fileName="statementList.css" type="css" mode="static" position="head" />
@@ -80,7 +80,7 @@
       <content fileName="next.png" type="image" mode="static" position="none" />
       <content fileName="prev.png" type="image" mode="static" position="none" />
     </output>
-    <output id="fallback" manageLoopDepth="1">
+    <output id="fallback">
       <description><![CDATA[Fallback when the browser doesn&acute;t support Javascript]]></description>
       <condition><![CDATA[Not(Browser.Support("javascript"))]]></condition>
       <content fileName="default.css" type="css" mode="static" position="head" />

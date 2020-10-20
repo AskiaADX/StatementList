@@ -138,11 +138,28 @@
       chineseCounter = options.chineseCounter,
       initialWidth = container.clientWidth,
       hideNextBtn = options.hideNextBtn,
-      disableReturn = Boolean(options.disableReturn);
-
+      disableReturn = Boolean(options.disableReturn),
+      durationQuestion = JSON.parse(options.durationQuestion), // Numeric question to store response time
+      timingInterval = options.timingInterval,
+      popupMessage = options.popupMessage,
+      durationInterval,
+      showPopupMessage;
 
     if (!options || !options.iterations || !options.iterations.length) {
       throw new Error('adcStatementList expect an option argument with an array of iterations');
+    }
+
+    if (durationQuestion.type == 'numeric') {
+      var elem = document.documentElement || document.body;
+      addEvent(elem, 'keydown', function(event) {
+          var key = (event.keyCode ? event.keyCode : event.which);
+          if (key == '65' ){ //key A - Yes
+              responseItems[0].click();
+          }
+          if (key == '76' ){ //key L - No
+              responseItems[1].click();
+          }
+      });
     }
 
     nextBtn = document.querySelector('input[name="Next"]');
@@ -472,6 +489,13 @@
       var input = iterations[currentIteration].id,
         value = target.getAttribute('data-value'),
         selectedElements = [].slice.call(container.getElementsByClassName('selected'));
+
+      if (durationQuestion.type == 'numeric') {
+        var durationInput;
+        durationInput = document.getElementById('timerate-'+input.id);
+        window.clearInterval(durationInterval);
+        window.clearInterval(showPopupMessage);
+      }
 
       for (i = 0; i < selectedElements.length; i++) {
         removeClass(selectedElements[i], 'selected');
@@ -908,7 +932,6 @@
 
     // Display the right loop caption and the right responses
     function displayIterationSingle () {
-
       for (i = 0; i < responseItems.length; i++) {
         responseItems[i].onclick = function (e) {
           (!isMultiple) ? selectStatementSingle(this) : selectStatementMulitple(this);
@@ -983,6 +1006,38 @@
         for (i = 0; i < nextStatements.length; i++) {
           nextStatements[i].style.display = '';
           nextStatements[i].style.visibility = 'visible';
+        }
+      }
+
+      if (durationQuestion.type == 'numeric') {
+
+        // TESTING
+        let inputList = document.querySelectorAll("[id^='timerate-']");
+        let spanList = document.querySelectorAll("[id^='sp-']");
+        for (var i = 0; i < inputList.length; i++) {
+          spanList[i].textContent = inputList[i].value;
+        } //
+
+        var startTime = Date.now();
+        var elapsedTimeMs = 0;
+        var input,
+          input = iterations[currentIteration].id;
+        var durationInput,
+          durationInput = document.getElementById('timerate-'+input.id);
+
+          document.getElementById('sp-'+input.id).textContent = durationInput.value;
+
+        if (durationInput.value == 0 | durationInput.value == '') {
+          showPopupMessage = setInterval(function(){
+            window.alert(popupMessage);
+          },timingInterval);
+
+          durationInterval = setInterval(function() {
+            var elapsedTime = Date.now() - startTime;
+            elapsedTimeMs = ((elapsedTime / 1000).toFixed(3)).replace('.','');
+            durationInput.value = elapsedTimeMs;
+            document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
+          }, 10);
         }
       }
     }

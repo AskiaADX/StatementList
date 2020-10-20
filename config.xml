@@ -7,8 +7,8 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>3.0.3</version>
-    <date>2013-09-06</date>
+    <version>3.1.0</version>
+    <date>2020-09-29</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
 			   - added option to enable / disable scroll to top
@@ -39,7 +39,11 @@
     v2.0.14 - Added the statement image for single/multi coded questions
             - alongs with a new adc property
     v3.0.0 - AvailableAnswers
-		v3.0.1 - include changes from v2.0.14]]></description>
+		v3.0.1 - include changes from v2.0.14
+    v3.0.2 -
+    v3.0.3 -
+    v3.1.0 - Added response-timer
+    ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -48,7 +52,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="false" open="false" requireLoopDepth="1" />
+      <constraint on="questions" single="true" multiple="true" requireParentLoop="true" chapter="false" date="false" numeric="true" open="false" requireLoopDepth="1" />
       <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="true" textbox="false" checkbox="true" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
@@ -606,6 +610,24 @@
           <option value="0px 2px 4px rgba(0,0,0,.2)" text="On" />
           <option value="none" text="Off" />
         </options>
+      </property>
+    </category>
+    <category id="responseDuration" name="Response Duration">
+      <property xsi:type="standardProperty" id="durationQuestion" name="Duration Question" type="question" require="false" visible="true">
+        <description><![CDATA[numeric question, stores duration on screen.]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="timingInterval" name="Timing interval" type="number" mode="static">
+        <description><![CDATA[
+          sets the interval for the popup message.
+        ]]></description>
+        <value><![CDATA[6000]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="popupMessage" name="Popup Message" type="string" mode="dynamic">
+        <description><![CDATA[
+          the message to be shown at the intervals
+        ]]></description>
+        <value><![CDATA[Please answer quicker]]></value>
       </property>
     </category>
     <category id="nsResponses" name="Non-Scaled Responses">

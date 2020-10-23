@@ -142,6 +142,7 @@
       durationQuestion = JSON.parse(options.durationQuestion), // Numeric question to store response time
       timingInterval = options.timingInterval,
       popupMessage = options.popupMessage,
+      showDurationTesting = Boolean(options.showDurationTesting) || false,
       durationInterval,
       showPopupMessage;
 
@@ -351,14 +352,14 @@
           if (key == 13 && elt.tagName !== 'TEXTAREA' && elt.type !== 'submit') {
             return false;
           }
-          if (durationQuestion.type == 'numeric') {
-            if (key == '65' ){ //key A - Yes
-                responseItems[0].click();
-            }
-            if (key == '76' ){ //key L - No
-                responseItems[1].click();
-            }
-          }
+          // if (durationQuestion.type == 'numeric') {
+          //   if (key == '65' ){ //key A - Yes
+          //       responseItems[0].click();
+          //   }
+          //   if (key == '76' ){ //key L - No
+          //       responseItems[1].click();
+          //   }
+          // }
         }
         if (typeof NavigatorHandler !== 'undefined') {
         	NavigatorHandler.keydown = function (e) {
@@ -1024,11 +1025,13 @@
       if (durationQuestion.type == 'numeric') {
 
         // TESTING
-        // let inputList = document.querySelectorAll("[id^='timerate-']");
-        // let spanList = document.querySelectorAll("[id^='sp-']");
-        // for (var i = 0; i < inputList.length; i++) {
-        //   spanList[i].textContent = inputList[i].value;
-        // } //
+        if (showDurationTesting) {
+          let inputList = document.querySelectorAll("[id^='timerate-']");
+          let spanList = document.querySelectorAll("[id^='sp-']");
+          for (var i = 0; i < inputList.length; i++) {
+            spanList[i].textContent = inputList[i].value;
+          } //
+        }
 
         var startTime = Date.now();
         var elapsedTimeMs = 0;
@@ -1037,7 +1040,7 @@
         var durationInput,
           durationInput = document.getElementById('timerate-'+input.id);
 
-          // document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
+          if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
 
         if (durationInput.value == 0 | durationInput.value == '') {
           showPopupMessage = setInterval(function(){
@@ -1048,7 +1051,7 @@
             var elapsedTime = Date.now() - startTime;
             elapsedTimeMs = ((elapsedTime / 1000).toFixed(3)).replace('.','');
             durationInput.value = elapsedTimeMs;
-            // document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
+            if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
           }, 10);
         }
       }

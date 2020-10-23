@@ -23,7 +23,7 @@ For i = 1 To CurrentQuestion.AvailableResponses.Count
 </div>
 {% Next %}
 
-<!-- TESTING <br><br><span>**This will be removed after testing**</span>-->
+<!-- TESTING --><br><br><span class="test_line">**This will be removed after testing**</span><br>
 
 {%
 Dim ar = CurrentQuestion.ParentLoop.AvailableAnswers
@@ -43,7 +43,7 @@ IF (durationQuestion.Type = "numeric") Then
 
 <input type="number" id="timerate-{%= inputId %}" name="{%= inputNameDQ %}" value="{%= inputValueDQ %}" style="display:none;" />
 
-<!-- TESTING <br>{'%:= CurrentQuestion.ParentLoop.AvailableResponses[j].Caption %} : <span id="sp-{'%= inputId %}"></span>-->
+<!-- TESTING --><span class="test_line">{%:= CurrentQuestion.ParentLoop.AvailableResponses[j].Caption %} : <span id="sp-{%= inputId %}"></span></span>
 
 {% EndIF %}
 

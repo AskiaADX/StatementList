@@ -6,6 +6,7 @@ DomReady.ready(function() {
         durationQuestion: '{%:= CurrentADC.PropQuestion("durationQuestion").ToString() %}',
         timingInterval: '{%= CurrentADC.PropValue("timingInterval") %}',
         popupMessage: '{%= CurrentADC.PropValue("popupMessage") %}',
+        showDurationTesting: {%= (CurrentADC.PropValue("showDurationTesting") = "1") %},
     		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',
     		controlWidth : '{%= CurrentADC.PropValue("controlWidth") %}',
     		maxImageWidth : '{%= CurrentADC.PropValue("maxImageWidth") %}',

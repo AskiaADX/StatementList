@@ -617,7 +617,7 @@
         <description><![CDATA[numeric question, stores duration on screen.]]></description>
         <value></value>
       </property>
-      <property xsi:type="standardProperty" id="timingInterval" name="Timing interval" type="number" mode="static">
+      <property xsi:type="standardProperty" id="timingInterval" name="Timing Interval" type="number" mode="static">
         <description><![CDATA[
           sets the interval for the popup message.
         ]]></description>
@@ -628,6 +628,14 @@
           the message to be shown at the intervals
         ]]></description>
         <value><![CDATA[Please answer quicker]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="showDurationTesting" name="Show Duration For Testing" type="string" mode="dynamic" require="true" visible="false">
+        <description><![CDATA[This will show/hide response durations for testing purposes]]></description>
+        <value><![CDATA[0]]></value>
+        <options>
+          <option value="1" text="Yes" />
+          <option value="0" text="No" />
+        </options>
       </property>
     </category>
     <category id="nsResponses" name="Non-Scaled Responses">

@@ -82,6 +82,8 @@ Dim buttonPrimaryColour =CurrentADC.PropValue("buttonPrimaryColour")
 Dim buttonDropShadow =CurrentADC.PropValue("buttonDropShadow")
 Dim buttonArrowColour =CurrentADC.PropValue("buttonArrowColour")
 
+Dim showDurationTesting = CurrentADC.PropValue("showDurationTesting")
+
 IF responseHeight = "" Then
 	responseHeight = "auto"
 EndIF
@@ -267,6 +269,16 @@ EndIF
 {
 	font-size:{%= fontSize%};
     color:rgb({%= responseSelectedFontColour%});
+}
+
+/* Response Duration */
+#adc_{%= CurrentADC.InstanceId%} .test_line
+{
+	{% If showDurationTesting = "1" Then %}
+		display: block;
+	{% Else %}
+		display: none;
+	{% EndIF %}
 }
 
 /* Non Scaled Reponses */

@@ -151,8 +151,12 @@
 
     if (durationQuestion.type == 'numeric') {
       var elem = document.documentElement || document.body;
-      addEvent(elem, 'keydown', function(event) {
-          var key = (event.keyCode ? event.keyCode : event.which);
+      addEvent(elem, 'keydown', function(e) {
+          if (!e) {
+            e = window.event; // Get event details for IE
+            e.which = e.keyCode; // assign which property (so rest of the code works using e.which)
+          }
+          var key = e.which || e.keyCode;
           if (key == '65' ){ //key A - Yes
               responseItems[0].click();
           }
@@ -346,6 +350,14 @@
           var key = e.which || e.keyCode;
           if (key == 13 && elt.tagName !== 'TEXTAREA' && elt.type !== 'submit') {
             return false;
+          }
+          if (durationQuestion.type == 'numeric') {
+            if (key == '65' ){ //key A - Yes
+                responseItems[0].click();
+            }
+            if (key == '76' ){ //key L - No
+                responseItems[1].click();
+            }
           }
         }
         if (typeof NavigatorHandler !== 'undefined') {
@@ -860,7 +872,6 @@
           width: width
         };
       if (currentIteration > (iterations.length - 1)) {
-
         if (autoForward) {
 
           //$container.find('.statement').animate(css, options.animationSpeed);
@@ -876,6 +887,7 @@
 
         } else {
           currentIteration--;
+
           for (i = 0; i < nextStatements.length; i++) {
             if (nextStatements[i].style.display !== 'none') {
               nextStatements[i].style.display = 'none';
@@ -1012,11 +1024,11 @@
       if (durationQuestion.type == 'numeric') {
 
         // TESTING
-        let inputList = document.querySelectorAll("[id^='timerate-']");
-        let spanList = document.querySelectorAll("[id^='sp-']");
-        for (var i = 0; i < inputList.length; i++) {
-          spanList[i].textContent = inputList[i].value;
-        } //
+        // let inputList = document.querySelectorAll("[id^='timerate-']");
+        // let spanList = document.querySelectorAll("[id^='sp-']");
+        // for (var i = 0; i < inputList.length; i++) {
+        //   spanList[i].textContent = inputList[i].value;
+        // } //
 
         var startTime = Date.now();
         var elapsedTimeMs = 0;
@@ -1025,7 +1037,7 @@
         var durationInput,
           durationInput = document.getElementById('timerate-'+input.id);
 
-          document.getElementById('sp-'+input.id).textContent = durationInput.value;
+          // document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
 
         if (durationInput.value == 0 | durationInput.value == '') {
           showPopupMessage = setInterval(function(){
@@ -1036,7 +1048,7 @@
             var elapsedTime = Date.now() - startTime;
             elapsedTimeMs = ((elapsedTime / 1000).toFixed(3)).replace('.','');
             durationInput.value = elapsedTimeMs;
-            document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
+            // document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
           }, 10);
         }
       }

@@ -536,12 +536,22 @@
         }
       }
 
-      if (nextStatements.length > 0) {
-        if (autoForward) {
-          setTimeout(function() {nextIteration();}, 100);
+      if (durationQuestion.type == 'numeric') {
+        if (nextStatements.length > 0) {
+          if (autoForward) {
+            setTimeout(function() {nextIteration();}, 10);
+          }
+        } else {
+          setTimeout(function() {nextIteration();}, 10);
         }
       } else {
+        if (nextStatements.length > 0) {
+          if (autoForward) {
+            setTimeout(function() {nextIteration();}, 100);
+          }
+        } else {
           setTimeout(function() {nextIteration();}, 100);
+        }
       }
 
     }
@@ -881,10 +891,18 @@
           var leftPos = container.querySelector('.statement').style.left;
           container.querySelector('.statement').style.left = -outerWidth(container) + 'px';
           container.querySelector('.statement').style.width = css.width + 'px';
-          setTimeout(function () {
-            container.querySelector('.statement').style.left = 0 + 'px';
-            nextBtn.click();
-          }, 200);
+
+          if (durationQuestion.type == 'numeric') {
+            setTimeout(function () {
+              container.querySelector('.statement').style.left = 0 + 'px';
+              nextBtn.click();
+            }, 10);
+          } else {
+            setTimeout(function () {
+              container.querySelector('.statement').style.left = 0 + 'px';
+              nextBtn.click();
+            }, 200);
+          }
 
         } else {
           currentIteration--;
@@ -917,10 +935,18 @@
       var leftPos = container.querySelector('.statement').style.left;
       container.querySelector('.statement').style.left = -outerWidth(container) + 'px';
 
-      setTimeout(function () {
-        container.querySelector('.statement').style.left = 0 + 'px';
-        //onAnimationComplete();
-      }, 200);
+      if (durationQuestion.type == 'numeric') {
+
+        setTimeout(function () {
+          container.querySelector('.statement').style.left = 0 + 'px';
+          //onAnimationComplete();
+        }, 10);
+      } else {
+        setTimeout(function () {
+          container.querySelector('.statement').style.left = 0 + 'px';
+          //onAnimationComplete();
+        }, 200);
+      }
 
     }
 
@@ -945,6 +971,40 @@
 
     // Display the right loop caption and the right responses
     function displayIterationSingle () {
+
+      if (durationQuestion.type == 'numeric') {
+        // TESTING
+        if (showDurationTesting) {
+          let inputList = document.querySelectorAll("[id^='timerate-']");
+          let spanList = document.querySelectorAll("[id^='sp-']");
+          for (var i = 0; i < inputList.length; i++) {
+            spanList[i].textContent = inputList[i].value;
+          }
+        } //
+
+        var startTime = Date.now();
+        var elapsedTimeMs = 0;
+        var input,
+          input = iterations[currentIteration].id;
+        var durationInput,
+          durationInput = document.getElementById('timerate-'+input.id);
+
+          if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
+
+        if (durationInput.value == 0 | durationInput.value == '') {
+          showPopupMessage = setInterval(function(){
+            window.alert(popupMessage);
+          },timingInterval);
+
+          durationInterval = setInterval(function() {
+            var elapsedTime = Date.now() - startTime;
+            elapsedTimeMs = ((elapsedTime / 1000).toFixed(3)).replace('.','');
+            durationInput.value = elapsedTimeMs;
+            if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
+          }, 10);
+        }
+      }
+
       for (i = 0; i < responseItems.length; i++) {
         responseItems[i].onclick = function (e) {
           (!isMultiple) ? selectStatementSingle(this) : selectStatementMulitple(this);
@@ -1019,40 +1079,6 @@
         for (i = 0; i < nextStatements.length; i++) {
           nextStatements[i].style.display = '';
           nextStatements[i].style.visibility = 'visible';
-        }
-      }
-
-      if (durationQuestion.type == 'numeric') {
-
-        // TESTING
-        if (showDurationTesting) {
-          let inputList = document.querySelectorAll("[id^='timerate-']");
-          let spanList = document.querySelectorAll("[id^='sp-']");
-          for (var i = 0; i < inputList.length; i++) {
-            spanList[i].textContent = inputList[i].value;
-          } //
-        }
-
-        var startTime = Date.now();
-        var elapsedTimeMs = 0;
-        var input,
-          input = iterations[currentIteration].id;
-        var durationInput,
-          durationInput = document.getElementById('timerate-'+input.id);
-
-          if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
-
-        if (durationInput.value == 0 | durationInput.value == '') {
-          showPopupMessage = setInterval(function(){
-            window.alert(popupMessage);
-          },timingInterval);
-
-          durationInterval = setInterval(function() {
-            var elapsedTime = Date.now() - startTime;
-            elapsedTimeMs = ((elapsedTime / 1000).toFixed(3)).replace('.','');
-            durationInput.value = elapsedTimeMs;
-            if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = elapsedTimeMs; //TESTING
-          }, 10);
         }
       }
     }
@@ -1262,7 +1288,11 @@
         }
       }
     }
-    setTimeout(function(){ document.querySelector("#adc_" + this.instanceId).style.visibility = 'visible'; }, 300);
+    if (durationQuestion.type == 'numeric') {
+      setTimeout(function(){ document.querySelector("#adc_" + this.instanceId).style.visibility = 'visible'; }, 10);
+    } else {
+      setTimeout(function(){ document.querySelector("#adc_" + this.instanceId).style.visibility = 'visible'; }, 300);
+    }
   }
 
   window.StatementList = StatementsList;

@@ -394,3 +394,29 @@ EndIF
         -webkit-user-select: none;
         -o-user-select: none;
 }
+
+#adc_{%= CurrentADC.InstanceId%} .wrong {
+  position: absolute;
+  width: 43px;
+  height: 43px;
+  opacity: 1;
+  text-align:center;
+}
+#adc_{%= CurrentADC.InstanceId%} .wrong:before,
+#adc_{%= CurrentADC.InstanceId%} .wrong:after {
+  position: absolute;
+  content: '';
+  height: 43px;
+  width: 7px;
+	background-color: rgb({%= responseSelectedColourPrimary%}) !important;
+
+	-webkit-box-shadow: {%= responseSelectedShadow%};
+	-moz-box-shadow: {%= responseSelectedShadow%};
+	box-shadow: {%= responseSelectedShadow%};
+}
+#adc_{%= CurrentADC.InstanceId%} .wrong:before {
+  transform: rotate(45deg);
+}
+#adc_{%= CurrentADC.InstanceId%} .wrong:after {
+  transform: rotate(-45deg);
+}

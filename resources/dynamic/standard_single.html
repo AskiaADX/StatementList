@@ -6,6 +6,7 @@ Dim inputId
 Dim image
 Dim attrChecked
 Dim durationQuestion = CurrentADC.PropQuestion("durationQuestion")
+Dim checkQuestion = CurrentADC.PropQuestion("checkQuestion")
 
 Dim i
 For i = 1 To CurrentQuestion.AvailableResponses.Count
@@ -32,13 +33,24 @@ For j = 1 To ar.Count
     inputName = CurrentQuestion.Iteration(ar[j].Index).InputName()
     inputId   = inputName
     inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
+    Dim qValue = CurrentQuestion.Iteration(ar[j].Index).value
 %}
-<input type="hidden" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}"  />
+<input type="hidden" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}" data-value="{%= qValue %}" />
+
+{% IF (checkQuestion.Type = "single") Then
+  Dim inputNameCQ		= checkQuestion.Iteration(ar[j].Index).InputName()
+  Dim inputValueCQ		= checkQuestion.Iteration(ar[j].Index).InputValue()
+  Dim checkQValue  = checkQuestion.Iteration(ar[j].Index).value
+%}
+
+<input type="hidden" id="check-{%= inputId %}" name="{%= inputNameCQ %}" value="{%= inputValueCQ %}" data-value="{%= checkQValue %}"/>
+
+{% EndIF %}
 
 {%
-IF (durationQuestion.Type = "numeric") Then
-  Dim inputNameDQ		= durationQuestion.Iteration(ar[j].Index).InputName()
-  Dim inputValueDQ  = durationQuestion.Iteration(ar[j].Index).InputValue()
+  IF (durationQuestion.Type = "numeric") Then
+    Dim inputNameDQ		= durationQuestion.Iteration(ar[j].Index).InputName()
+    Dim inputValueDQ  = durationQuestion.Iteration(ar[j].Index).InputValue()
 %}
 
 <input type="number" id="timerate-{%= inputId %}" name="{%= inputNameDQ %}" value="{%= inputValueDQ %}" style="display:none;" />
@@ -48,3 +60,5 @@ IF (durationQuestion.Type = "numeric") Then
 {% EndIF %}
 
 {% Next %}
+
+<div style="text-align:center; padding-bottom:50px"><a id="icon" href="#"></div>

@@ -140,6 +140,7 @@
       hideNextBtn = options.hideNextBtn,
       disableReturn = Boolean(options.disableReturn),
       durationQuestion = JSON.parse(options.durationQuestion), // Numeric question to store response time
+      checkQuestion = JSON.parse(options.checkQuestion), // Single-coded question to validate response
       timingInterval = options.timingInterval,
       popupMessage = options.popupMessage,
       showDurationTesting = Boolean(options.showDurationTesting) || false,
@@ -352,14 +353,6 @@
           if (key == 13 && elt.tagName !== 'TEXTAREA' && elt.type !== 'submit') {
             return false;
           }
-          // if (durationQuestion.type == 'numeric') {
-          //   if (key == '65' ){ //key A - Yes
-          //       responseItems[0].click();
-          //   }
-          //   if (key == '76' ){ //key L - No
-          //       responseItems[1].click();
-          //   }
-          // }
         }
         if (typeof NavigatorHandler !== 'undefined') {
         	NavigatorHandler.keydown = function (e) {
@@ -504,10 +497,11 @@
         selectedElements = [].slice.call(container.getElementsByClassName('selected'));
 
       if (durationQuestion.type == 'numeric') {
-        var durationInput;
-        durationInput = document.getElementById('timerate-'+input.id);
-        window.clearInterval(durationInterval);
-        window.clearInterval(showPopupMessage);
+        if (target.classList.contains('responseItem') & target.previousElementSibling.classList.contains('responseItem')) {
+          input.dataset.value = 2;
+        } else if(target.classList.contains('responseItem') & target.nextElementSibling.classList.contains('responseItem')) {
+          input.dataset.value = 1;
+        }
       }
 
       for (i = 0; i < selectedElements.length; i++) {
@@ -537,13 +531,31 @@
       }
 
       if (durationQuestion.type == 'numeric') {
-        if (nextStatements.length > 0) {
+        if (nextStatements.length >= 0) {
           if (autoForward) {
-            setTimeout(function() {nextIteration();}, 10);
+            if (checkQuestion.type == 'single'){
+              if (document.getElementById('check-'+input.id).getAttribute('data-value') == input.getAttribute('data-value')){
+                document.querySelector('#icon').classList.remove("wrong");
+
+                var durationInput = document.getElementById('timerate-'+input.id);
+                window.clearInterval(durationInterval);
+                window.clearInterval(showPopupMessage);
+                setTimeout(function() {nextIteration();}, 10);
+              } else {
+                // Error given
+                document.querySelector('#icon').classList.add("wrong");
+              }
+            } else {
+              var durationInput = document.getElementById('timerate-'+input.id);
+              window.clearInterval(durationInterval);
+              window.clearInterval(showPopupMessage);
+              setTimeout(function() {nextIteration();}, 10);
+            }
           }
-        } else {
-          setTimeout(function() {nextIteration();}, 10);
+        // } else {
+        //   setTimeout(function() {nextIteration();}, 10);
         }
+
       } else {
         if (nextStatements.length > 0) {
           if (autoForward) {

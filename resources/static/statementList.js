@@ -539,7 +539,7 @@
 
                 var durationInput = document.getElementById('timerate-'+input.id);
                 window.clearInterval(durationInterval);
-                window.clearInterval(showPopupMessage);
+                clearTimeout(showPopupMessage);
                 setTimeout(function() {nextIteration();}, 10);
               } else {
                 // Error given
@@ -548,7 +548,7 @@
             } else {
               var durationInput = document.getElementById('timerate-'+input.id);
               window.clearInterval(durationInterval);
-              window.clearInterval(showPopupMessage);
+              clearTimeout(showPopupMessage);
               setTimeout(function() {nextIteration();}, 10);
             }
           }
@@ -1004,7 +1004,7 @@
           if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
 
         if (durationInput.value == 0 | durationInput.value == '') {
-          showPopupMessage = setInterval(function(){
+          showPopupMessage =  setTimeout(function(){
             window.alert(popupMessage);
           },timingInterval);
 

@@ -145,8 +145,7 @@
       popupMessage = options.popupMessage,
       showDurationTesting = Boolean(options.showDurationTesting) || false,
       durationInterval,
-      showPopupMessage,
-      isActive = "active";
+      showPopupMessage;
 
     if (!options || !options.iterations || !options.iterations.length) {
       throw new Error('adcStatementList expect an option argument with an array of iterations');
@@ -161,10 +160,14 @@
           }
           var key = e.which || e.keyCode;
           if (key == '65' ){ //key A - Yes
+            if (document.getElementById("popupModal").classList.contains("hide")) {
               responseItems[0].click();
+            }
           }
           if (key == '76' ){ //key L - No
+            if (document.getElementById("popupModal").classList.contains("hide")) {
               responseItems[1].click();
+            }
           }
       });
     }
@@ -540,7 +543,6 @@
 
                 var durationInput = document.getElementById('timerate-'+input.id);
                 window.clearInterval(durationInterval);
-                // window.clearInterval(showPopupMessage);
                 setTimeout(function() {nextIteration();}, 10);
               } else {
                 // Error given
@@ -549,12 +551,9 @@
             } else {
               var durationInput = document.getElementById('timerate-'+input.id);
               window.clearInterval(durationInterval);
-              // window.clearInterval(showPopupMessage);
               setTimeout(function() {nextIteration();}, 10);
             }
           }
-        // } else {
-        //   setTimeout(function() {nextIteration();}, 10);
         }
         window.clearInterval(showPopupMessage);
       } else {

@@ -62,3 +62,47 @@ For j = 1 To ar.Count
 {% Next %}
 
 <div style="text-align:center; padding-bottom:50px"><a id="icon" href="#"></div>
+
+  <style>
+  .popup-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 40vh;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.1);
+  }
+  .popup-modal-content {
+    text-align:center;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 200px;
+  }
+  .hide {
+    display:none;
+  }
+  .ok {
+    cursor:pointer;
+  }
+  .popup-modal-content > p {
+    color:black;
+  }
+  </style>
+  <!-- <button id="modalOpen">Open Modal</button> -->
+
+  <div id="popupModal" class="popup-modal">
+    <div class="popup-modal-content">
+      <p>{%:= CurrentADC.PropValue("popupMessage") %}</p>
+      <input type="button" class="ok" value="OK">
+    </div>
+  </div>
+
+  <script>
+  </script>

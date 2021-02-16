@@ -145,7 +145,8 @@
       popupMessage = options.popupMessage,
       showDurationTesting = Boolean(options.showDurationTesting) || false,
       durationInterval,
-      showPopupMessage;
+      showPopupMessage,
+      isActive = "active";
 
     if (!options || !options.iterations || !options.iterations.length) {
       throw new Error('adcStatementList expect an option argument with an array of iterations');
@@ -539,7 +540,7 @@
 
                 var durationInput = document.getElementById('timerate-'+input.id);
                 window.clearInterval(durationInterval);
-                clearTimeout(showPopupMessage);
+                // window.clearInterval(showPopupMessage);
                 setTimeout(function() {nextIteration();}, 10);
               } else {
                 // Error given
@@ -548,14 +549,14 @@
             } else {
               var durationInput = document.getElementById('timerate-'+input.id);
               window.clearInterval(durationInterval);
-              clearTimeout(showPopupMessage);
+              // window.clearInterval(showPopupMessage);
               setTimeout(function() {nextIteration();}, 10);
             }
           }
         // } else {
         //   setTimeout(function() {nextIteration();}, 10);
         }
-
+        window.clearInterval(showPopupMessage);
       } else {
         if (nextStatements.length > 0) {
           if (autoForward) {
@@ -564,6 +565,7 @@
         } else {
           setTimeout(function() {nextIteration();}, 100);
         }
+        window.clearInterval(showPopupMessage);
       }
 
     }
@@ -985,6 +987,22 @@
     function displayIterationSingle () {
 
       if (durationQuestion.type == 'numeric') {
+        var modal = document.getElementById("popupModal");
+        var btn = document.getElementById("modalOpen");
+        var okBtn = document.getElementsByClassName("ok")[0];
+
+        okBtn.onclick = function() {
+          modal.style.display = "none";
+          modal.classList.add("hide");
+        }
+
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            modal.classList.add("hide");
+          }
+        }
+
         // TESTING
         if (showDurationTesting) {
           let inputList = document.querySelectorAll("[id^='timerate-']");
@@ -1001,12 +1019,13 @@
         var durationInput,
           durationInput = document.getElementById('timerate-'+input.id);
 
-          if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
+        if (showDurationTesting) document.getElementById('sp-'+input.id).textContent = durationInput.value; // TESTING
 
         if (durationInput.value == 0 | durationInput.value == '') {
-          showPopupMessage =  setTimeout(function(){
-            window.alert(popupMessage);
-          },timingInterval);
+            showPopupMessage =  setInterval(function(){
+              document.getElementById("popupModal").style.display = "block";
+              document.getElementById("popupModal").classList.remove("hide");
+            },timingInterval);
 
           durationInterval = setInterval(function() {
             var elapsedTime = Date.now() - startTime;

@@ -993,12 +993,22 @@
         okBtn.onclick = function() {
           modal.style.display = "none";
           modal.classList.add("hide");
+          window.clearInterval(showPopupMessage);
+          showPopupMessage =  setInterval(function(){
+            document.getElementById("popupModal").style.display = "block";
+            document.getElementById("popupModal").classList.remove("hide");
+          },timingInterval);
         }
 
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = "none";
             modal.classList.add("hide");
+            window.clearInterval(showPopupMessage);
+            showPopupMessage =  setInterval(function(){
+              document.getElementById("popupModal").style.display = "block";
+              document.getElementById("popupModal").classList.remove("hide");
+            },timingInterval);
           }
         }
 

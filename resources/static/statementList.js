@@ -145,7 +145,8 @@
       popupMessage = options.popupMessage,
       showDurationTesting = Boolean(options.showDurationTesting) || false,
       durationInterval,
-      showPopupMessage;
+      showPopupMessage,
+      modalShownCount = 0;
 
     if (!options || !options.iterations || !options.iterations.length) {
       throw new Error('adcStatementList expect an option argument with an array of iterations');

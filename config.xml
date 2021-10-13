@@ -7,8 +7,8 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>3.0.3</version>
-    <date>2013-09-06</date>
+    <version>3.1.0</version>
+    <date>2021-10-13</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
 			   - added option to enable / disable scroll to top
@@ -39,7 +39,10 @@
     v2.0.14 - Added the statement image for single/multi coded questions
             - alongs with a new adc property
     v3.0.0 - AvailableAnswers
-		v3.0.1 - include changes from v2.0.14]]></description>
+		v3.0.1 - include changes from v2.0.14
+    v3.0.2 -
+    v3.0.3 -
+    v3.1.0 - share directory removed]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -62,15 +65,15 @@
       <content fileName="standard.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="standard_single.html" type="html" mode="dynamic" position="none" />
       <content fileName="standard_multiple.html" type="html" mode="dynamic" position="none" />
-      <content fileName="es5-shim.min.js" type="javascript" mode="share" position="head">
+      <content fileName="es5-shim.min.js" type="javascript" mode="static" position="head">
         <yield><![CDATA[
           <!--[if lt IE 10]>
-            <script type="text/javascript" src="{%= CurrentADC.URLTo("share/es5-shim.min.js") %}"></script>
+            <script type="text/javascript" src="{%= CurrentADC.URLTo("static/es5-shim.min.js") %}"></script>
           <![endif]-->
         ]]></yield>
       </content>
-      <content fileName="domready.js" type="javascript" mode="share" position="head" />
-      <content fileName="rainbowvis.js" type="javascript" mode="share" position="head" />
+      <content fileName="domready.js" type="javascript" mode="static" position="head" />
+      <content fileName="rainbowvis.js" type="javascript" mode="static" position="head" />
       <content fileName="statementList.js" type="javascript" mode="static" position="head" />
       <content fileName="standard.js" type="javascript" mode="dynamic" position="foot" />
       <content fileName="standard_single.js" type="javascript" mode="dynamic" position="none" />

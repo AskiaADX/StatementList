@@ -7,8 +7,8 @@
   <info>
     <name>StatementList</name>
     <guid>995b8259-2cec-4368-b733-d7ea6eec68a9</guid>
-    <version>3.1.0</version>
-    <date>2021-10-13</date>
+    <version>3.2.0</version>
+    <date>2022-09-28</date>
     <description><![CDATA[v1.0.5 - removed CSS3 Pie
 		v1.0.6 - enabled control to be used in loops
 			   - added option to enable / disable scroll to top
@@ -42,7 +42,10 @@
 		v3.0.1 - include changes from v2.0.14
     v3.0.2 -
     v3.0.3 -
-    v3.1.0 - share directory removed]]></description>
+    v3.1.0 - share directory removed
+    v3.2.0 - Libraries updated,
+           - Design 5.6 errors fixed.
+    ]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

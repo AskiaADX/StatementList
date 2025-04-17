@@ -140,7 +140,6 @@
       hideNextBtn = options.hideNextBtn,
       disableReturn = Boolean(options.disableReturn);
 
-
     if (!options || !options.iterations || !options.iterations.length) {
       throw new Error('adcStatementList expect an option argument with an array of iterations');
     }
@@ -582,14 +581,21 @@
 
       }
 
-      var width = container.offsetWidth;
+      var width = '100%'; // container.offsetWidth;
+        
+      var btnWidth = 0;
       if (container.querySelector('.previousStatement.top').style.display == '') {
-        width -= outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'));
+        // width -= outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'));
+          btnWidth += outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'));
+          // width = 'calc(100% - ' + (outerWidth(container.querySelector('.previousStatement.top')) + lrBorder(container.querySelector('.previousStatement.top'))) + 'px)';
       }
       if (container.querySelector('.nextStatement.top').style.display == '') {
-        width -= outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'));
-      }
-      container.querySelector('.statement').style.width = width + 'px';
+        // width -= outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'));
+        btnWidth +=  outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'));
+          // width = 'calc(100% - ' + (outerWidth(container.querySelector('.nextStatement.top')) + lrBorder(container.querySelector('.nextStatement.top'))) + 'px)';
+      }        
+        
+      container.querySelector('.statement').style.width = 'calc(100% - ' + btnWidth + 'px)';
       if (checkAllAnswered() === iterations.length && hideNextBtn === 'Until All items answered') {
         enableNext();
       } else if (checkAllAnswered() !== iterations.length && hideNextBtn === 'Until All items answered') {
@@ -608,15 +614,22 @@
         nextStatementTopLRBorder = container.querySelector('.nextStatement.top') ? lrBorder(container.querySelector('.nextStatement.top')) : 0,
         btnWidth = previousStatementTopOWidth > nextStatementTopOWidth
         ? (previousStatementTopOWidth + previousStatementTopLRBorder)
-        : (nextStatementTopOWidth + nextStatementTopLRBorder);
+        : (nextStatementTopOWidth + nextStatementTopLRBorder),
+        totalBtnWidth = 0;
 
       if (currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both') {
         width -= btnWidth;
+          totalBtnWidth += btnWidth;
       }
       if (currentIteration < (iterations.length - 1) || options.topButtons != 'hide both') {
         width -= btnWidth;
+           totalBtnWidth += btnWidth;
       }
-      return width - 2;
+      // return width - 2;
+      return {
+      	width: (width - 2),
+        btnWidth: totalBtnWidth
+      }
     }
 
     // Update the navigation
@@ -660,7 +673,7 @@
       }
       currentIteration--;
 
-      var width = (getStatementWidth() - 3),
+      var width = (getStatementWidth().width - 3),
         css = {
           opacity: 0,
           left: '-=' + width,
@@ -829,7 +842,7 @@
       }
 
       currentIteration++;
-      var width = (getStatementWidth() - 3),
+      var width = (getStatementWidth().width - 3),
         css = {
           opacity: 0,
           left: '-=' + width,
@@ -895,13 +908,14 @@
       var width = getStatementWidth(),
         css = {
           opacity: 1,
-          left: '+=' + width,
-          width: width
+          left: '+=' + width.width,
+          width: width.width
         };
 
       //$container.find('.statement').animate(css, options.animationSpeed);
       container.querySelector('.statement').style.opacity = css.opacity;
-      container.querySelector('.statement').style.width = css.width + 'px';
+      // container.querySelector('.statement').style.width = css.width + 'px';
+      container.querySelector('.statement').style.width = 'calc(100% - ' + width.btnWidth + 'px)';
       var leftPos = container.querySelector('.statement').style.left;
       container.querySelector('.statement').style.left = 0 + 'px';
     }
@@ -1127,10 +1141,10 @@
       }
 
       var nextStatementWidth = (container.querySelector('.nextStatement.top') ? outerWidth(container.querySelector('.nextStatement.top')) : 0);
-      container.querySelector('.statement').style.width =
-        container.clientWidth - (nextStatementWidth + 2 + lrBorder(document.querySelector('.statement'))) + 'px';
+      // container.querySelector('.statement').style.width =   container.clientWidth - (nextStatementWidth + 2 + lrBorder(document.querySelector('.statement'))) + 'px';
+      container.querySelector('.statement').style.width = 'calc(100% - ' +   (nextStatementWidth + 2 + lrBorder(document.querySelector('.statement'))) + 'px)';
       container.querySelector('.statement').style.float = 'left';
-
+        
       for (i = 0; i < nextStatements.length; i++) {
         nextStatements[i].style.height = container.querySelector('.statement').clientHeight + 'px';
       }

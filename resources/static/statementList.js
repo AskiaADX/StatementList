@@ -603,18 +603,44 @@
       }
     }
 
+    // Measure a navigation button even when it is currently display:none.
+    // The statement width must reserve the button's space before the button
+    // becomes visible, otherwise the float can briefly wrap underneath.
+    function getNavigationButtonWidth (el) {
+      if (!el) {
+        return 0;
+      }
+
+      var oldDisplay = el.style.display,
+        oldVisibility = el.style.visibility,
+        wasHidden = (oldDisplay === 'none');
+
+      if (wasHidden) {
+        // Make it measurable without making it visible to the respondent.
+        el.style.visibility = 'hidden';
+        el.style.display = 'block';
+      }
+
+      var width = outerWidth(el) + lrBorder(el);
+
+      if (wasHidden) {
+        el.style.display = oldDisplay;
+        el.style.visibility = oldVisibility;
+      }
+
+      return width;
+    }
+
     // Returns the width of the statement
     // according if the iteration is the first or the last
     function getStatementWidth () {
 
       var width = container.clientWidth,
-        previousStatementTopOWidth = container.querySelector('.previousStatement.top') ? outerWidth(container.querySelector('.previousStatement.top')) : 0,
-        previousStatementTopLRBorder = container.querySelector('.previousStatement.top') ? lrBorder(container.querySelector('.previousStatement.top')) : 0,
-        nextStatementTopOWidth = container.querySelector('.nextStatement.top') ? outerWidth(container.querySelector('.nextStatement.top')) : 0,
-        nextStatementTopLRBorder = container.querySelector('.nextStatement.top') ? lrBorder(container.querySelector('.nextStatement.top')) : 0,
-        btnWidth = previousStatementTopOWidth > nextStatementTopOWidth
-        ? (previousStatementTopOWidth + previousStatementTopLRBorder)
-        : (nextStatementTopOWidth + nextStatementTopLRBorder),
+        previousStatementTopWidth = getNavigationButtonWidth(container.querySelector('.previousStatement.top')),
+        nextStatementTopWidth = getNavigationButtonWidth(container.querySelector('.nextStatement.top')),
+        btnWidth = previousStatementTopWidth > nextStatementTopWidth
+        ? previousStatementTopWidth
+        : nextStatementTopWidth,
         totalBtnWidth = 0;
 
       if (currentIteration > 0 && iterations.length > 0 && options.topButtons != 'hide both') {

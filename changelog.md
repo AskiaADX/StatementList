@@ -35,4 +35,5 @@ v3.1.0 - share directory removed
 v3.2.0 - Libraries updated,
        - Design 5.6 errors fixed.
 v3.2.1 - Fixed css float glitch
+v3.2.2 - fixed navigation float glitch 
     
